@@ -59,6 +59,7 @@
 				<li><b>DRAWING</b>: runs right before the game is presented, allowing you to draw on top of it.</li>
 				<li><span class="dsl_version">DSL4</span> <b>POST_WORLD</b>: runs after the world is drawn but before HUD is drawn.</li>
 				<li><span class="dsl_version">DSL4</span> <b>PRE_FADE</b>: runs before the game draws camera fade.</li>
+				<li><span class="dsl_version">DSL6</span> <b>GAME2</b>: runs immediately after normal <b>GAME</b> threads.</li>
 			</ul>
 			<hr/>
 			<h1>Thread Order</h1>
@@ -70,8 +71,7 @@
 				All collections are run in the order they were created, meaning each script belonging to the collection is run in order, meaning each thread belonging to the script is run in order.
 			</p>
 			<p>
-				The only exception to this rule is that the script order is <i>reversed</i> when a collection shuts down,
-				scripts cleanup "unwinds" everything done that has been done.
+				The only exception to this rule is that the script order is <i>reversed</i> when a collection shuts down, as if the scripts are being "unwound".
 			</p>
 			<hr/>
 			<h1 id="compatibility">Game Compatibility</h1>
@@ -80,7 +80,7 @@
 				99% of functions will not be affected by this, but a few (namely <i>button sequence</i> functions) will cause issues due to the way they work.
 				Another notable example is <a href="/function.html?BlipAddXYZ">BlipAddXYZ</a>, a function that mostly works fine but will fail to draw a ground blip by default in DSL.
 				A few <i>compatibility functions</i> (like <a href="/dsl/library/miscellaneous.html?CallFunctionFromScript">CallFunctionFromScript</a>)
-				exist to help this by calling certain script functionswhile setting a different base game script as "active".
+				exist to help this by calling certain script functions while setting a different base game script as "active".
 				If all else fails though, you can still mod the old fashioned way by replacing base game scripts while still being allowed to make use of most DSL functions.
 			</p>
 		</div>
