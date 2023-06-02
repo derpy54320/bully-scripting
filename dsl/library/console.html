@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Console Functions</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+	<script type="text/javascript" src="/function.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1 id="func_name"></h1>
+			<div id="func_info">
+				<h1>Loading function...</h1>
+				<p>
+					Please make sure JavaScript is enabled.
+					Otherwise you will be unable to see the function documentation.
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="IsConsoleActive" class="dsl_function">
+		<p class="func_description">
+			Returns if the console is currently opened.
+			Primarily intended for scripts to be able to limit certain inputs when the console is in focus.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Active</li>
+		</ul>
+	</div>
+	<div id="PrintOutput" class="dsl_function">
+		<p class="func_description">
+			Convert all arguments to strings using <dfn>tostring</dfn> and print them in the console as output text.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_vararg">Text</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="print" class="dsl_function">
+		<p class="func_description">
+			This function is an alias to <a href="/dsl/library/console.html?PrintOutput">PrintOutput</a> that replaces the originally useless <a href="/function.html?print">print</a> function.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_vararg">Text</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="PrintWarning" class="dsl_function">
+		<p class="func_description">
+			Convert all arguments to strings using <dfn>tostring</dfn> and print them in the console as warning text.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_vararg">Text</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="PrintError" class="dsl_function">
+		<p class="func_description">
+			Convert all arguments to strings using <dfn>tostring</dfn> and print them in the console as error text.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_vararg">Text</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="PrintSpecial" class="dsl_function">
+		<p class="func_description">
+			Convert all arguments to strings using <dfn>tostring</dfn> and print them in the console as special text.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_vararg">Text</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+	<script type="text/javascript">
+		setupRealFunctionPageDSL(location.search.substring(1));
+	</script>
+</body>

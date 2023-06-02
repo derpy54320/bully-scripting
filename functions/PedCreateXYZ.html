@@ -1,0 +1,23 @@
+<p class="func_description">
+	Create a ped (a character) with a custom position, as opposed to a pre-defined point like <a href="/function.html?PedCreatePoint">PedCreatePoint</a>.<br/>
+	The ped will be tied to the current script so that it is cleaned up when the script terminates, and will of course be returned for you to script with.
+</p>
+<h2>Arguments</h2>
+<ul class="func_arguments">
+	<li class="lua_number">Ped model ID</li>
+	<li class="lua_number">X coordinate</li>
+	<li class="lua_number">Y coordinate</li>
+	<li class="lua_number">Z coordinate</li>
+</ul>
+<h2>Results</h2>
+<ul class="func_results">
+	<li class="lua_number">Ped</li>
+</ul>
+<h2>Example</h2>
+<p>Create and recruit Algernon as an ally.</p>
+<code class="func_example">
+	<button class="copy_code" onclick="copyCode(this)">copy</button>
+	<pre>local x, y, z = PlayerGetPosXYZ()
+local ped = PedCreateXYZ(4, x + 1, y, z)
+PedRecruitAlly(gPlayer, ped)</pre>
+</code>

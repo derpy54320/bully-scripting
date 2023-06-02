@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Client Functions</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+	<script type="text/javascript" src="/function.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1 id="func_name"></h1>
+			<div id="func_info">
+				<h1>Loading function...</h1>
+				<p>
+					Please make sure JavaScript is enabled.
+					Otherwise you will be unable to see the function documentation.
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="ConnectToServer" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Attempt to connect to a server given an <dfn>Address</dfn> and return if the prompt was successfully brought up.
+			</p>
+			<p>
+				This function is primarily meant for creating a server browser.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Address</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Prompted</li>
+		</ul>
+	</div>
+	<div id="DisconnectFromServer" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Disconnect from the current server and return if there was a server to disconnect from.
+			</p>
+			<p>
+				This function is primarily meant for creating a server browser.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<p class="func_arguments">
+			None.
+		</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Disconnected</li>
+		</ul>
+	</div>
+	<div id="GetServerList" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Return a table of all the servers listed in the user's DSL config under <dfn>list_server</dfn>.
+			</p>
+			<p>
+				This function is primarily meant for creating a server browser.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<p class="func_arguments">
+			None.
+		</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Disconnected</li>
+		</ul>
+	</div>
+	<div id="IsNetworkingAllowed" class="dsl_function">
+		<p class="func_description">
+			Returns true if networking is enabled in the user's DSL config.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">
+			None.
+		</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Allowed</li>
+		</ul>
+	</div>
+	<div id="RequestServerListing" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Request listing information for a server and return if it was successfully requested.
+				If a response is received, a <dfn>ServerListing</dfn> event will be fired.
+			</p>
+			<p>
+				This function is primarily meant for creating a server browser.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Address</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Requested</li>
+		</ul>
+	</div>
+	<div id="SendNetworkEvent" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Send Lua data over the network. This function should usually only be used by client scripts from a server.
+			</p>
+			<p>
+				This is a <b>client</b> function, see the server version here: <a href="/dsl/library/server.html?SendNetworkEvent">SendNetworkEvent</a>.
+			</p>
+			<p>
+				The same restrictions apply here as with <a href="/dsl/library/serialize.html?PackTable">PackTable</a>.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_vararg">Data</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">
+			None.
+		</p>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+	<script type="text/javascript">
+		setupRealFunctionPageDSL(location.search.substring(1));
+	</script>
+</body>

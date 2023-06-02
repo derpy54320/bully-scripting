@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - File Functions</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+	<script type="text/javascript" src="/function.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1 id="func_name"></h1>
+			<div id="func_info">
+				<h1>Loading function...</h1>
+				<p>
+					Please make sure JavaScript is enabled.
+					Otherwise you will be unable to see the function documentation.
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="GetScriptFilePath" class="dsl_function">
+		<p class="func_description">
+			Get a full path given a <a href="/dsl/paths.html">relative path</a>.
+			Usually not needed, as most DSL functions expect the relative path.
+			If no <dfn>File name</dfn> is given, then it's just as if <dfn>""</dfn> was used.
+			A <dfn>Full path</dfn> in this context is not a full system path, but rather just a path that is relative to <dfn>Bully.exe</dfn> rather than the running collection.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_string">File name</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_string">Full path</li>
+		</ul>
+	</div>
+	<div id="GetPackageFilePath" class="dsl_function">
+		<p class="func_description">
+			Get the path of a file located in DSL's <dfn>packages</dfn> folder.
+			The <dfn>File name</dfn> is optional just like in <a href="/dsl/library/file.html?GetScriptFilePath">GetScriptFilePath</a>.
+			This is what you should be using to get your DLL file if you have a package script using <dfn>loadlib</dfn>.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_string">File name</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_string">Full path</li>
+		</ul>
+	</div>
+	<div id="IsSystemAccessAllowed" class="dsl_function">
+		<p class="func_description">
+			Returns if system access is unrestricted.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Allowed</li>
+		</ul>
+	</div>
+	<div id="OpenFile" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Open a file given a <a href="/dsl/paths.html">relative path</a>.
+				<dfn>Mode</dfn> should be <dfn>"r"</dfn> for reading, <dfn>"w"</dfn> for writing, or <dfn>"a"</dfn> for updating.
+			</p>
+			<p>
+				Files are always opened in binary, and the size of the file is returned in <dfn>Bytes</dfn>.
+			</p>
+			<p>
+				Zipped scripts (see <a href="/dsl/library/manager.html?IsScriptZipped">IsScriptZipped</a>) can only open files for reading.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Name</li>
+			<li class="lua_string">Mode</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_userdata">File</li>
+			<li class="lua_number">Bytes</li>
+		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL6</span> The "a" mode was added.
+		</p>
+	</div>
+	<div id="CloseFile" class="dsl_function">
+		<p class="func_description">
+			Close a file. Although you should close a file as soon as you are done with it, don't worry too much about closing it in the case that your script shuts down earlier than expected.
+			It will automatically be collected at that time, as long as there aren't references to it anywhere else.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">File</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="FlushFile" class="dsl_function">
+		<p class="func_description">
+			Flush writing operations.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">File</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="SeekFile" class="dsl_function">
+		<p class="func_description">
+			Only allowed on non-zipped files, seeks a file like ANSI C.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">File</li>
+			<li class="lua_number">Offset</li>
+			<li class="lua_string">Whence</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="ReadFile" class="dsl_function">
+		<p class="func_description">
+			Read <dfn>Bytes</dfn> from <dfn>File</dfn>.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">File</li>
+			<li class="lua_number">Bytes</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_string">Data</li>
+		</ul>
+	</div>
+	<div id="WriteFile" class="dsl_function">
+		<p class="func_description">
+			Write <dfn>Data</dfn> to <dfn>File</dfn>.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">File</li>
+			<li class="lua_string">Data</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="SaveTable" class="dsl_function">
+		<p class="func_description">
+			Save a table to a file given a <a href="/dsl/paths.html">relative path</a>.
+			The same restrictions apply here as with <a href="/dsl/library/serialize.html?PackTable">PackTable</a>.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Name</li>
+			<li class="lua_table">Table</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="LoadTable" class="dsl_function">
+		<p class="func_description">
+			Load a table from a file created by <a href="/dsl/library/file.html?SaveTable">SaveTable</a>.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Name</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_table">Table</li>
+		</ul>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+	<script type="text/javascript">
+		setupRealFunctionPageDSL(location.search.substring(1));
+	</script>
+</body>

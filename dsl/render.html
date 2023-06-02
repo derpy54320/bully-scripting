@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Render Functions</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1>derpy's script loader - Render Functions</h1>
+			<p>
+				All of DSL's render functions follow some general rules.
+				Unless otherwise noted by the function's documentation, you can assume the following concepts.
+			</p>
+			<hr/>
+			<h1 id="coords">Normalized Coordinates</h1>
+			<p>
+				Rendering functions that take coordinates or sizes (width / height) expect them to be <i>normalized</i>.
+				This means a position of <dfn>(0, 0)</dfn> defines the top left of the screen, and <dfn>(1, 1)</dfn> is the bottom right.
+				Similarly, a size of <dfn>1 x 1</dfn> will be as big as the entire screen.
+				Because of this it is important you make proper use of <a href="/dsl/library/render.html?GetDisplayAspectRatio">GetDisplayAspectRatio</a> when you need to draw something that should appear the same size on any aspect ratio.
+				For preserving the aspect ratio of textures, you can use the height multiplied by <a href="/dsl/library/render.html?GetTextureDisplayAspectRatio">GetTextureDisplayAspectRatio</a> as the width of your texture draw.
+			</p>
+			<hr/>
+			<h1 id="colors">Color Ranges</h1>
+			<p>
+				Colors values are expected to be in the range of <dfn>[0, 255]</dfn>, where an RGB value of <dfn>0, 0, 0</dfn> is pure black and <dfn>255, 255, 255</dfn> is pure white.
+				The alpha value sometimes comes after works the same way, where <dfn>0</dfn> is fully transparent and <dfn>255</dfn> is fully opaque.
+				If a value given is not an integer, it will be rounded down. Optional color values will always default to <dfn>255</dfn>.
+			</p>
+			<hr/>
+			<h1 id="text">Text Formatting</h1>
+			<p>
+				Text formatting for the <a href="/dsl/library/render.html?DrawText">DrawText</a> and <a href="/dsl/library/render.html?MeasureText">MeasureText</a> functions are done using multiple function calls.
+				Before drawing (or measuring) text, you should be calling any of the text formatting functions to define how you want your text to look.
+				If you end up deciding not to draw text after setting up the format for it, you should call <a href="/dsl/library/render.html?DiscardText">DiscardText</a> to get rid of it so it doesn't affect the next time text is drawn.
+				You could also call <a href="/dsl/library/render.html?PopTextFormatting">PopTextFormatting</a> to discard the current text but also return a value
+				for later use with <a href="/dsl/library/render.html?SetTextFormatting">SetTextFormatting</a>.
+				For simple text draws, you can consider using <a href="/dsl/library/render.html?DrawTextInline">DrawTextInline</a> as a quick alternative to the normal method.
+			</p>
+			<hr/>
+			<h1 id="cache">Cached Drawing</h1>
+			<p>
+				Things can only technically be drawn in a <i>drawing</i> thread (those with a <a href="/dsl/scripts.html#threads">type</a> of <b>DRAWING</b>, <b>POST_WORLD</b>, or <b>PRE_FADE</b>).
+				You are still able to use all rendering functions (unless otherwise noted by the function) at any point, which will simply <i>cache</i> the drawing operation to be done later.
+				The time at which a <i>cached</i> draw is actually drawn is determined by the current <i>layer</i>, which is set using <a href="/dsl/library/render.html?SetDrawLayer">SetDrawLayer</a>.
+				If a measurement is meant to be returned by the function that gets cached, a measurement is still done without actually drawing anything yet.
+			</p>
+		</div>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+</body>

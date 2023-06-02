@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Command Functions</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+	<script type="text/javascript" src="/function.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1 id="func_name"></h1>
+			<div id="func_info">
+				<h1>Loading function...</h1>
+				<p>
+					Please make sure JavaScript is enabled.
+					Otherwise you will be unable to see the function documentation.
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="SetCommand" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Register a <dfn>Command</dfn> with the current script and set the callback function for it.
+				If the command is already registered to the current script, the callback function will be updated to the one given.
+				If the command already exists for any other reason then the command will not be set and a warning will be shown in the console, but it is not an error.
+				If there is no current DSL script to register with, the command will exist until cleared manually with <a href="/dsl/library/command.html?ClearCommand">ClearCommand</a>.
+			</p>
+			<p>
+				<dfn>Function</dfn> receives the arguments passed from the command line as strings.
+				If a string given in the command line is quoted then it is passed as a single argument,
+				for example <span class="sample_input">/help arg1 "arg2 arg3"</span> will only pass two strings to the function, <dfn>arg1</dfn> and <dfn>arg2 arg3</dfn>.
+				All non-quoted whitespace is removed.
+				This extra processing can be skipped by requesting a <dfn>Raw argument</dfn>, meaning only one un-modified string can be passed to the function.
+			</p>
+			<p>
+				The optional <dfn>Help text</dfn> is used by the built-in help command by doing something like <span class="sample_input">/help Command</span>.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Command</li>
+			<li class="lua_function">Function</li>
+			<li class="lua_opt_boolean">Raw argument</li>
+			<li class="lua_opt_string">Help text</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Set successfully</li>
+		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> An error is no longer raised when the command name is already registered, and the optional <dfn>Help text</dfn> argument was added.
+		</p>
+		<h2>Example</h2>
+		<p>Make a command to give the player some money.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>SetCommand("give_money", function(dollars)
+	
+	-- Convert dollars to a number, this will return nil if nothing was given or the string doesn't represent a number.
+	dollars = tonumber(dollars)
+	if dollars then
+		PrintError("expected amount of dollars to give")
+	else
+		PlayerAddMoney(dollars * 100) -- convert from dollars to cents
+	end
+	
+end)</pre>
+		</code>
+	</div>
+	<div id="RunCommand" class="dsl_function">
+		<p class="func_description">
+			Process a command line string as if it was typed into the console.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Command line</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Ran</li>
+		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL5</span> An error is no longer raised if the command does not exist or an error occurs during parsing, and <dfn>Ran</dfn> will indicate success or failure instead.
+		</p>
+	</div>
+	<div id="ClearCommand" class="dsl_function">
+		<p class="func_description">
+			Unregister a <dfn>Command</dfn> from the current script.
+			Nothing will happen if the command is not registered with the script, and no error will be raised.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Command</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="DoesCommandExist" class="dsl_function">
+		<p class="func_description">
+			Check if a <dfn>Command</dfn> exists.
+			This does <i>not</i> check if it is associated with the current script, but only if it exists at all.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Command</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Exists</li>
+		</ul>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+	<script type="text/javascript">
+		setupRealFunctionPageDSL(location.search.substring(1));
+	</script>
+</body>

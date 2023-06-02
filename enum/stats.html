@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<head>
+	<title>Bully - Ped Stats</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1>Ped Stats</h1>
+			<p>
+				Ped stats are initially determined by the ped's <i>stat type</i>, which is set by their <a href="/models/peds.html">ped object</a>.
+				They can be changed for each instance of a ped. It is worth pointing out that some stats (like <b>8</b>) are continually overridden by the game itself.
+			</p>
+			<p>
+				The descriptions for each stat come from <dfn>pedstats.dat</dfn>, and have only been slightly cleaned up for readability.
+			</p>
+			<p>
+				<a href="/function.html?GameGetPedStat">GameGetPedStat</a>,
+				<a href="/function.html?GameSetPedStat">GameSetPedStat</a>,
+				<a href="/function.html?PedOverrideStat">PedOverrideStat</a>.
+			</p>
+			<table class="enum_table">
+				<tr><th>0</th><td>Id of pickup def (c. Pickups.dat)</td></tr>
+				<tr><th>1</th><td>Likelihood (n/100) of dropping an item</td></tr>
+				<tr><th>2</th><td>Vision Yaw (in degrees) - note this is total yaw and not angle from facing direction (which is this value / 2)</td></tr>
+				<tr><th>3</th><td>Vision Range (in metres)</td></tr>
+				<tr><th>4</th><td>Max Health (n/100)</td></tr>
+				<tr><th>5</th><td>Health regeneration rate - percentage of maximum rate (n/100)</td></tr>
+				<tr><th>6</th><td>Fear (n/100)</td></tr>
+				<tr><th>7</th><td>Chicken (n/100) (chance of tattling/ yelling for help)</td></tr>
+				<tr><th>8</th><td>Attack Frequency (n/100)</td></tr>
+				<tr><th>9</th><td>Bike Attack Frequency (n/100)</td></tr>
+				<tr><th>10</th><td>Projectile Attack Accuracy (n/100)</td></tr>
+				<tr><th>11</th><td>Projectile Attack Frequency (n/100)</td></tr>
+				<tr><th>12</th><td>Block Frequency (n/100)</td></tr>
+				<tr><th>13</th><td>Evade Frequency (n/100)</td></tr>
+				<tr><th>14</th><td>Aggresion (n/100) (how likely are they to initiate a fight, and how likely they are to contnue it)</td></tr>
+				<tr><th>15</th><td>Criminality</td></tr>
+				<tr><th>16</th><td>Sprint Meter</td></tr>
+				<tr><th>17</th><td>Character Class</td></tr>
+				<tr><th>18</th><td>Preferred Combat Zone (0/1/2 = short/medium/long)</td></tr>
+				<tr><th>19</th><td>Preferred Orientation (Bit field: 0001 front, 0010 side, 0100 back. So front+side = 011 = 3, and 111 = 7)</td></tr>
+				<tr><th>20</th><td>Animation Speed factor (100 = 100% speed)</td></tr>
+				<tr><th>21</th><td>Zone Promote</td></tr>
+				<tr><th>22</th><td>Special Meter</td></tr>
+				<tr><th>23</th><td>Special Points</td></tr>
+				<tr><th>24</th><td>Bike Cruise Speed</td></tr>
+				<tr><th>25</th><td>Bike Top Speed</td></tr>
+				<tr><th>26</th><td>Bike Wait Speed</td></tr>
+				<tr><th>27</th><td>Bike Flee Distance</td></tr>
+				<tr><th>28</th><td>Bike Catchup Distance</td></tr>
+				<tr><th>29</th><td>Bike Wait Distance</td></tr>
+				<tr><th>30</th><td>Bike Projectile Usage (n/100)</td></tr>
+				<tr><th>31</th><td>Damage_Scale</td></tr>
+				<tr><th>32</th><td>Dive probability</td></tr>
+				<tr><th>33</th><td>Tenacity (n/100), indicates how tough they are to knock down or off a bike</td></tr>
+				<tr><th>34</th><td>Evasion (n/100)</td></tr>
+				<tr><th>35</th><td>Bike Flee Speed</td></tr>
+				<tr><th>36</th><td>Bike Follow Speed</td></tr>
+				<tr><th>37</th><td>Bike Catchup Speed</td></tr>
+				<tr><th>38</th><td>Grap1Reversal (Strikes)</td></tr>
+				<tr><th>39</th><td>Grap2Reversal (Grapples)</td></tr>
+				<tr><th>40</th><td>Night weapon</td></tr>
+				<tr><th>41</th><td>Name of the bike model which the ped can ride ("None" if the ped can't ride any bike)</td></tr>
+				<tr><th>42</th><td>Name of the bike model which the ped can ride ("None" if the ped can't ride any bike)</td></tr>
+				<tr><th>43</th><td>Name of the bike model which the ped can ride ("None" if the ped can't ride any bike)</td></tr>
+				<tr><th>44</th><td>Likelihood (n/100) of having a weapon</td></tr>
+				<tr><th>45</th><td>Weapon slot 1: Type of melee/projectile</td></tr>
+				<tr><th>46</th><td>Weapon slot 1: Amount of Ammo</td></tr>
+				<tr><th>47</th><td>Weapon slot 1: Selection weight for melee/projectile weapon - HIGHEST NUMBER WINS</td></tr>
+				<tr><th>48</th><td>Weapon slot 1: Available after mission (use "init" to signify start of game)</td></tr>
+				<tr><th>49</th><td>Weapon slot 2: Type of melee/projectile</td></tr>
+				<tr><th>50</th><td>Weapon slot 2: Amount of Ammo</td></tr>
+				<tr><th>51</th><td>Weapon slot 2: Selection weight for melee/projectile weapon</td></tr>
+				<tr><th>52</th><td>Weapon slot 2: Available after mission (use "init" to signify start of game)</td></tr>
+				<tr><th>53</th><td>Weapon slot 3: Type of melee/projectile</td></tr>
+				<tr><th>54</th><td>Weapon slot 3: Amount of Ammo</td></tr>
+				<tr><th>55</th><td>Weapon slot 3: Selection weight for melee/projectile weapon</td></tr>
+				<tr><th>56</th><td>Weapon slot 3: Available after mission (use "init" to signify start of game)</td></tr>
+				<tr><th>57</th><td>Weapon slot 4: Type of melee/projectile</td></tr>
+				<tr><th>58</th><td>Weapon slot 4: Amount of Ammo</td></tr>
+				<tr><th>59</th><td>Weapon slot 4: Selection weight for melee/projectile weapon</td></tr>
+				<tr><th>60</th><td>Weapon slot 4: Available after mission (use "init" to signify start of game)</td></tr>
+				<tr><th>61</th><td>Stun Resistance (n/100) how resistant a ped is to stunning</td></tr>
+				<tr><th>62</th><td>Ped can be knocked down (0 = no, 1+ = yes)</td></tr>
+				<tr><th>63</th><td>Percent health at which the ped can be humiliated in combat</td></tr>
+			</table>
+		</div>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+</body>

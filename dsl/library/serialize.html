@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Serialize Functions</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+	<script type="text/javascript" src="/function.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1 id="func_name"></h1>
+			<div id="func_info">
+				<h1>Loading function...</h1>
+				<p>
+					Please make sure JavaScript is enabled.
+					Otherwise you will be unable to see the function documentation.
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="PackData" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Serialize all of the values given into a single string that can be unpacked using <a href="/dsl/library/serialize.html?UnpackData">UnpackData</a>.
+				If you only want to pack a single table, consider using <a href="/dsl/library/serialize.html?PackTable">PackTable</a>.
+			</p>
+			<p>
+				Only the following values are allowed to be serialized: <b>boolean</b>, <b>number</b>, <b>string</b>, and <b>table</b>.
+				Do not use any tables that refer back to themselves.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_vararg">Data</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_string">Serialized data</li>
+		</ul>
+	</div>
+	<div id="UnpackData" class="dsl_function">
+		<p class="func_description">
+			Unpacks values previously packed using <a href="/dsl/library/serialize.html?PackData">PackData</a>.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Serialized data</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_multret">Data</li>
+		</ul>
+	</div>
+	<div id="PackTable" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Serialize the table into a single string that can be unpacked using <a href="/dsl/library/serialize.html?UnpackTable">UnpackTable</a>.
+				This is a lower level version of the <a href="/dsl/library/serialize.html?PackData">PackData</a> function.
+			</p>
+			<p>
+				Only the following values are allowed to be serialized: <b>boolean</b>, <b>number</b>, <b>string</b>, and <b>table</b>.
+				Do not use any tables that refer back to themselves.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_table">Table</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_string">Serialized table</li>
+		</ul>
+	</div>
+	<div id="UnpackTable" class="dsl_function">
+		<p class="func_description">
+			Unpacks a table previously packed using <a href="/dsl/library/serialize.html?PackTable">PackTable</a>.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Serialized table</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_table">Table</li>
+		</ul>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+	<script type="text/javascript">
+		setupRealFunctionPageDSL(location.search.substring(1));
+	</script>
+</body>

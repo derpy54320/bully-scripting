@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Event Functions</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+	<script type="text/javascript" src="/function.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1 id="func_name"></h1>
+			<div id="func_info">
+				<h1>Loading function...</h1>
+				<p>
+					Please make sure JavaScript is enabled.
+					Otherwise you will be unable to see the function documentation.
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="AddScriptLoaderCallback" class="dsl_function">
+		<p class="func_description">
+			Registers a new <dfn>NativeScriptLoaded</dfn> event handler, meaning <dfn>Callback</dfn> will be called when a base game script is loaded.
+			The script's name and environment is passed to the function so it can apply changes and patches to the script, as well as give it modified versions of normal functions as a way of changing the script's behavior.
+			Keep in mind that the name given is a <i>full</i> name, so you may need to print what it says when you expect a script to start in order to get the right name for it.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_function">Callback</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> This function is now just for legacy support, and does the same thing calling <a href="/dsl/library/event.html?RegisterLocalEventHandler">RegisterLocalEventHandler</a> with <dfn>NativeScriptLoaded</dfn> would.
+		</p>
+		<h2>Example</h2>
+		<p>Change store prices to be free and stop the boy's dorm script from despawning little kids.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>function F_ShopAddItem(...)
+	arg[5] = 0
+	return ShopAddItem(unpack(arg))
+end
+function F_Nothing()
+end
+AddScriptLoaderCallback(function(name, env)
+	if name == "SStores.lua" then
+		-- change SStores.lua's ShopAddItem to be our custom version so we can change prices
+		env.ShopAddItem = F_ShopAddItem
+	elseif name == "AreaScripts/Bdorm.lua" then
+		-- change a function the bdorm script to stop little kids from being despawned
+		env.F_KillAllLittleKids = F_Nothing
+	end
+	print("loaded "..name)
+end)
+</pre>
+		</code>
+	</div>
+	<div id="RegisterLocalEventHandler" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Registers a new local event handler.
+				The <dfn>Callback</dfn> function is called when the event is activated.
+				The returned <dfn>Event handler</dfn> object is registered with the current script, meaning it will be removed when the script dies.
+				If there is no current DSL script to register with, it will exist until removed manually with <a href="/dsl/library/event.html?RemoveEventHandler">RemoveEventHandler</a>.
+			</p>
+			<p>
+				An event <dfn>Type</dfn> is just a string.
+				Although there are a few events built-in and listed below, you are free to define your own for any purpose.
+				Just make sure the name is unique enough that it won't clash with what other developers are likely to use.
+				This is a good way to allow your script's behavior to be influenced by scripts from other developers.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Type</li>
+			<li class="lua_function">Callback</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_userdata">Event handler</li>
+		</ul>
+		<h2>Example</h2>
+		<p>Keep the player up past 2 AM.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>RegisterLocalEventHandler("PlayerSleepCheck",function()
+	return true
+end)
+</pre>
+		</code>
+		<h2>Events (client)</h2>
+		<table class="func_details">
+			<tr>
+				<th>Type</th>
+				<th>Description</th>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL6</span><b>CameraFaded(ms, fadein)</b></td>
+				<td>The camera is fading in or out. Same arguments as <dfn>CameraFade</dfn>, but the 2nd value is a boolean instead of a number.</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>ControllersUpdated()</b></td>
+				<td>All controllers have been updated. This is a good time to call <dfn>SetStickValue</dfn>.</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>ControllerUpdating(id)</b></td>
+				<td>A specific controller is being updated. This is a good time to call <dfn>SetButtonPressed</dfn>.</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>GameBeingPaused()</b></td>
+				<td>The game will pause unless an event handler returns true.</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL4</span><b>NativeScriptLoaded(name, env)</b></td>
+				<td>A base game script has been loaded and run, but not yet updated (meaning its <dfn>main</dfn> function hasn't run).</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>PedBeingCreated()</b></td>
+				<td>A ped is about to be created. You can count peds with <dfn>AllPeds</dfn> to determine if you should delete a ped to prevent a crash.</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>PedStatOverriding(ped, stat, value)</b></td>
+				<td>A ped's stat is being changed unless an event handler returns true. Beware setting the stat yourself will still activate the event.</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>PlayerSleepCheck()</b></td>
+				<td>The game wants to check if the player should fall asleep, but will skip the check if an event handler returns true.</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>SaveGameLoading()</b></td>
+				<td>A save game is going to be loaded unless an event handler returns true.</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>ServerConnected(address)</b></td>
+				<td>A server has been fully connected to.</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>ServerConnecting(address)</b></td>
+				<td>A server connection has begun.</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>ServerDisconnected(address)</b></td>
+				<td>A server has been disconnected from. Always comes after a <dfn>ServerConnecting</dfn> event (unless the game is quit).</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>ServerDownloading()</b></td>
+				<td>The server we're connecting to is downloading.</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>ServerKicked()</b></td>
+				<td>The server has issued a kick.</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>ServerListing(address, listing)</b></td>
+				<td>A server has provided listing information. The listing table contains <dfn>name</dfn>, <dfn>info</dfn>, <dfn>mode</dfn>, <dfn>icon</dfn>, <dfn>players</dfn>, and <dfn>max_players</dfn>.</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>WindowGoingFullscreen()</b></td>
+				<td>The game will enter exclusive fullscreen mode unless an event handler returns true.</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>WindowMinimizing()</b></td>
+				<td>The game's window will be minimized unless an event handler returns true.</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>WindowUpdating(window)</b></td>
+				<td>The game's window can be customly styled if any event handler returns true. The window table contains fields describing the window.</td>
+			</tr>
+		</table>
+		<h2>Events (server)</h2>
+		<table class="func_details">
+			<tr>
+				<th>Type</th>
+				<th>Description</th>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>PlayerConnected(player)</b></td>
+				<td>A player has fully connected and can be used safely with any networking functions.</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>PlayerConnecting(player)</b></td>
+				<td>A player is connecting and can only be used with some functions. Kick them to prevent them from being connected.</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>PlayerDropped(player)</b></td>
+				<td>A player has been dropped and all references to them should be removed. Will always come after a <dfn>PlayerConnecting</dfn> event.</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>PlayerListing(player, listing)</b></td>
+				<td>A player requested listing information for the server. You can modify the listing table's <dfn>info</dfn> and <dfn>mode</dfn>. The player is only valid for the duration of this event.</td>
+			</tr>
+		</table>
+		<h2>Events (shared)</h2>
+		<table class="func_details">
+			<tr>
+				<th>Type</th>
+				<th>Description</th>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL5</span><b>ScriptPrinted(text, type)</b></td>
+				<td>One of the print functions have been called. This is mainly designed to help forward console output into a server chat.</td>
+			</tr>
+		</table>
+	</div>
+	<div id="RegisterNetworkEventHandler" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Registers a new network event handler.
+				The <dfn>Callback</dfn> function is called when the event is activated.
+				The returned <dfn>Event handler</dfn> object is registered with the current script, meaning it will be removed when the script dies.
+				If there is no current DSL script to register with, it will exist until removed manually with <a href="/dsl/library/event.html?RemoveEventHandler">RemoveEventHandler</a>.
+			</p>
+			<p>
+				An event <dfn>Type</dfn> is just a string.
+				Unlike <a href="/dsl/library/event.html?RegisterLocalEventHandler">RegisterLocalEventHandler</a>, there are no built-in events.
+				Network events can only be activated by the <a href="/dsl/library/client.html?SendNetworkEvent">SendNetworkEvent</a> function being called on the other side of the connection.
+			</p>
+			<p>
+				Since the event is sent over a network connection, you should <b>not</b> trust the arguments given to your callback. Make sure to type check them if you do not want your script misbehaving.
+			</p>
+			<p>
+				On the server, the first argument given to your callback function is the <dfn>Player</dfn> id for the player that sent the event. You can always trust this is a valid player id.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Type</li>
+			<li class="lua_function">Callback</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_userdata">Event handler</li>
+		</ul>
+		<h2>Example</h2>
+		<p>Tell all players in the server when a player dies.</p>
+		<h3>client script</h3>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>function main()
+	while not SystemIsReady() do
+		Wait(0)
+	end
+	while true do
+		if PedIsDead(gPlayer) then
+			SendNetworkEvent("example:playerDied") -- putting "yourModName:" in front of events helps prevent naming conflicts with other scripts
+			repeat
+				Wait(0)
+			until not PedIsDead(gPlayer) -- wait until we're not dead so that the server isn't just spammed with events every frame we're dead
+		end
+		Wait(0)
+	end
+end
+RegisterNetworkEventHandler("example:notifyPlayerDeath",function(name)
+	TextPrintString(name.." has died!",3,2)
+end)
+</pre>
+		</code>
+		<h3>server script</h3>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>RegisterNetworkEventHandler("example:playerDied",function(player) -- on the server, a valid player is always the first argument
+	SendNetworkEvent(-1,"example:notifyPlayerDeath",GetPlayerName(player)) -- using -1 as the first argument means this event is sent to ALL players
+end)
+</pre>
+		</code>
+	</div>
+	<div id="RemoveEventHandler" class="dsl_function">
+		<p class="func_description">
+			Remove an event handler created with <a href="/dsl/library/event.html?RegisterLocalEventHandler">RegisterLocalEventHandler</a>.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Event handler</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="RunLocalEvent" class="dsl_function">
+		<p class="func_description">
+			Activate an event of <dfn>Type</dfn>, passing any <dfn>Arguments</dfn> you want.
+			Keep in mind that tables in Lua are passed by reference, so a decent strategy for allowing other scripts to respond to your event is by passing some sort of table.
+			The <dfn>Result</dfn> is false unless at least one of the callbacks return true. This can be used as a way of letting certain events be cancelled, or for any other arbitrary use.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Type</li>
+			<li class="lua_vararg">Arguments</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Result</li>
+		</ul>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+	<script type="text/javascript">
+		setupRealFunctionPageDSL(location.search.substring(1));
+	</script>
+</body>

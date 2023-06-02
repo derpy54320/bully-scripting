@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Config Files</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1>derpy's script loader - Config Files</h1>
+			<p>
+				<span class="dsl_version">DSL5</span> Config files are more like traditional INI files.
+				Keys and values can be seperated with <dfn>:</dfn> or <dfn>=</dfn>, strings can be wrapped in quotation marks, and lines starting with <dfn>[</dfn> are ignored.
+			</p>
+			<p>
+				All config files in DSL are comprised of simple key / value pairs using plain text.
+				The first word on a line is considered the <dfn>key</dfn>, and the rest of the line (after skipping whitespace) is considered the <dfn>value</dfn>.
+				Key names are case-sensitive, and no extra processing is done to the value by default.
+				This means that the "type" of a value is only determined by the way it is used.
+				The same key can be specified multiple times in a single config file.
+				This functionality can be used to define an array of values.
+				See <a href="/dsl/library/config.html?AllConfigValues">AllConfigValues</a>.
+				A comment can be specified using <dfn>#</dfn>, which instructs DSL to ignore the rest of a line.
+			</p>
+			<hr/>
+			<h1 id="main">Main DSL Config</h1>
+			<p>
+				DSL's main config file can be found at <dfn>_derpy_script_loader/config.txt</dfn>.
+				This file is generated when DSL is started if it does not exist or if it is not the correct config version.
+			</p>
+			<p>
+				It is a self-explanatory file so not every option will be broken down here, but there are some hidden options that do not get generated.
+			</p>
+			<h3><span class="dsl_version">DSL5</span> Hidden Developer Options</h3>
+			<code>
+				<button class="copy_code" onclick="copyCode(this)">copy</button>
+				<pre>[DEVELOPER OPTIONS]
+dev_add_debug_functions false     # add debug functions to the global environment
+dev_add_rebuild_function false    # add the RebuildArchives function to the global environment</pre>
+			</code>
+			<h3><span class="dsl_version">DSL5</span> Hidden Pool Options</h3>
+			<code>
+				<button class="copy_code" onclick="copyCode(this)">copy</button>
+				<pre>[EXPERIMENTAL GAME POOL RESIZING]
+resize_pool_scale 0                 # multiply the value of all other pool options (pools are left alone when result is zero)
+resize_pool_ptr_node 15000          # resize game pools (keep in mind many parts of the game will not support it)
+resize_pool_entry_info_node 2000
+resize_pool_vehicle 15
+resize_pool_ped 24                  # also controls 8 parallel pools
+resize_pool_joint_constraint 48     # also controls 3 parallel pools
+resize_pool_weapon 57               # actual name unknown
+resize_pool_lua_script 8
+resize_pool_dummy 300
+resize_pool_prop_anim 220
+resize_pool_building 2250
+resize_pool_treadable 1
+resize_pool_col_model 4150
+resize_pool_stimulus 87
+resize_pool_object 275
+resize_pool_projectile 35
+resize_pool_cut_scene 30
+resize_pool_unknown 200             # unknown pool</pre>
+			</code>
+			<hr/>
+			<h1>Script Collection Config</h1>
+			<p>
+				Every script collection can have its own config that defines how it should behave.
+			</p>
+			<p>
+				Script collection config files are explained in depth <a href="/dsl/collections.html#config">here.</a>
+			</p>
+		</div>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+</body>

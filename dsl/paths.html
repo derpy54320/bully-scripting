@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Relative Paths</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1>derpy's script loader - Relative Paths</h1>
+			<p>
+				Many DSL functions will take something known as a <i>relative path</i>.
+				This means that the path you give is relative to the running collection, or the game's <dfn>Scripts</dfn> folder if a DSL is not running (meaning the function was called from a base game script).
+				For example you request a file named <dfn>file.txt</dfn> from a normal collection named <dfn>Collection</dfn>,
+				then the real path used will end up being something like <dfn>_derpy_script_loader/scripts/Collection/file.txt</dfn>.
+			</p>
+			<hr/>
+			<h1>File Security</h1>
+			<p>
+				If system access is not enabled (see <dfn>allow_system_access</dfn> in DSL's config), then an error will occur when trying to access a file that is not in a "safe" path.
+				Anywhere in DSL's <dfn>scripts</dfn> folder and <dfn>packages</dfn> folder is considered safe, but in general you shouldn't be accessing anything outside of your own collection.
+			</p>
+			<hr/>
+			<h1>Zip Files</h1>
+			<p>
+				If the running collection is a <i>zipped</i> collection, then the file is retrieved from the zip archive.
+				In this case, there is no way to refer to a file that is not in said zip archive.
+			</p>
+		</div>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+</body>

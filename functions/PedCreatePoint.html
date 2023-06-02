@@ -1,0 +1,24 @@
+<p class="func_description">
+	Create a ped (a character) at a pre-defined point, as opposed to a custom position like <a href="/function.html?PedCreateXYZ">PedCreateXYZ</a>.<br/>
+	The ped will be tied to the current script so that it is cleaned up when the script terminates, and will of course be returned for you to script with.<br/>
+</p>
+<p>Remember you can only use information from .DAT files that are loaded.</p>
+<h2>Arguments</h2>
+<ul class="func_arguments">
+	<li class="lua_number">Ped model ID</li>
+	<li class="lua_number">Point</li>
+	<li class="lua_number">Point number</li>
+</ul>
+<h2>Results</h2>
+<ul class="func_results">
+	<li class="lua_number">Ped</li>
+</ul>
+<h2>Example</h2>
+<p>Create Tad and Parker in the boxing gym.</p>
+<code class="func_example">
+	<button class="copy_code" onclick="copyCode(this)">copy</button>
+	<pre>DATLoad("2_03.DAT", 2) -- Load the .DAT with the point we need
+
+local tad = PedCreateXYZ(31, POINTLIST._2_03_PlayerStart, 1)
+local parker = PedCreateXYZ(40, POINTLIST._2_03_PlayerStart, 2)</pre>
+</code>

@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Manager Functions</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+	<script type="text/javascript" src="/function.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1 id="func_name"></h1>
+			<div id="func_info">
+				<h1>Loading function...</h1>
+				<p>
+					Please make sure JavaScript is enabled.
+					Otherwise you will be unable to see the function documentation.
+				</p>
+			</div>
+		</div>
+	</div>
+	<!-- SCRIPTS - HEADERS -->
+	<div id="DontAutoStartScript" class="dsl_function">
+		<p class="func_description">
+			This is a <i>header</i> function, meaning it is meant to go on the top of your main script as an alternative to using <a href="/dsl/collections.html#config">config.txt</a>.<br/>
+			Calling this function will instantly stop execution of your script and shut it down if it was <a href="/dsl/collections.html#startup">started automatically</a>.
+			If the main script of a collection is shutdown as a result of calling this function, the entire collection will also be shutdown.
+			It is worth noting that a script being loaded as a <i>dependency</i> to an automatically started script or collection will <i>not</i> be stopped by this function.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Example</h2>
+		<p>Give the player money, but only if the script was started manually.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>DontAutoStartScript()
+PlayerAddMoney(10000)</pre>
+		</code>
+	</div>
+	<div id="RequireDependency" class="dsl_function">
+		<p class="func_description">
+			This is a <i>header</i> function, meaning it is meant to go on the top of your main script as an alternative to using <a href="/dsl/collections.html#config">config.txt</a>.<br/>
+			This function makes sure that <dfn>Collection</dfn> is running, and if it is not then it should be started.
+			If it does not exist or it fails to start, then this script will be shutdown, execution will instantly stop, and the console will inform the user that they are missing a needed dependency.
+			If the main script of a collection is shutdown as a result of calling this function, the entire collection will also be shutdown.
+			A difference between setting a dependency in the config and requiring it using this function, is that requiring it in the config ensures it was running *before* starting the dependent collection at all.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Collection</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Example</h2>
+		<p>
+			Require all animations to be loaded for this script to run.
+			Remember <dfn>loadanim.lua</dfn> is released as part of DSL, so this won't require extra effort from the user.
+			It will just ensure that it is running if they have opted to not have their scripts automatically start.
+		</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>RequireDependency("loadanim.lua")</pre>
+		</code>
+	</div>
+	<div id="RequireLoaderVersion" class="dsl_function">
+		<p class="func_description">
+			This is a <i>header</i> function, meaning it is meant to go on the top of your main script as an alternative to using <a href="/dsl/collections.html#config">config.txt</a>.<br/>
+			This function makes sure that the current version of DSL is at least <dfn>Version</dfn>.
+			If <dfn>Not backwards compatible</dfn> is true, then it requires that the current version of DSL is the exact version specified.
+			If the current DSL version does not match what is desired, then this script will be shutdown, execution will instantly stop, and the console will inform the user that they do not have the right version.
+			If the main script of a collection is shutdown as a result of calling this function, the entire collection will also be shutdown.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Version</li>
+			<li class="lua_opt_boolean">Not backwards compatible</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> The optional <dfn>Not backwards compatible</dfn> argument was added.
+		</p>
+		<h2>Example</h2>
+		<p>We can require a certain loader version if we know something will only work in that version.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>RequireLoaderVersion(4)
+
+RegisterLocalizedText("QUICK_EXAMPLE", 100)
+ReplaceLocalizedText("QUICK_EXAMPLE", "These localized text functions were introduced in DSL4, so it is important we check for that version so anyone running an old DSL version will know they need to upgrade.")
+
+function main()
+	while not SystemIsReady() do
+		Wait(0)
+	end
+	Wait(1000)
+	TutorialShowMessage("QUICK_EXAMPLE", 5000)
+end</pre>
+		</code>
+	</div>
+	<div id="RequireSystemAccess" class="dsl_function">
+		<p class="func_description">
+			This is a <i>header</i> function, meaning it is meant to go on the top of your main script as an alternative to using <a href="/dsl/collections.html#config">config.txt</a>.<br/>
+			This function makes sure that system access is enabled (see <dfn>allow_system_access</dfn> in DSL's config).
+			If system access is not enabled, then this script will be shutdown, execution will instantly stop, and the console will inform the user that they need system access enabled to continue.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<!-- SCRIPTS - INVOCATION -->
+	<div id="LoadScript" class="dsl_function">
+		<p class="func_description">
+			Load a DSL script into the current script's environment.
+			This differs from <a href="/dsl/library/manager.html?StartScript">StartScript</a> as <i>loading</i> a script means it will load into the current script rather than fully "starting" a new script.
+			This can basically be thought of as the DSL version of <a href="/function.html?ImportScript">ImportScript</a> (though you can still use ImportScript to load scripts from Scripts.img).
+			<dfn>Name</dfn> is given as a <a href="/dsl/paths.html">relative path</a>.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Name</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Example</h2>
+		<p>A main script can load a secondary script as a way of splitting large amounts of code into separate files for organization.</p>
+		<p>The loaded script is loaded into the script that called <b>LoadScript</b>, allowing said script to use the functions and variables defined there.</p>
+		<h3>main.lua:</h3>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>LoadScript("example.lua")
+
+-- Hello world, from another script! will be printed
+F_HelloWorld()
+
+-- nil will be printed, because we cannot access the local variables of the other function
+print(some_local)
+
+-- but we do share globals with that script, so we can see 7 printed here
+print(some_global)</pre>
+		</code>
+		<h3>example.lua:</h3>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>local some_local = 4
+some_global = 7
+function F_HelloWorld()
+	print("Hello world, from another script!")
+end</pre>
+		</code>
+	</div>
+	<div id="StartScript" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Start a DSL script and add it to the current collection.
+				This differs from <a href="/dsl/library/manager.html?LoadScript">LoadScript</a> as <i>starting</i> a script means it gets its own <i>script object</i>,
+				environment, and <a href="/dsl/scripts.html#flow">flow threads</a>. <dfn>Name</dfn> is given as a <a href="/dsl/paths.html">relative path</a>.
+			</p>
+			<p>
+				You can optionally supply your own <dfn>Environment</dfn> instead of letting the default one be generated.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Name</li>
+			<li class="lua_opt_table">Environment</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_userdata">Script</li>
+		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> Passing a custom <dfn>Environment</dfn> no longer stops a script from creating normal <a href="/dsl/scripts.html#flow">script flow</a> threads.
+		</p>
+		<h2>Example</h2>
+		<p>Run two scripts in the same collection by using <b>StartScript</b>.</p>
+		<h3>main.lua:</h3>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>StartScript("secondary.lua")
+
+function main()
+	while not SystemIsReady() do
+		Wait(0)
+	end
+	while true do
+		TextPrintString("hello from main.lua", 0, 1)
+		Wait(0)
+	end
+end</pre>
+		</code>
+		<h3>secondary.lua:</h3>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>function main()
+	while not SystemIsReady() do
+		Wait(0)
+	end
+	while true do
+		TextPrintString("hello from secondary.lua", 0, 2)
+		Wait(0)
+	end
+end</pre>
+		</code>
+	</div>
+	<div id="StartVirtualScript" class="dsl_function">
+		<p class="func_description">
+			Creating a <i>virtual script</i> is very similar to creating a script with <a href="/dsl/library/manager.html?StartScript">StartScript</a>,
+			except that a function is given instead of a file. This allows you to get the benefits of having another script object, without the need for a dedicated file.
+			If you do not care about giving it a special <dfn>Name</dfn>, you can just give the <dfn>Function</dfn> as the first argument.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_string">Name</li>
+			<li class="lua_function">Function</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_userdata">Script</li>
+		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> The optional <dfn>Name</dfn> argument was added.
+		</p>
+	</div>
+	<!-- SCRIPTS - CLEANUP -->
+	<div id="TerminateCurrentScript" class="dsl_function">
+		<p class="func_description">
+			This function replaces the existing <a href="/function.html?TerminateCurrentScript">TerminateCurrentScript</a>.
+			If DSL is not running <i>or</i> <a href="/dsl/library/manager.html?UseBaseGameScriptFunctions">UseBaseGameScriptFunctions</a> was called with true, the original function is used.
+			Otherwise the current DSL script is shutdown.
+			This does not instantly take control away from your script, meaning your code will continue execution until the current thread yields or control is otherwise returned to DSL.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Example</h2>
+		<p>Stop the script when a button is pressed.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>function main()
+	while not SystemIsReady() do
+		Wait(0)
+	end
+	while true do
+		TextPrintString("running", 0, 2)
+		Wait(0)
+		if IsButtonBeingPressed(3,0) then
+			TerminateCurrentScript()
+			print("this will be printed because control is not instantly taken away")
+			Wait(0)
+			print("this will not be printed because waiting gave control back to DSL")
+		end
+	end
+end</pre>
+		</code>
+	</div>
+	<div id="TerminateScript" class="dsl_function">
+		<p class="func_description">
+			Shutdown <dfn>Script</dfn>, or the current script if not given.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_userdata">Script</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<!-- SCRIPTS - QUERY -->
+	<div id="GetScriptCollection" class="dsl_function">
+		<p class="func_description">
+			Returns the name of <dfn>Script</dfn>'s collection, or of the current collection.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_userdata">Script</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_string">Collection</li>
+		</ul>
+	</div>
+	<div id="GetScriptEnvironment" class="dsl_function">
+		<p class="func_description">
+			Returns the environment assigned to <dfn>Script</dfn> or the current script.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_userdata">Script</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_table">Environment</li>
+		</ul>
+	</div>
+	<div id="GetScriptName" class="dsl_function">
+		<p class="func_description">
+			Returns the name of <dfn>Script</dfn> or the current script.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_userdata">Script</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_string">Collection</li>
+		</ul>
+	</div>
+	<div id="GetScriptSharedTable" class="dsl_function">
+		<p class="func_description">
+			Returns the shared table of <dfn>Script</dfn>'s collection or of the current collection.
+			The shared table available to all scripts in the collection, and is empty by default.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_userdata">Script</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_table">Table</li>
+		</ul>
+		<p>Communicate with a second script using a shared table.</p>
+		<h3>main.lua:</h3>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>gShared = GetScriptSharedTable()
+StartScript("secondary.lua")
+
+function main()
+	while not SystemIsReady() do
+		Wait(0)
+	end
+	while gShared.some_text do
+		TextPrintString(gShared.some_text, 0, 1)
+		Wait(0)
+	end
+end</pre>
+		</code>
+		<h3>secondary.lua:</h3>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>gShared = GetScriptSharedTable()
+gShared.some_text = "hello world"
+
+function main()
+	Wait(9000)
+	gShared.some_text = "good bye"
+	Wait(1000)
+	gShared.some_text = nil
+end</pre>
+		</code>
+	</div>
+	<div id="IsScriptRunning" class="dsl_function">
+		<p class="func_description">
+			Returns if <dfn>Script</dfn> is running, as in not shutdown or shutting down.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Script</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Running</li>
+		</ul>
+	</div>
+	<div id="IsScriptZipped" class="dsl_function">
+		<p class="func_description">
+			Returns if <dfn>Script</dfn>'s collection or the running collection is a <i>zipped</i> collection.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_userdata">Script</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Zipped</li>
+		</ul>
+	</div>
+	<!-- THREADS - CREATION -->
+	<div id="CreateThread" class="dsl_function">
+		<p class="func_description">
+			This function replaces the existing <a href="/function.html?CreateThread">CreateThread</a>.
+			If DSL is not running <i>or</i> <a href="/dsl/library/manager.html?UseBaseGameScriptFunctions">UseBaseGameScriptFunctions</a> was called with true, the original function is used.
+			Otherwise a <b>GAME</b> thread is created and added to the current script.
+			These threads run directly after the base game's.
+			When creating a DSL script, <dfn>Function</dfn> can be a string to refer to a function in the current script's environment.
+			In this case, the name of the thread is also preserved to be shown in console messages or returned with
+			<a href="/dsl/library/manager.html?GetThreadName">GetThreadName</a>.
+			Any extra <dfn>Arguments</dfn> are passed to the thread function when the thread starts.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_function">Function</li>
+			<li class="lua_vararg">Arguments</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_userdata">Thread</li>
+		</ul>
+		<h2>Example</h2>
+		<p>Do something on a delay by quickly creating a thread with an anonymous function.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>function main()
+	while not SystemIsReady() do
+		Wait(0)
+	end
+	while true do
+		local ped = PedGetTargetPed(gPlayer)
+		if PedIsValid(ped) and IsButtonBeingPressed(7,0) then
+			
+			-- player insulted a ped, let's apply emotional damage after a second delay
+			CreateThread(function()
+				Wait(1000)
+				if PedIsValid(ped) then -- make sure they're still valid after waiting
+					PedApplyDamage(ped, 1000)
+				end
+			end)
+			
+		end
+	end
+end</pre>
+		</code>
+	</div>
+	<div id="CreateSystemThread" class="dsl_function">
+		<p class="func_description">
+			Create a <b>SYSTEM</b> thread, using the same general rules as <a href="/dsl/library/manager.html?CreateThread">CreateThread</a>.
+			These threads run while the game is paused or out of focus, before most parts of the game are updated each frame.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_function">Function</li>
+			<li class="lua_vararg">Arguments</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_userdata">Thread</li>
+		</ul>
+	</div>
+	<div id="CreateDrawingThread" class="dsl_function">
+		<p class="func_description">
+			Create a <b>DRAWING</b> thread, using the same general rules as <a href="/dsl/library/manager.html?CreateThread">CreateThread</a>.
+			These threads run directly before the game presents its back buffer, meaning anything you draw will be on top of everything the game drew.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_function">Function</li>
+			<li class="lua_vararg">Arguments</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_userdata">Thread</li>
+		</ul>
+	</div>
+	<div id="CreateAdvancedThread" class="dsl_function">
+		<p class="func_description">
+			Create <a href="/dsl/scripts.html#threads">any type</a> of thread, using the same general rules as <a href="/dsl/library/manager.html?CreateThread">CreateThread</a>.
+			Some threads can only be created using this function.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Type</li>
+			<li class="lua_function">Function</li>
+			<li class="lua_vararg">Arguments</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_userdata">Thread</li>
+		</ul>
+	</div>
+	<!-- THREADS - CLEANUP -->
+	<div id="TerminateCurrentThread" class="dsl_function">
+		<p class="func_description">
+			Shutdown the current thread.
+			Similar to <a href="/dsl/library/manager.html?TerminateCurrentScript">TerminateCurrentScript</a>, control is not instantly taken away.
+			You will have to yield if you want to instantly jump out of thread exectuion.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="TerminateThread" class="dsl_function">
+		<p class="func_description">
+			This function replaces the existing <a href="/function.html?TerminateThread">TerminateThread</a>.
+			If DSL is not running <i>or</i> <a href="/dsl/library/manager.html?UseBaseGameScriptFunctions">UseBaseGameScriptFunctions</a> was called with true, the original function is used.
+			Otherwise it will shutdown <dfn>Thread</dfn> or the current thread.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Thread</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<!-- THREADS - QUERY -->
+	<div id="GetThreadName" class="dsl_function">
+		<p class="func_description">
+			Return the name of <dfn>Thread</dfn> or of the current thread.
+			It is possible this function will not return anything if the thread was not created with a name.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_userdata">Thread</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_opt_string">Name</li>
+		</ul>
+	</div>
+	<div id="IsThreadRunning" class="dsl_function">
+		<p class="func_description">
+			Returns if <dfn>Thread</dfn> is running, as in not shutdown or shutting down.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Thread</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Running</li>
+		</ul>
+	</div>
+	<!-- THREADS - WAIT -->
+	<div id="GetThreadWait" class="dsl_function">
+		<p class="func_description">
+			Returns the time until <dfn>Thread</dfn> or the current thread will be allowed to update again.
+			If a coroutine you created calls <a href="/dsl/library/manager.html?Wait">Wait</a>, this function can be used with the current thread to get what time was passed.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_userdata">Thread</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Milliseconds</li>
+		</ul>
+	</div>
+	<div id="Wait" class="dsl_function">
+		<p class="func_description">
+			This function replaces the existing <a href="/function.html?Wait">Wait</a>.
+			If DSL is not running <i>or</i> <a href="/dsl/library/manager.html?UseBaseGameScriptFunctions">UseBaseGameScriptFunctions</a> was called with true, the original function is used.
+			Otherwise the current thread will yield and next time it will be allowed to update is set to <dfn>Milliseconds</dfn> from now.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_number">Milliseconds</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Example</h2>
+		<p>Almost every script will need to make use of Wait.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>function main()
+	
+	-- wait until the system is ready before doing anything else
+	while not SystemIsReady() do
+		Wait(0)
+	end
+	
+	-- main loop that is always running for as long as the script is alive
+	while true do
+		TextPrintString("you can script things that run every frame here", 0, 2)
+		Wait(0)
+	end
+	
+end</pre>
+		</code>
+	</div>
+	<!-- MANAGER - MISCELLANEOUS -->
+	<div id="UseBaseGameScriptFunctions" class="dsl_function">
+		<p class="func_description">
+			If you ever need one of the replaced base script manager functions to run when it normally wouldn't, you can use this function.
+			Usually this will just result in issues, but it is provided for the sake of giving scripters the option to use the original functions.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_boolean">Use base functions</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="ImportScript" class="dsl_function">
+		<p class="func_description">
+			Loads a script from <dfn>Scripts.img</dfn> into the current script's environment.<br/>
+			This function emulates the <a href="/function.html?ImportScript">ImportScript</a> normally available to base game scripts.
+			This function is a special case, because the original version is actually hidden by <dfn>util.lur</dfn>.
+			The version typically available to base game scripts is actually provided by <dfn>util.lur</dfn> that is made specifically for each script.
+			In an effort to mimic this behavior, DSL does not register this function as a global function.
+			Instead, it is put into each script's environment just like <dfn>util.lur</dfn> would normally do.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Name</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+	<script type="text/javascript">
+		setupRealFunctionPageDSL(location.search.substring(1));
+	</script>
+</body>

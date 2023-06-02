@@ -1,0 +1,27 @@
+<p class="func_description">
+	Set the player's position and current area.<br/>
+	Unless <a href="/function.html?AreaDisableCameraControlForTransition">AreaDisableCameraControlForTransition</a> was called, switching to a new area will cause the camera to fade out then in.<br/>
+	This is the backing function for <a href="/function.html?AreaTransitionXYZ">AreaTransitionXYZ</a> and will return immediately rather than waiting for the area to load,
+	you can use <a href="/function.html?AreaIsLoading">AreaIsLoading</a> to monitor the loading process.
+</p>
+<h2>Arguments</h2>
+<ul class="func_arguments">
+	<li class="lua_number">X coordinate</li>
+	<li class="lua_number">Y coordinate</li>
+	<li class="lua_number">Z coordinate</li>
+	<li class="lua_number">Area ID</li>
+</ul>
+<h2>Results</h2>
+<p class="func_results">
+	None.
+</p>
+<h2>Example</h2>
+<p>Move the player in front of the boy's dorm.</p>
+<code class="func_example">
+	<button class="copy_code" onclick="copyCode(this)">copy</button>
+	<pre>PlayerSetPosXYZArea(270, -110, 6, 0)
+while AreaIsLoading() do
+	Wait(0)
+end
+TextPrintString("Warped to boy's dorm!", 3, 1)</pre>
+</code>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Savedata Functions</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+	<script type="text/javascript" src="/function.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1 id="func_name"></h1>
+			<div id="func_info">
+				<h1>Loading function...</h1>
+				<p>
+					Please make sure JavaScript is enabled.
+					Otherwise you will be unable to see the function documentation.
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="IsSaveDataReady" class="dsl_function">
+		<p class="func_description">
+			Check if custom save data is ready.
+			If it is not ready, the other save data functions will fail.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Ready</li>
+		</ul>
+	</div>
+	<div id="GetSaveDataTable" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Get a <i>save data table</i> given a <dfn>Save data ID</dfn>.
+				If one does not exist, an empty one will be generated.
+				The same restrictions apply to the table as with tables packed using <a href="/dsl/library/serialize.html?PackTable">PackTable</a>.
+			</p>
+			<p>
+				Save data can only be assumed to be ready by the time the first <b>GAME</b> thread runs.
+				This basically means that you shouldn't get save data until your script's <b>MissionSetup</b> or <b>main</b>.
+			</p>
+			<p>
+				All modifications you make to your <i>save data table</i> will be saved in the normal file used to save game progress,
+				giving you a way to save things that should be tied to the playthrough.
+			</p>
+			<p>
+				<dfn>Save data ID</dfn> should be unique enough that other developers are not likely to use it by mistake.
+				Prefixing it with your username is often a good way to avoid conflicts.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Save data ID</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_table">Save data</li>
+		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> Save data is now more reliable, and accurately reports when it is not ready.
+		</p>
+		<h2>Example</h2>
+		<p>Remember how many apples Jimmy eats and show it to the player at all times.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>function MissionSetup()
+	gSaveData = GetSaveDataTable("test_saving_system")
+end
+function main()
+	local eating = false
+	while not SystemIsReady() do
+		Wait(0)
+	end
+	
+	-- make an initial value for our apple count if one does not exist in our save data table
+	if not gSaveData.apples then
+		gSaveData.apples = 0
+	end
+	
+	while true do
+		if PedMePlaying(gPlayer,"EatDirect",true) and PedGetWeapon(gPlayer) == 310 then
+			eating = true -- remember that we started eating so we can increment our count when we're done eating
+		elseif eating then
+			eating = false
+			
+			-- increment our apple count (since we're editing it in the save table, it will save with the game)
+			gSaveData.apples = gSaveData.apples + 1
+			
+		end
+		drawText("[saving example]\nJimmy has consumed "..gSaveData.apples.." apples.")
+		Wait(0)
+	end
+end
+function drawText(text)
+	SetTextFont("Georgia")
+	SetTextBold()
+	SetTextShadow()
+	SetTextScale(1.2)
+	SetTextPosition(0.5, 0.9)
+	SetTextColor(191, 191, 191, 255)
+	DrawText(text)
+end
+</pre>
+		</code>
+	</div>
+	<div id="GetRawSaveDataTable" class="dsl_function">
+		<p class="func_description">
+			Return the raw save data table.
+			You should usually be using <a href="/dsl/savedata.html?GetSaveDataTable">GetSaveDataTable</a> instead.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_table">Raw save data</li>
+		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> Save data is now more reliable, and accurately reports when it is not ready.
+		</p>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+	<script type="text/javascript">
+		setupRealFunctionPageDSL(location.search.substring(1));
+	</script>
+</body>

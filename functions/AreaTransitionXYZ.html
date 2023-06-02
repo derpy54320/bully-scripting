@@ -1,0 +1,23 @@
+<p class="func_description">
+	Move the player to a new area, wait for it to load, and optionally opt out of camera fading.<br/>
+	This function is defined by <dfn>SGlFunc.lur</dfn> and primarily uses <a href="/function.html?PlayerSetPosXYZArea">PlayerSetPosXYZArea</a>
+	and <a href="/function.html?AreaDisableCameraControlForTransition">AreaDisableCameraControlForTransition</a> to do its job.
+</p>
+<h2>Arguments</h2>
+<ul class="func_arguments">
+	<li class="lua_number">Area ID</li>
+	<li class="lua_number">X coordinate</li>
+	<li class="lua_number">Y coordinate</li>
+	<li class="lua_number">Z coordinate</li>
+	<li class="lua_boolean">Disable camera control</li>
+</ul>
+<h2>Results</h2>
+<p class="func_results">
+	None.
+</p>
+<h2>Example</h2>
+<p>Transition to the front of the boy's dorm without fading the camera out.</p>
+<code class="func_example">
+	<button class="copy_code" onclick="copyCode(this)">copy</button>
+	<pre>AreaTransitionXYZ(0, 270, -110, 6, true)</pre>
+</code>

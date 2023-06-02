@@ -1,0 +1,21 @@
+<p class="func_description">
+	Sets the player's position.
+	This will not change the player's area, if that is something you need consider using <a href="/function.html?PlayerSetPosXYZArea">PlayerSetPosXYZArea</a> or <a href="/function.html?AreaTransitionXYZ">AreaTransitionXYZ</a>.<br/>
+	Like any other function that sets the player's position (with the exception of <a href="/function.html?PlayerSetPosSimple">PlayerSetPosSimple</a>) this will despawn most ambient peds and move allies / hostiles along with you.
+</p>
+<h2>Arguments</h2>
+<ul class="func_arguments">
+	<li class="lua_number">X coordinate</li>
+	<li class="lua_number">Y coordinate</li>
+	<li class="lua_number">Z coordinate</li>
+</ul>
+<h2>Results</h2>
+<p class="func_results">
+	None.
+</p>
+<h2>Example</h2>
+<p>Warp the player in front of the boy's dorm.</p>
+<code class="func_example">
+	<button class="copy_code" onclick="copyCode(this)">copy</button>
+	<pre>PlayerSetPosXYZ(270, -110, 6)</pre>
+</code>

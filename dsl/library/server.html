@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Server Functions</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+	<script type="text/javascript" src="/function.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1 id="func_name"></h1>
+			<div id="func_info">
+				<h1>Loading function...</h1>
+				<p>
+					Please make sure JavaScript is enabled.
+					Otherwise you will be unable to see the function documentation.
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="SendNetworkEvent" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Send Lua data over the network. This function should usually only be used by server scripts.
+			</p>
+			<p>
+				This is a <b>server</b> function, see the client version here: <a href="/dsl/library/client.html?SendNetworkEvent">SendNetworkEvent</a>.
+			</p>
+			<p>
+				Data is sent to a specific <dfn>Player</dfn> or sent to all players by using -1.
+			</p>
+			<p>
+				The same restrictions apply here as with <a href="/dsl/library/serialize.html?PackTable">PackTable</a>.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Player</li>
+			<li class="lua_vararg">Data</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">
+			None.
+		</p>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+	<script type="text/javascript">
+		setupRealFunctionPageDSL(location.search.substring(1));
+	</script>
+</body>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Config Functions</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+	<script type="text/javascript" src="/function.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1 id="func_name"></h1>
+			<div id="func_info">
+				<h1>Loading function...</h1>
+				<p>
+					Please make sure JavaScript is enabled.
+					Otherwise you will be unable to see the function documentation.
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="LoadConfigFile" class="dsl_function">
+		<p class="func_description">
+			Load a <a href="/dsl/config.html">config file</a> given a <a href="/dsl/paths.html">relative path</a>.
+			A valid <dfn>Config</dfn> object is always returned, even if it is missing. It will just behave like an empty config file.
+			You can check if a config is missing using <a href="/dsl/library/config.html?IsConfigMissing">IsConfigMissing</a>.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Name</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_userdata">Config</li>
+		</ul>
+		<h2>Example</h2>
+		<p>Use a config file to allow the user to customize the behavior of your mod.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>function MissionSetup()
+	
+	-- load config with the button for our move
+	
+	local cfg = LoadConfigFile("fighting_moves.txt")
+	gKickButton = GetConfigNumber(cfg, "kick_button", 8)
+	
+end
+function main()
+	while not SystemIsReady() do
+		Wait(0)
+	end
+	while true do
+		local target = PedGetTargetPed(gPlayer)
+		if PedIsValid(target) and PedIsInCombat(target) and PedMePlaying(gPlayer, "Default_KEY", true) then
+			
+			-- only allow fighting moves when it is appropriate
+			
+			if IsButtonBeingPressed(gKickButton, 0) then
+				PedSetActionNode(gPlayer, "/Global/G_Grappler_A/Offense/Short/Strikes/HeavyAttacks/BootKick", "Act/Anim/G_Grappler_A.act")
+			end
+			
+		end
+		Wait(0)
+	end
+end</pre>
+		</code>
+	</div>
+	<div id="GetScriptConfig" class="dsl_function">
+		<p class="func_description">
+			Returns the <dfn>Config</dfn> object belonging to the current collection.
+			It will behave just like the one returned by <a href="/dsl/library/config.html?LoadConfigFile">LoadConfigFile</a>.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_userdata">Config</li>
+		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> This function was introduced, but was poorly implemented and would cause crashes.<br/>
+			<span class="dsl_version">DSL5</span> This function now works as intended.
+		</p>
+	</div>
+	<div id="IsConfigMissing" class="dsl_function">
+		<p class="func_description">
+			Since <a href="/dsl/library/config.html?LoadConfigFile">LoadConfigFile</a> still returns a valid <dfn>Config</dfn> object when the requested config doesn't exist,
+			you will need to use this function to check if it actually exists or not.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Config</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Missing</li>
+		</ul>
+	</div>
+	<div id="GetConfigValue" class="dsl_function">
+		<p class="func_description">
+			Return the raw value associated with <dfn>Key</dfn> as a string.
+			If there is no value, <dfn>Default</dfn> will be returned (if given).
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Config</li>
+			<li class="lua_string">Key</li>
+			<li class="lua_any">Default</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_opt_string">Value</li>
+		</ul>
+	</div>
+	<div id="GetConfigString" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Return the value associated with <dfn>Key</dfn> as a string.
+				If there is no value, <dfn>Default</dfn> will be returned (if given).
+			</p>
+			<p>
+				Unlike <a href="/dsl/library/config.html?GetConfigValue">GetConfigValue</a>, this function will strip away quotation marks from the string if there are any.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Config</li>
+			<li class="lua_string">Key</li>
+			<li class="lua_any">Default</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_opt_string">Value</li>
+		</ul>
+	</div>
+	<div id="GetConfigNumber" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Return the number associated with <dfn>Key</dfn> if it can be converted.
+				Otherwise, <dfn>Default</dfn> will be returned (if given).
+			</p>
+			<p>
+				The number can be expressed using hexadecimal if it is preceded by <dfn>0x</dfn> in the config.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Config</li>
+			<li class="lua_string">Key</li>
+			<li class="lua_any">Default</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_opt_number">Value</li>
+		</ul>
+	</div>
+	<div id="GetConfigBoolean" class="dsl_function">
+		<p class="func_description">
+			Return if the value under <dfn>Key</dfn> is not false.
+			If there is no value, <dfn>Default</dfn> will be returned (if given).
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Config</li>
+			<li class="lua_string">Key</li>
+			<li class="lua_any">Default</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_opt_boolean">Value</li>
+		</ul>
+	</div>
+	<div id="GetConfigStrings" class="dsl_function">
+		<div class="func_description">
+			<p>
+				<span class="dsl_warning">WARNING</span>
+				This function has been deprecated, but still works to preserve legacy support. Consider using <a href="/dsl/library/config.html?GetConfigString">GetConfigString</a>.
+			</p>
+			<p>
+				Similar to <a href="/dsl/library/config.html?GetConfigValue">GetConfigValue</a>, except it will strip the quotation marks from <dfn>Value</dfn> and is capable of returning multiple values seperated by a comma (<dfn>,</dfn>).
+				If there is no value associated with <dfn>Key</dfn>, all the extra values passed to the function are returned instead.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Config</li>
+			<li class="lua_string">Key</li>
+			<li class="lua_vararg">Defaults</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_multret">Strings</li>
+		</ul>
+	</div>
+	<div id="AllConfigValues" class="dsl_function">
+		<p class="func_description">
+			Returns an iterator function designed for use in a <i>for</i> loop that returns each value associated with <dfn>Key</dfn>.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Config</li>
+			<li class="lua_string">Key</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_function">Iterator</li>
+		</ul>
+		<h2>Example</h2>
+		<p>Give the player each weapon listed in a <dfn>gConfig</dfn>, which is presumed to already exist as a <dfn>Config</dfn> object.</p>
+		<h3>script</h3>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>for weapon in AllConfigValues(gConfig, "weapon_model") do
+	local model = tonumber(weapon)
+	if model then
+		PedSetWeapon(gPlayer, 50)
+	else
+		PrintWarning("expected number for weapon ("..weapon..")")
+	end
+end</pre>
+		</code>
+		<h3>config</h3>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre># list as many weapon models as you want to be used with AllConfigValues
+
+weapon_model 301 # fire crackers
+weapon_model 305 # spud gun
+weapon_model 307 # bottle rocket launcher</pre>
+		</code>
+	</div>
+	<div id="AllConfigStrings" class="dsl_function">
+		<p class="func_description">
+			Similar to <a href="/dsl/library/config.html?AllConfigValues">AllConfigValues</a>, except it also parses each value like <a href="/dsl/library/config.html?GetConfigString">GetConfigString</a> would.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Config</li>
+			<li class="lua_string">Key</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_function">Iterator</li>
+		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL5</span> Only one string can be returned per config line instead of multiple.
+		</p>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+	<script type="text/javascript">
+		setupRealFunctionPageDSL(location.search.substring(1));
+	</script>
+</body>

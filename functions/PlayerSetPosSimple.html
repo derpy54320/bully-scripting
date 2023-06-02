@@ -1,0 +1,24 @@
+<p class="func_description">
+	Set the player's position without extra behaviors. Will not behave correctly if the position is not loaded, so only use this for moving a short distance.<br/>
+	Unlike <a href="/function.html?PlayerSetPosXYZ">PlayerSetPosXYZ</a> and <a href="/function.html?PedSetPosXYZ">PedSetPosXYZ</a>, this will not affect anything other than the player's position.
+</p>
+<h2>Arguments</h2>
+<ul class="func_arguments">
+	<li class="lua_number">X coordinate</li>
+	<li class="lua_number">Y coordinate</li>
+	<li class="lua_number">Z coordinate</li>
+</ul>
+<h2>Results</h2>
+<p class="func_results">
+	None.
+</p>
+<h2>Example</h2>
+<p>Move the player forward.</p>
+<code class="func_example">
+	<button class="copy_code" onclick="copyCode(this)">copy</button>
+	<pre>local x, y, z = PlayerGetPosXYZ()
+local heading = PedGetHeading(gPlayer)
+local distance = 3
+
+PlayerSetPosSimple(x - distance * math.sin(heading), y + distance * math.cos(heading), z)</pre>
+</code>

@@ -1,0 +1,20 @@
+<p class="func_description">
+	Sets the player's health.
+	Health can go as high as you want, but it is only meant to go to double the max health (that extra health being from the kissing bonus).<br/>
+	Unlike <a href="/function.html?PedSetHealth">PedSetHealth</a>, this function will not change the player's max health if health is set higher.
+	By default, the player's max health is 200.
+</p>
+<h2>Arguments</h2>
+<ul class="func_arguments">
+	<li class="lua_number">Health</li>
+</ul>
+<h2>Results</h2>
+<p class="func_results">
+	None.
+</p>
+<h2>Example</h2>
+<p>Restore full player health.</p>
+<code class="func_example">
+	<button class="copy_code" onclick="copyCode(this)">copy</button>
+	<pre>PlayerSetHealth(PedGetMaxHealth(gPlayer))</pre>
+</code>

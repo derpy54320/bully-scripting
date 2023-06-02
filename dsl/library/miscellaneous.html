@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Miscellaneous Functions</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+	<script type="text/javascript" src="/function.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1 id="func_name"></h1>
+			<div id="func_info">
+				<h1>Loading function...</h1>
+				<p>
+					Please make sure JavaScript is enabled.
+					Otherwise you will be unable to see the function documentation.
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="GetFrameTime" class="dsl_function">
+		<p class="func_description">
+			Returns the amount of time that has passed since the last frame in seconds.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Frame time</li>
+		</ul>
+		<h2>Example</h2>
+		<p>Use frame time to move forward at 3 meters per second when a button is pressed, regardless of frame rate.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>function main()
+	while not SystemIsReady() do
+		Wait(0)
+	end
+	while true do
+		if IsButtonPressed(3,0) then
+			local h, x, y, z = PedGetHeading(gPlayer), PlayerGetPosXYZ()
+			
+			-- multiply the distance that we move by the frame time, so we only move that many units per second
+			local distance = 3 * GetFrameTime()
+			
+			PlayerSetPosSimple(x - distance * math.sin(h), y + distance * math.cos(h), z)
+		end
+		Wait(0)
+	end
+end</pre>
+		</code>
+	</div>
+	<div id="GetPersistentDataTable" class="dsl_function">
+		<p class="func_description">
+			Returns a <i>persistent data table</i> for the current collection.
+			This table is preserved after <a href="/dsl/collections.html#startup">DSL is reset</a>, and is tied to the name of the current collection.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_table">Persistent data table</li>
+		</ul>
+	</div>
+	<div id="GetPlayerName" class="dsl_function">
+		<p class="func_description">
+			Returns the username set in <a href="/dsl/config.html#main">DSL's main config</a>, or "player" if nothing is set.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_string">Player name</li>
+		</ul>
+	</div>
+	<div id="GetSystemTimer" class="dsl_function">
+		<p class="func_description">
+			Returns the value of <a href="https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-gettickcount">GetTickCount</a>, primarily intended for use with <dfn>math.randomseed</dfn> to improve the random number generator.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Tick count</li>
+		</ul>
+	</div>
+	<div id="IsActionNodeValid" class="dsl_function">
+		<p class="func_description">
+			Runs the same check as <a href="/function.html?PedSetActionNode">PedSetActionNode</a> to determine if a node is both valid and loaded, without actually needing to set the action node.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Action node</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Valid</li>
+		</ul>
+	</div>
+	<div id="IsDslScriptRunning" class="dsl_function">
+		<p class="func_description">
+			Check if a DSL script is currently running so that you can conditionally make use of features that cannot be used by scripts in <dfn>Scripts.img</dfn>.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Running</li>
+		</ul>
+	</div>
+	<div id="IsGamePaused" class="dsl_function">
+		<p class="func_description">
+			Returns if the game is... <b><i>paused</i></b>.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Paused</li>
+		</ul>
+	</div>
+	<div id="CallFunctionFromScript" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Call a function from a native script.
+				The way this is done is by spoofing the game into thinking a certain game script is running, while also temporarily telling DSL that none of its scripts are.
+			</p>
+			<p>
+				In most cases, this is just as good as actually calling a function from the script in question.
+				The most notable example of that not being the case is with <a href="/function.html?ButtonHistorySetCallbackFailed">ButtonHistorySetCallbackFailed</a> and its related functions.
+				If you want a simpler way to make this apply to your entire script for a certain function, consider using <a href="/dsl/library/miscellaneous.html?UseProxyScriptForFunction">UseProxyScriptForFunction</a>.
+			</p>
+			<p>
+				<dfn>Script</dfn> should be the name of a native script that is currently running, or a DSL script object.
+				Passing <dfn>nil</dfn> instead of any other value will spoof the game into thinking there is no scripts at all.
+				Otherwise, your options will usually consist of <dfn>main.lua</dfn>, <dfn>STimeCycle.lua</dfn>, the current area script, and the current mission / errand.
+			</p>
+			<p>
+				If you use this to create something (such as a blip for instance), make sure to delete that something by the time your script ends or it could permanently take up resources.
+			</p>
+			<p>
+				If using <dfn>nil</dfn> for a script, do not create or destroy native game scripts (by using something like <a href="/function.html?LaunchScript">LaunchScript</a>).
+				It will result in undefined behavior.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_string">Script</li>
+			<li class="lua_function">Function</li>
+			<li class="lua_vararg">Arguments</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_multret">Results</li>
+		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL5</span> A DSL script object can be passed for <dfn>Script</dfn> to call the function from that script.
+		</p>
+	</div>
+	<div id="UseProxyScriptForFunction" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Creates a function in the calling environment that will use <a href="/dsl/library/miscellaneous.html?CallFunctionFromScript">CallFunctionFromScript</a> to call the function given.
+				<dfn>Function</dfn> is presumed to be in the global environment.
+			</p>
+			<p>
+				For some functions, this can give you a way to make use of things that don't work in DSL.
+				The most notable example is <a href="/function.html?BlipAddXYZ">BlipAddXYZ</a> not letting you create ground blips.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_string">Script</li>
+			<li class="lua_string">Function</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Example</h2>
+		<p>Add a ground blip in front of the boy's dorm.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>UseProxyScriptForFunction("main.lua", "BlipAddXYZ")
+UseProxyScriptForFunction("main.lua", "BlipRemove")
+
+gCreatedBlip = -1
+
+function main()
+	while not SystemIsReady() do
+		Wait(0)
+	end
+	
+	-- since we setup a proxy script for this function, the blip is actually going to be created by main.lua
+	gCreatedBlip = BlipAddXYZ(270, -110, 6, 25, 1, 1)
+	
+end
+
+function MissionCleanup()
+	
+	-- it is very important we delete the blip ourselves since it doesn't belong to our script, meaning it won't be cleaned up naturally
+	if gCreatedBlip ~= -1 then
+		BlipRemove(gCreatedBlip)
+	end
+	
+end
+</pre>
+		</code>
+	</div>
+	<div id="QuitGame" class="dsl_function">
+		<p class="func_description">
+			Instantly exit the game's process.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_number">Status</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">
+			This function doesn't return.
+		</p>
+	</div>
+	<div id="ForceWindowUpdate" class="dsl_function">
+		<p class="func_description">
+			Forcefully activate the <dfn>UpdateWindow</dfn> event to possibly re-style the game's window.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="GetInternalResolution" class="dsl_function">
+		<p class="func_description">
+			Get the game's current internal resolution.
+			You may be looking for <a href="/dsl/library/render.html?GetDisplayResolution">GetDisplayResolution</a> instead.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Width</li>
+			<li class="lua_number">Height</li>
+		</ul>
+	</div>
+	<div id="GetScreenResolution" class="dsl_function">
+		<p class="func_description">
+			Get the size of the primary monitor.
+			Primarily intended for centering the window during the <dfn>UpdateWindow</dfn> event.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Width</li>
+			<li class="lua_number">Height</li>
+		</ul>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+	<script type="text/javascript">
+		setupRealFunctionPageDSL(location.search.substring(1));
+	</script>
+</body>

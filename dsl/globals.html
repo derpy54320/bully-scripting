@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Global Variables</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1>derpy's script loader - Global Variables</h1>
+			<p>
+				The only global variable set by DSL (besides all of its functions) is <dfn>gDerpyScriptLoader</dfn>, which is set to the current <a href="/dsl/about.html#versions">version of DSL</a>.
+			</p>
+			<p>
+				You can use this value to conditionally support certain features of DSL,
+				or to check for the presence of DSL when making a script that should work anywhere.
+			</p>
+			<code>
+				<button class="copy_code" onclick="copyCode(this)">copy</button>
+				<pre>if gDerpyScriptLoader then
+	DrawTextInline("You can make use of DSL functions!", 3, 1)
+else
+	TextPrintString("Support running this script without DSL.", 3, 1)
+end</pre>
+			</code>
+		</div>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+</body>

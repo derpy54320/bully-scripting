@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<head>
+	<title>Bully - Downloads</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1 id="dsl">derpy's script loader</h1>
+			<p>
+				derpy's script loader (DSL) is a script loader for Bully: Scholarship Edition (PC).
+				It aims to take away all of the hassle and limitations that used to come with scripting the game.<br/>
+				For more information, see the <a href="/dsl/about.html">about page</a> and be sure to read the <dfn>readme.txt</dfn> that comes with the download.
+				Also check out <a href="https://discord.gg/r6abc7Avpm">the discord</a> to stay updated, share mods, and ask questions.
+			</p>
+			<p>
+				The current version is <a href="https://www.mediafire.com/file_premium/db3fro4fjnuf7p8/derpy_script_loader_5.zip/file">derpy's script loader 5</a>.<br/>
+				If you need one of the legacy versions, see <a href="https://www.mediafire.com/folder/clgtvlrnat179/derpy's_script_loader">all versions</a>.
+			</p>
+			<p>
+				The current server version is <a href="https://www.mediafire.com/file_premium/sc1qn52f9q0uq22/derpy_script_server_5.zip/file">derpy's script server 5</a>.<br/>
+				Please keep in mind all networking functionality is considered experimental at this time.
+			<hr/>
+			<h1 id="lua">Lua 5.0.2</h1>
+			<p>
+				Bully uses <a href="https://www.lua.org/ftp/lua-5.0.2.tar.gz">Lua 5.0.2</a> with <dfn>LUA_NUMBER</dfn> set as a 4 byte floating point,
+				and a few other differences that don't affect the way you'd compile or run scripts.<br/>
+				You can download a pre-compiled binary for the <a href="https://www.mediafire.com/file/r0z1w42qifdfbvz/luac.exe/file">compiler</a>
+				and stand-alone <a href="https://www.mediafire.com/file/7rci2ro8fnkoud8/lua.exe/file">interpreter</a>.
+			</p>
+			<p>
+				Both of these tools are <i>command line tools</i> made for Windows, meaning they will only run using Windows' command prompt.
+				If you don't know how to use the command prompt, consider checking out the <a href="/tutorials/1_introduction.html">tutorial</a>.
+			</p>
+			<p>
+				You can run <span class="sample_input">luac.exe</span> without passing any arguments to get the help dialogue.<br/>
+				The most common usage looks like <span class="sample_input">luac -o ArcRace1.lur source.lua</span>, which will compile <dfn>source.lua</dfn> into <dfn>ArcRace1.lur</dfn>.
+			</p>
+			<p>
+				You can run <span class="sample_input">lua.exe</span> by itself to run Lua in <i>interactive mode</i>, letting you write code that gets instantly executed.<br/>
+				You can also run a script by doing something like <span class="sample_input">lua script.lua</span>, where <dfn>script.lua</dfn> is the script you want to run.
+			</p>
+		</div>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+</body>

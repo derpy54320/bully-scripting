@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Locale Functions</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+	<script type="text/javascript" src="/function.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1 id="func_name"></h1>
+			<div id="func_info">
+				<h1>Loading function...</h1>
+				<p>
+					Please make sure JavaScript is enabled.
+					Otherwise you will be unable to see the function documentation.
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="RegisterLocalizedText" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Register a localized text entry with a custom <dfn>Label</dfn> and a pre-determined maximum <dfn>Length</dfn> within the game's localized text.
+				Do not use a label that already exists within the base game.
+			</p>
+			<p>
+				You can call this function as often as you like, but text can only be registered once.
+				If <dfn>Label</dfn> was already registered to have a smaller length, then this function will fail.
+				If it was already registered to be the same length or bigger, then the function will just do nothing.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Label</li>
+			<li class="lua_number">Length</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Example</h2>
+		<p>Print the target ped's name using <a href="/function.html?TextPrint">TextPrint</a>.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>RegisterLocalizedText("TARGET_PED_NAME", 100)
+
+function main()
+	while not SystemIsReady() do
+		Wait(0)
+	end
+	while true do
+		local target = PedGetTargetPed(gPlayer)
+		if PedIsValid(target) then
+			ReplaceLocalizedText("TARGET_PED_NAME", PedGetName(target))
+			TextPrint("TARGET_PED_NAME", 0, 1)
+		end
+		Wait(0)
+	end
+end</pre>
+		</code>
+	</div>
+	<div id="ReplaceLocalizedText" class="dsl_function">
+		<div class="func_description">
+			<p>
+				<span class="dsl_warning">WARNING</span>
+				Though this function should never cause any crashes or instability, it does not always reliably replace the text.
+			</p>
+			<p>
+				Replace localized text with new text.
+				This can be used with text that exists in the base game, or with text registered using <a href="/dsl/library/locale.html?RegisterLocalizedText">RegisterLocalizedText</a>.
+				Text made by the base game is not always loaded until it is needed.
+				You may have to take extra care to wait for certain text to be loaded before replacing it.
+			</p>
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Label</li>
+			<li class="lua_string">Text</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+	<script type="text/javascript">
+		setupRealFunctionPageDSL(location.search.substring(1));
+	</script>
+</body>

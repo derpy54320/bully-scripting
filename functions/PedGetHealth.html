@@ -1,0 +1,21 @@
+<p class="func_description">
+	Gets a ped's health.
+</p>
+<h2>Arguments</h2>
+<ul class="func_arguments">
+	<li class="lua_number">Ped</li>
+</ul>
+<h2>Results</h2>
+<ul class="func_results">
+	<li class="lua_number">Health</li>
+</ul>
+<h2>Example</h2>
+<p>Print how much health the target ped has.</p>
+<code class="func_example">
+	<button class="copy_code" onclick="copyCode(this)">copy</button>
+	<pre>local ped = PedGetTargetPed(gPlayer)
+
+if PedIsValid(ped) then
+	TextPrintString(PedGetName(ped)..": "..PedGetHealth(ped).." hp", 3, 2)
+end</pre>
+</code>

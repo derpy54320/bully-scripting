@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Scripts &#38; Threads</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1>derpy's script loader - Scripts &#38; Threads</h1>
+			<p>
+				For the most part, DSL scripts and threads act the same as normal scripts.
+				This means you should mostly be able to do anything you normally could in a base game script replacement,
+				but as discussed in <a href="#compatibility">Game Compatibility</a> there may be a few cases where this is not the case.
+			</p>
+			<hr/>
+			<h1 id="flow">Script Flow</h1>
+			<p>
+				There can be 4 special functions defined in your script that DSL will use to make <b>GAME</b> threads at certain times.
+				All of them are optional, and will just be skipped if not present.
+			</p>
+			<ul>
+				<li><b>gamemain</b>: only once immediately after scripts are initialized, before the base game's <dfn>main.lur</dfn> is created.</li>
+				<li><b>MissionSetup</b>: when the script starts. If an error occurs, the whole script is shut down.</li>
+				<li><b>main</b>: after <b>MissionSetup</b> is completed, or right away if it doesn't exist.</li>
+				<li><b>MissionCleanup</b>: on script shutdown. This thread is considered a <i>cleanup</i> thread.</li>
+			</ul>
+			<p>
+				The <b>gamemain</b> function is special because along with running when normal game threads run, it will also be updated once as soon as it is created.
+				This emulates the way <b>gamemain</b> works in the base game's <dfn>main.lur</dfn>, and also gives you a way to do things that need to be done ASAP.
+			</p>
+			<p>
+				<i>Cleanup</i> threads will keep a script from being fully shutdown, also keeping the collection stuck in the "STOPPING" state if it's shutting down.
+				Any thread created by a cleanup thread also becomes a cleanup thread.
+				Usually this is only to allow something like a quick area transition to happen as part of cleanup.
+			</p>
+			<hr/>
+			<h1>Script Environments</h1>
+			<p>
+				When a DSL script starts, it is given its own environment just like the game's normal mission scripts.
+				The only thing set by DSL in this environment is <a href="/function.html?ImportScript">ImportScript</a>, imitating the way the game normally works.
+				This means that all globals you set in your script will be limited to only being seen by said script, even though you can of course still access the global environment.
+				Things can be shared between scripts in a collection using <a href="/dsl/library/manager.html?GetScriptSharedTable">GetScriptSharedTable</a> to get a table that all scripts in the collection can access.
+				For a wider scope, you can use the <dfn>shared</dfn> table to pass things around (the way that normal game scripts do it).
+				If you need to add something to the global environment, you can use <dfn>_G</dfn> (the global environment table).
+			</p>
+			<hr/>
+			<h1 id="threads">Thread Types</h1>
+			<p>
+				Normally there is only one type of thread, but in DSL there are many thread types.
+				The type of a thread determines when it will be run.
+				Game threads are created using <a href="/dsl/library/manager.html?CreateThread">CreateThread</a>, and the other "main" thread types also have their own dedicated functions.
+				For any other type of function, you will need to use <a href="/dsl/library/manager.html?CreateAdvancedThread">CreateAdvancedThread</a>.
+			</p>
+			<ul>
+				<li><b>GAME</b>: runs immediately after base game scripts normally run.</li>
+				<li><b>SYSTEM</b>: runs each frame before anything else, even before input.</li>
+				<li><b>DRAWING</b>: runs right before the game is presented, allowing you to draw on top of it.</li>
+				<li><span class="dsl_version">DSL4</span> <b>POST_WORLD</b>: runs after the world is drawn but before HUD is drawn.</li>
+				<li><span class="dsl_version">DSL4</span> <b>PRE_FADE</b>: runs before the game draws camera fade.</li>
+			</ul>
+			<hr/>
+			<h1>Thread Order</h1>
+			<p>
+				<span class="dsl_version">DSL4</span> Prior to version 4, script cleanup was done in order rather than unwinding.
+			</p>
+			<p>
+				Any time there is a <i>thread update</i>, it is done in a specific but very simple order.
+				All collections are run in the order they were created, meaning each script belonging to the collection is run in order, meaning each thread belonging to the script is run in order.
+			</p>
+			<p>
+				The only exception to this rule is that the script order is <i>reversed</i> when a collection shuts down,
+				scripts cleanup "unwinds" everything done that has been done.
+			</p>
+			<hr/>
+			<h1 id="compatibility">Game Compatibility</h1>
+			<p>
+				Since DSL uses its own improved script management system rather than loading scripts directly into the (very limited) normal script pool, things do not *always* perfectly work out.
+				99% of functions will not be affected by this, but a few (namely <i>button sequence</i> functions) will cause issues due to the way they work.
+				Another notable example is <a href="/function.html?BlipAddXYZ">BlipAddXYZ</a>, a function that mostly works fine but will fail to draw a ground blip by default in DSL.
+				A few <i>compatibility functions</i> (like <a href="/dsl/library/miscellaneous.html?CallFunctionFromScript">CallFunctionFromScript</a>)
+				exist to help this by calling certain script functionswhile setting a different base game script as "active".
+				If all else fails though, you can still mod the old fashioned way by replacing base game scripts while still being allowed to make use of most DSL functions.
+			</p>
+		</div>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+</body>

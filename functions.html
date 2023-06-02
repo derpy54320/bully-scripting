@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<head>
+	<title>Bully - Global Functions</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1>Global Functions</h1>
+			<p>
+				These are all the global functions created by the game during initialization with the exclusion of ones created by Lua's standard library, as those are documented <a href="https://www.lua.org/manual/5.0/manual.html#5">here</a>.
+				Do keep in mind that some of these functions are not actually present in Bully though.
+				The <b>io</b> and <b>os</b> libraries are completely absent, and the <b>string</b> library is limited to a simplified <dfn>string.find</dfn> and <dfn>string.format</dfn>.
+				Some functions (like <dfn>print</dfn>) are still listed here, because Bully creates its own version that overrides the original one.
+			</p>
+			<p>
+				There is no straight forward way to get all of the arguments and results of these Lua functions due to the nature of how they're defined.
+				All documentation here is from a combination of experimentation and research into decompiled scripts.
+				For that reason, take everything here with a grain of salt and know the information for each function may not be 100% accurate.
+			</p>
+			<p>
+				The <span class="lua_tag_title" style="font-size: 14px; padding: 2px; padding-left: 4px; padding-right: 4px">Lua</span> label means that a function was defined by a lua script rather than by the game itself.
+				In most cases, this won't affect your ability to use it the same way you would any other function.
+			</p>
+			<hr/>
+			<h1 id="conventions">Naming Conventions</h1>
+			<p>
+				Being able to guess the arguments and results of functions is often fairly simple.
+				This may be needed as many functions do not have detailed documentation at this time.
+			</p>
+			<p>
+				Most functions start with a noun (like <dfn>Player</dfn> or <dfn>Vehicle</dfn>) that says what the function is relating to, which usually indicates the what the first argument is.
+				For example, a function like <a href="/function.html?PedSetHealth">PedSetHealth</a> takes a ped as the first argument, then the health value as the second argument.
+				One notable exception to this rule is <dfn>Player</dfn>, as those functions don't take any such argument.
+				For example, <a href="/function.html?PlayerSetHealth">PlayerSetHealth</a> only takes a health value, without the need to specify a player (because there is only one player in most contexts).
+			</p>
+			<p>
+				Most functions have only one result, which is usually indicated by the name itself.
+				Something like <a href="/function.html?PedGetHealth">PedGetHealth</a> for example, predictably returns health value.
+				There are only a few exceptions, most notably functions that return a position.
+				A function like <a href="/function.html?PlayerGetPosXYZ">PlayerGetPosXYZ</a> returns the player's position as 3 coordinates, representing each axis.
+			</p>
+			<p>
+				Any function that creates something is usually an exception to the rule of the first argument being the first noun of the name.
+				As an example, something like <a href="/function.html?PedCreateXYZ">PedCreateXYZ</a> takes a model number and 3 coordinates for where to create the ped, also returning the created ped.
+			</p>
+		</div>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+</body>

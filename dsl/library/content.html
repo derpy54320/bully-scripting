@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Content Functions</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+	<script type="text/javascript" src="/function.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1 id="func_name"></h1>
+			<div id="func_info">
+				<h1>Loading function...</h1>
+				<p>
+					Please make sure JavaScript is enabled.
+					Otherwise you will be unable to see the function documentation.
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="RegisterGameFile" class="dsl_function">
+		<p class="func_description">
+			Register some file for replacement given a <a href="/dsl/paths.html">relative path</a>.
+			This can usually only be called in a <a href="/dsl/collections.html#startup">pre_init_script</a>.
+			It is usually simpler to register the file using your collection's <dfn>config.txt</dfn> instead.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Archive</li>
+			<li class="lua_string">Path</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Archives (for the <dfn>Archive</dfn> argument)</h2>
+		<ul class="func_details">
+			<li>ACT.IMG</li>
+			<li>CUTS.IMG</li>
+			<li>TRIGGER.IMG</li>
+			<li>IDE.IMG</li>
+			<li>SCRIPTS.IMG</li>
+			<li>WORLD.IMG</li>
+		</ul>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+	<script type="text/javascript">
+		setupRealFunctionPageDSL(location.search.substring(1));
+	</script>
+</body>

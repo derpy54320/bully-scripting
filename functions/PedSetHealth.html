@@ -1,0 +1,23 @@
+<p class="func_description">
+	Sets a ped's health. Will raise max health if set higher than their current max health.
+</p>
+<h2>Arguments</h2>
+<ul class="func_arguments">
+	<li class="lua_number">Ped</li>
+	<li class="lua_number">Health</li>
+</ul>
+<h2>Results</h2>
+<p class="func_results">
+	None.
+</p>
+<h2>Example</h2>
+<p>Heal a ped (assumed to already exist) by 100 health points without affecting their max health.</p>
+<code class="func_example">
+	<button class="copy_code" onclick="copyCode(this)">copy</button>
+	<pre>local health = PedGetHealth(ped) + 100
+
+if health &gt; PedGetMaxHealth(ped) then
+	health = PedSetMaxHealth(ped)
+end
+PedSetHealth(ped, health)</pre>
+</code>

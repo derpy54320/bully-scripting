@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<head>
+	<title>derpy's script loader</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1>derpy's script loader</h1>
+			<p>
+				derpy's script loader (DSL) is a script loader for Bully: Scholarship Edition (PC).<br/>
+				It can be downloaded <a href="/downloads.html#dsl">here</a>, and installation is covered by the included <dfn>readme.txt</dfn>.<br/>
+				Here are a few of the things that DSL excels at doing, and how they help the overall modding process.
+			</p>
+			<ul>
+				<li>Load scripts directly from a folder with the simple loading system, or even from a zip archive.</li>
+				<li>Skip compiling as Lua's parser is now patched in, letting scripts run from source.</li>
+				<li>Unlimited amount of scripts thanks to a custom script manager that still emulates game script objects.</li>
+				<li>Access the full Lua standard library, but stay safe with optional system security settings.</li>
+				<li>Group scripts together into script collections that can be started, stopped, and restarted on the fly while playing.</li>
+				<li>Save and load an arbitrary amount of lua data in actual save game files for any large projects.</li>
+				<li>Stop guessing what went wrong with your script, and just see it in a nice convenient console with detailed error reporting.</li>
+				<li>Register scriptable commands that can be used with the console to do anything you want... on command!</li>
+				<li>Use the custom per-frame renderer that gives you a huge amount of powerful lower-level drawing functions.</li>
+				<li>Run scripts earlier than normally possible with conventional STimeCycle.lur replacements, or even on the main menu.</li>
+				<li>Replace and register new localized text entries, letting you print any text you want anywhere you want.</li>
+				<li>Hook into base game scripts with ease using events that callback your code as soon as a native script loads.</li>
+				<li>Use a large majority of new DSL functionality from base game scripts if you need to replace normal scripts.</li>
+				<li>Take advantage of more new functions that are too numerous to list here!</li>
+			</ul>
+			<hr/>
+			<h1>Getting Started</h1>
+			<p>
+				Use the navigation bar on the left if you are looking for DSL functions.
+			</p>
+			<p>
+				All mods that you make or install with DSL are put in the <dfn>_derpy_script_loader/scripts</dfn> folder,
+				and are technically called <a href="/dsl/collections.html">script collections</a>.<br/>
+				If you don't know much about script modding yet but want to get started, check out the <a href="/tutorial/1_introduction.html">tutorial</a>.
+			</p>
+			<p>
+				If you already know how to script mod but are new to DSL, the quickest way to learn is to just make a new file in DSL's <dfn>scripts</dfn> folder and call it something like <dfn>mymod.lua</dfn>.
+				Open it in your favorite editor, and make a script like you normally would with a <dfn>MissionSetup</dfn>, <dfn>main</dfn>, and <dfn>MissionCleanup</dfn> function.
+				Unlike replacing a built-in script like <dfn>ArcRace1.lur</dfn>, your script will run as soon as the game starts.
+				It is for this reason that you will need to wait for <a href="/function.html?SystemIsReady">SystemIsReady</a> to return <dfn>true</dfn> before doing most things to avoid any crashes.
+				For the most part, it should be just like making a <dfn>STimeCycle.lur</dfn> mod. Unlike normal scripting you will not need to compile your script, just start the game!
+				Open the console (using <dfn>~</dfn> by default) to see if you got any errors, and type <span class="sample_input">/restart mymod.lua</span> to restart your script.
+			</p>
+			<hr/>
+			<h1 id="versions">Version History</h1>
+			<p>
+				DSL versions are designated by a single number that goes up every time there is an update.
+				This is so there is no disparity between the version numbers used for naming and used for version checking.
+				Before <i>version 4</i>, the versions were called "alpha" because the naming scheme was not very well thought out.
+				Just because the word alpha has been dropped for version names, doesn't mean this mod isn't still extremely experimental.
+				It just means the naming scheme is going to be simpler moving forward.
+			</p>
+			<h2>pre-alpha (0)</h2>
+			<ul>
+				<li>Pre-alpha versions were only shared between a tight group of testers, and are only listed here for the sake of completeness.</li>
+			</ul>
+			<h2>alpha 1</h2>
+			<ul>
+				<li>82 total functions.</li>
+				<li>The first public release.</li>
+			</ul>
+			<h2>alpha 2</h2>
+			<ul>
+				<li>87 total functions.</li>
+				<li>Temporarily added allow_mouse to loader config, so that mouse-related issues can be narrowed down and reported by those who have problems.</li>
+				<li>Added SetTextBold, SetTextItalic, SetTextClipping, PopTextFormatting, and DrawTextInline.</li>
+			</ul>
+			<h2>alpha 3</h2>
+			<ul>
+				<li>90 total functions.</li>
+				<li>Scripts do not shutdown when main returns anymore, as this design seems better.</li>
+				<li>There is a package system now so anyone can neatly add C functions to use in lua if system access is on.</li>
+				<li>Config is generated instead of released with updates so that updating is a simple drag/drop/replace.</li>
+				<li>The loadlib function is now allowed when system access is turned on in config.</li>
+				<li>DrawTextInline can now draw "directly" instead of only allowing one text at a time per-style.</li>
+				<li>DrawTextInline doesn't round down duration and the texture alpha has been fixed.</li>
+				<li>DrawTextInline preserves formatting on new lines.</li>
+				<li>DrawTexture2 can draw a centered texture with optional rotation.</li>
+				<li>IsGamePaused returns true if the game is paused.</li>
+				<li>GetPackageFilePath returns a file name relative to the "packages" directory.</li>
+				<li>SetTextFormatting can take a style number like the ones given to DrawTextInline.</li>
+				<li>Other small fixes too minor to list.</li>
+			</ul>
+			<h2>version 4</h2>
+			<ul>
+				<li>130 total functions.</li>
+				<li>Added an event system, providing scripts with a way to influence game behavior and trigger their own events.</li>
+				<li>Argument checking is a little more strict to help the debugging process rather than just taking bad values.</li>
+				<li>Collections can now be installed as a zip archive by simply putting a zip with the mod files into the scripts folder.</li>
+				<li>Collections have their own config files where custom settings, requirements, or script names can be specified.</li>
+				<li>Commands can now have help text associated with them.</li>
+				<li>Console output has been improved, such as now showing the collection and thread names in errors.</li>
+				<li>Countless major under-the-hood changes to generally improve DSL.</li>
+				<li>Direct input keyboard scan codes are now used instead of virtual key codes.</li>
+				<li>Dynamic textures were introduced, allowing you to do things like draw the game's current back buffer onto a texture to draw later.</li>
+				<li>ImportScript is now supported in a way that mimics the base game, allowing you to import scripts from Scripts.img into your script.</li>
+				<li>Improved the way normal script objects are emulated to be more accurate.</li>
+				<li>Inline text now has an optional width argument that goes before the text.</li>
+				<li>Localized text can now be replaced with new text, and new text entries can be registered.</li>
+				<li>More thread types were made for improved control with rendering functions.</li>
+				<li>Patched the custom save data system heavily, as it was pretty broken before.</li>
+				<li>Persistent data tables have been added as a way for scripts to store information in between DSL resets.</li>
+				<li>Pre-init scripts are now a thing, allowing you to run scripts much earlier than normal even if in a limited way.</li>
+				<li>Render cache functions now draw before camera fade is applied, but this can be scripted using the new draw layer system.</li>
+				<li>Significant additions to the library of script functions, and many improvements to already existing ones.</li>
+				<li>Standard file input / output functions have been added for a safer alternative to allowing full system access.</li>
+				<li>Smaller things that are too numerous to list fully here.</li>
+			</ul>
+			<h2>version 5</h2>
+			<ul>
+				<li>183 total functions.</li>
+				<li>The server version has been released, allowing players to connect to it and communicate through scripted events.</li>
+				<li>More local events have been added that offer scripts greater control over the game.</li>
+				<li>A new global function hook and replacement system has been created.</li>
+				<li>More input functions have been added to modify controller state.</li>
+				<li>A significant amount of small changes and patches.</li>
+			</ul>
+		</div>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+</body>

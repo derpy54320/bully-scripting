@@ -1,0 +1,24 @@
+<p class="func_description">
+	Gets the current time.
+</p>
+<h2>Arguments</h2>
+<p class="func_arguments">
+	None.
+</p>
+<h2>Results</h2>
+<ul class="func_results">
+	<li class="lua_number">Hour</li>
+	<li class="lua_number">Minute</li>
+</ul>
+<h2>Example</h2>
+<p>Constantly print the current in-game time.</p>
+<code class="func_example">
+	<button class="copy_code" onclick="copyCode(this)">copy</button>
+	<pre>local ClockH, ClockM
+
+	while true do
+		ClockH, ClockM = ClockGet()
+		TextPrintString("It is currently "..ClockH..":"..ClockM, 0, 1)
+		Wait(0)
+	end</pre>
+</code>

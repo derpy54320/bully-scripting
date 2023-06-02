@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Input Functions</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+	<script type="text/javascript" src="/function.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1 id="func_name"></h1>
+			<div id="func_info">
+				<h1>Loading function...</h1>
+				<p>
+					Please make sure JavaScript is enabled.
+					Otherwise you will be unable to see the function documentation.
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="IsKeyValid" class="dsl_function">
+		<p class="func_description">
+			Translates <dfn>Key</dfn> just like <a href="/dsl/library/input.html?IsKeyPressed">IsKeyPressed</a> and returns if it is valid rather than raising an error.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Key</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Result</li>
+		</ul>
+	</div>
+	<div id="IsKeyPressed" class="dsl_function">
+		<p class="func_description">
+			Returns if a key is pressed.
+			<dfn>Key</dfn> should be given as a DirectInput keyboard scan code name (listed below), but can also be given as a directly as a number.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Key</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Result</li>
+		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> DirectInput keyboard scan codes are now used, but virtual key code names will still be converted for legacy support.<br/>
+			<span class="dsl_version">DSL5</span> Keys are also reported as pressed when they are being pressed, and no longer when they are being released.
+		</p>
+		<h2>DirectInput Keyboard Scan Code Names</h2>
+		<code class="func_details">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>ESCAPE
+1
+2
+3
+4
+5
+6
+7
+8
+9
+0
+MINUS
+EQUALS
+BACK
+TAB
+Q
+W
+E
+R
+T
+Y
+U
+I
+O
+P
+LBRACKET
+RBRACKET
+RETURN
+LCONTROL
+A
+S
+D
+F
+G
+H
+J
+K
+L
+SEMICOLON
+APOSTROPHE
+GRAVE
+LSHIFT
+BACKSLASH
+Z
+X
+C
+V
+B
+N
+M
+COMMA
+PERIOD
+SLASH
+RSHIFT
+MULTIPLY
+LMENU
+SPACE
+CAPITAL
+F1
+F2
+F3
+F4
+F5
+F6
+F7
+F8
+F9
+F10
+NUMLOCK
+SCROLL
+NUMPAD7
+NUMPAD8
+NUMPAD9
+SUBTRACT
+NUMPAD4
+NUMPAD5
+NUMPAD6
+ADD
+NUMPAD1
+NUMPAD2
+NUMPAD3
+NUMPAD0
+DECIMAL
+OEM_102
+F11
+F12
+F13
+F14
+F15
+KANA
+ABNT_C1
+CONVERT
+NOCONVERT
+YEN
+ABNT_C2
+NUMPADEQUALS
+PREVTRACK
+AT
+COLON
+UNDERLINE
+KANJI
+STOP
+AX
+UNLABELED
+NEXTTRACK
+NUMPADENTER
+RCONTROL
+MUTE
+CALCULATOR
+PLAYPAUSE
+MEDIASTOP
+VOLUMEDOWN
+VOLUMEUP
+WEBHOME
+NUMPADCOMMA
+DIVIDE
+SYSRQ
+RMENU
+PAUSE
+HOME
+UP
+PRIOR
+LEFT
+RIGHT
+END
+DOWN
+NEXT
+INSERT
+DELETE
+LWIN
+RWIN
+APPS
+POWER
+SLEEP
+WAKE
+WEBSEARCH
+WEBFAVORITES
+WEBREFRESH
+WEBSTOP
+WEBFORWARD
+WEBBACK
+MYCOMPUTER
+MAIL
+MEDIASELECT
+BACKSPACE
+NUMPADSTAR
+LALT
+CAPSLOCK
+NUMPADMINUS
+NUMPADPLUS
+NUMPADPERIOD
+NUMPADSLASH
+RALT
+UPARROW
+PGUP
+LEFTARROW
+RIGHTARROW
+DOWNARROW
+PGDN
+CIRCUMFLEX</pre>
+		</code>
+	</div>
+	<div id="IsKeyBeingPressed" class="dsl_function">
+		<p class="func_description">
+			Returns if a key was just pressed, meaning it is pressed this frame but was not on the previous one.
+			<dfn>Key</dfn> is translated using the same rules as <a href="/dsl/library/input.html?IsKeyPressed">IsKeyPressed</a>.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Key</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Result</li>
+		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> DirectInput keyboard scan codes are now used, but virtual key code names will still be converted for legacy support.
+		</p>
+	</div>
+	<div id="IsKeyBeingReleased" class="dsl_function">
+		<p class="func_description">
+			Returns if a key was just released, meaning it is not pressed this frame but was on the previous one.
+			<dfn>Key</dfn> is translated using the same rules as <a href="/dsl/library/input.html?IsKeyPressed">IsKeyPressed</a>.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Key</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Result</li>
+		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> DirectInput keyboard scan codes are now used, but virtual key code names will still be converted for legacy support.
+		</p>
+	</div>
+	<div id="GetAnyKeyPressed" class="dsl_function">
+		<p class="func_description">
+			Returns any <dfn>Key</dfn> that would satisfy <a href="/dsl/library/input.html?IsKeyPressed">IsKeyPressed</a>.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Key</li>
+		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> DirectInput keyboard scan codes are now used, but virtual key code names will still be converted for legacy support.<br/>
+			<span class="dsl_version">DSL5</span> Keys are also reported as pressed when they are being pressed, and no longer when they are being released.
+		</p>
+	</div>
+	<div id="GetAnyKeyBeingPressed" class="dsl_function">
+		<p class="func_description">
+			Returns any <dfn>Key</dfn> that would satisfy <a href="/dsl/library/input.html?IsKeyBeingPressed">IsKeyBeingPressed</a>.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Key</li>
+		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> DirectInput keyboard scan codes are now used, but virtual key code names will still be converted for legacy support.
+		</p>
+	</div>
+	<div id="GetAnyKeyBeingReleased" class="dsl_function">
+		<p class="func_description">
+			Returns any <dfn>Key</dfn> that would satisfy <a href="/dsl/library/input.html?IsKeyBeingReleased">IsKeyBeingReleased</a>.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Key</li>
+		</ul>
+	</div>
+	<div id="StartTyping" class="dsl_function">
+		<p class="func_description">
+			Start allowing keyboard input that can be retrieved using <a href="/dsl/library/input.html?GetTypingString">GetTypingString</a>.
+			If typing was already active, then this function will return false.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Started</li>
+		</ul>
+		<h2>Example</h2>
+		<p>Start a mission when a button is pressed.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>function main()
+	while not SystemIsReady() do
+		Wait(0)
+	end
+	while true do
+		if IsButtonBeingPressed(3, 0) and StartTyping() then
+			while IsTypingActive() do
+				TextPrintString("start mission: "..GetTypingString(), 0, 1)
+				Wait(0)
+			end
+			if not WasTypingAborted() then
+				ForceStartMission(GetTypingString())
+			end
+		end
+		Wait(0)
+	end
+end</pre>
+		</code>
+	</div>
+	<div id="IsTypingActive" class="dsl_function">
+		<p class="func_description">
+			Returns if typing is currently active (see <a href="/dsl/library/input.html?StartTyping">StartTyping</a>).
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Active</li>
+		</ul>
+	</div>
+	<div id="GetTypingString" class="dsl_function">
+		<p class="func_description">
+			Returns the string being typed (see <a href="/dsl/library/input.html?StartTyping">StartTyping</a>).
+			Do not call this function if you have not started typing.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_string">String</li>
+		</ul>
+	</div>
+	<div id="WasTypingAborted" class="dsl_function">
+		<p class="func_description">
+			Returns if the reason <a href="/dsl/library/input.html?IsTypingActive">IsTypingActive</a> returned false was because the typing was aborted.
+			Typing can be aborted by pressing the enter key, or by using <a href="/dsl/library/input.html?StopTyping">StopTyping</a>.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Aborted</li>
+		</ul>
+	</div>
+	<div id="StopTyping" class="dsl_function">
+		<p class="func_description">
+			Abort typing (see <a href="/dsl/library/input.html?StartTyping">StartTyping</a>).
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="GetMouseInput" class="dsl_function">
+		<p class="func_description">
+			Returns direct mouse input.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">X</li>
+			<li class="lua_number">Y</li>
+		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> This function now works properly, without the need for running on a specific thread.
+		</p>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+	<script type="text/javascript">
+		setupRealFunctionPageDSL(location.search.substring(1));
+	</script>
+</body>

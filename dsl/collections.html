@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Script Collections</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1>derpy's script loader - Script Collections</h1>
+			<p>
+				A <i>script collection</i> (sometimes shortened to <i>collection</i>) is, as the name suggests, a collection of scripts.
+				All scripts that DSL load are contained within a collection, even if they are the only script in said collection.
+				This grouping is useful for being able to start and stop multiple related scripts at once, and for simplifying what counts as a single "mod".
+				In general, each script collection can be considered a different mod.
+			</p>
+			<hr/>
+			<h1>Types</h1>
+			<p>
+				<span class="dsl_version">DSL4</span> Support for zip files is only supported in version 4 and beyond.
+			</p>
+			<p>
+				A script collection simply represents one of the things placed in DSL's <dfn>scripts</dfn> folder.
+				There are 3 ways to define a script collection.<br/>
+				Placing other file types in the <dfn>scripts</dfn> folder is valid and they will be ignored, but having other folders not representing a script collection will raise errors.<br/>
+			</p>
+			<ul>
+				<li>A folder is known as a <i>normal</i> collection.</li>
+				<li>A script file (ending in <dfn>.lua</dfn> / <dfn>.lur</dfn>) is known as a <i>standalone</i> collection.</li>
+				<li>A zip archive (ending in <dfn>.zip</dfn>) is known as a <i>zipped</i> collection, and mostly behaves like a <i>normal</i> collection.
+			</ul>
+			<h2>Zipped Collections</h2>
+			<p>
+				If you decide to zip your collection up for release, it can be installed by simply putting the zip archive in the <dfn>scripts</dfn> folder.
+				The structure of your zip archive is very important, your files (such as your config and main script unless changed in the config) must appear in the root of the zip.
+			</p>
+			<p>
+				For example, if you have a normal collection as a folder (say <dfn>Some Mod</dfn>) and want to make <dfn>Some Mod.zip</dfn> then it is important you do not add the folder to the zip.
+				Instead, the contents of the folder are what should be in the root of the zip.
+				Basically put, make sure your config file can be found in the zip at <dfn>config.txt</dfn> rather than <dfn>Some Mod/config.txt</dfn>.
+			</p>
+			<hr/>
+			<h1 id="config">Config</h1>
+			<p>
+				<span class="dsl_version">DSL4</span> This feature was introduced in version 4.
+				Older versions used "main.lua" as the name for main scripts, and the concepts of <i>init</i> &amp; <i>pre-init</i> scripts were not yet a thing.
+			</p>
+			<p>
+				Collections that are not standalone are able to have a <dfn>config.txt</dfn> file that determines when the collection should run,
+				what requirements are needed (such as DSL version and the presence of other collections), and allows extra functionality not possible without a config file.
+				This config can also be accessed by scripts for any reason, so custom values can be put in if desired by the author.
+				If a config does not exist in a normal collection, a default one will be generated.
+			</p>
+			<p>
+				All values are optional, and only <dfn>main_script</dfn> will get a default value (except on the server version where there can be zero main scripts).
+				Standalone collections obviously use their own name for the main script, and other collections will default to using "main.lua".
+				Since the file generated is self-explanatory and there are no hidden options, it will not be discussed here.
+			</p>
+			<hr/>
+			<h1 id="startup">Startup</h1>
+			<p>
+				<span class="dsl_version">DSL4</span> A second starting point is supported using a <dfn>init_script</dfn>.<br/>
+				<span class="dsl_version">DSL5</span> A third starting point is supported using a <dfn>pre_init_script</dfn>.
+			</p>
+			<p>
+				There are three distinct points that collections can be automatically started <b>*if*</b> they have at least one relevant script defined.
+				If a collection does not start automatically, it will have to be started by a command or loaded as a dependency of another collection.
+				In between each of these <i>stages</i>, DSL is reset and all collections are instantly killed (without ever calling <dfn>MissionCleanup</dfn>).
+			</p>
+			<ul>
+				<li><b>pre_init_script</b>: runs once when the game starts. Rendering is not allowed during this stage, and game functions are unavailable.</li>
+				<li><b>init_script</b>: runs once when the game is loaded, which is when the main menu is reached for the first time. Game functions are unavailable.</li>
+				<li><b>main_script</b>: runs right after the game's script manager is setup, and before the game's <dfn>main.lur</dfn> starts. Happens again when the game restarts.</li>
+			</ul>
+			<p>
+				As for actual scripts, there are only 2 ways that one can be started.
+			</p>
+			<ul>
+				<li>Automatically when a collection starts, if defined in the collections's config.
+				<li>Manually when started by a DSL function.</li>
+			</ul>
+			<p>
+				Collections are only automatically started if DSL's global config doesn't have <dfn>dont_auto_start</dfn> set to true <b>*or*</b> the collection's config has an <dfn>auto_start</dfn> override set to true.
+				If a collection's config defines <dfn>auto_start</dfn>, then this preference will be overridden.
+				If however DSL's global config has <dfn>force_auto_start_pref</dfn> set to true, then the collection's <dfn>auto_start</dfn> is completely ignored.
+				To put it a little more simply, the auto-start behavior is checked like this.
+			</p>
+			<ol>
+				<li>Does DSL's config have <dfn>force_auto_start_pref</dfn> enabled? Then only auto-start if DSL's <dfn>dont_auto_start</dfn> is false.</li>
+				<li>Does the collection have <dfn>auto_start</dfn> defined? Then only auto-start if it says to.</li>
+				<li>Fallback to only auto-starting if DSL's <dfn>dont_auto_start</dfn> is false.
+			</ol>
+			<hr/>
+			<h1>Commands</h1>
+			<p>
+				<span class="dsl_version">DSL4</span> Although all of these commands were available since version 1, the <dfn>*</dfn> option is only available in version 4 and beyond.
+			</p>
+			<p>
+				All known collections can be shown using the <span class="sample_input">/list</span> command. All collections are shown with the names that other collection commands expect.
+				More specific information can be shown using the <span class="sample_input">/check collection</span> command, where <dfn>collection</dfn> is some collection name.
+			</p>
+			<p>
+				Starting (or restarting) a collection can be done using <span class="sample_input">/start collection</span>, or <span class="sample_input">/start *</span> to start / restart all collections.
+				Restarting can also be done using <span class="sample_input">/restart collection</span>, and <span class="sample_input">/restart *</span> restarts all collections that were already running.
+			</p>
+			<p>
+				Stopping a collection is done using <span class="sample_input">/stop collection</span> or <span class="sample_input">/stop *</span> for all collections.
+				This will not instantly kill scripts completely. Instead it starts the graceful shutdown process by killing all active threads and creating the cleanup thread (meaning <dfn>MissionCleanup</dfn>).
+				The shutdown process will not be considered finished until all cleanup threads are dead.
+			</p>
+		</div>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+</body>

@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Render Functions</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+	<script type="text/javascript" src="/function.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1 id="func_name"></h1>
+			<div id="func_info">
+				<h1>Loading function...</h1>
+				<p>
+					Please make sure JavaScript is enabled.
+					Otherwise you will be unable to see the function documentation.
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="GetDisplayResolution" class="dsl_function">
+		<p class="func_description">
+			Return the current resolution used by DSL's renderer.
+			Although this shouldn't change during a normal play session, it is possible for another mod to resize the game.
+			For this reason, it is often a good idea to get this value each frame you need it rather than once at setup.
+			Also keep in mind that most render functions take <a href="/dsl/render.html#coords">normalized coords</a>, meaning you will not usually need the actual resolution.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Width</li>
+			<li class="lua_number">Height</li>
+		</ul>
+	</div>
+	<div id="GetDisplayAspectRatio" class="dsl_function">
+		<p class="func_description">
+			Return the current aspect ratio.
+			This value is the same as dividing the <dfn>Width</dfn> and <dfn>Height</dfn> returned by <a href="/dsl/library/render.html?GetDisplayResolution">GetDisplayResolution</a>.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Aspect ratio</li>
+		</ul>
+	</div>
+	<div id="SetDrawLayer" class="dsl_function">
+		<p class="func_description">
+			Set the current drawing layer used by <a href="/dsl/render.html#cache">cached draws</a>.
+			This value is reset every time the current thread changes, so you will only need to re-apply it once before a large amount of drawing as long as you know it is all done without the thread yielding (waiting).
+			If you need to draw something somewhere other than a thread, you should call this function even if it is just to apply the default setting.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Layer</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> Although layers were not implemented until this version, cached draws used to be drawn at the same time as the <b>POST_FADE</b> layer rather than <b>PRE_FADE</b> (which is the new default).<br/>
+			<span class="dsl_version">DSL5</span> This function now works as intended, and does not wrongly raise an error when setting any layer besides <b>POST_FADE</b>.
+		</p>
+		<h2>Layers</h2>
+		<ul class="func_details">
+			<li><b>POST_WORLD</b>: after the world is drawn, but before HUD is drawn.</li>
+			<li><b>PRE_FADE</b>: (default) after HUD is drawn, but before fading is applied.</li>
+			<li><b>POST_FADE</b>: after fading is drawn, immediately before the game is actually drawn.</li>
+		</ul>
+	</div>
+	<div id="DrawRectangle" class="dsl_function">
+		<p class="func_description">
+			Draw a rectangle.
+			Keep the <a href="/dsl/render.html">general rules</a> of rendering in mind.
+			<dfn>X</dfn> and <dfn>Y</dfn> define the top left of the rectangle.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">X</li>
+			<li class="lua_number">Y</li>
+			<li class="lua_number">Width</li>
+			<li class="lua_number">Height</li>
+			<li class="lua_number">Red</li>
+			<li class="lua_number">Green</li>
+			<li class="lua_number">Blue</li>
+			<li class="lua_opt_number">Alpha</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> Alpha is now optional, and <dfn>255</dfn> will be used if it is not present.
+		</p>
+	</div>
+	<div id="CreateTexture" class="dsl_function">
+		<p class="func_description">
+			Create a <dfn>Texture</dfn> for later drawing given a <a href="/dsl/paths.html">relative path</a> of a <dfn>.png</dfn> file.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Name</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_userdata">Texture</li>
+		</ul>
+	</div>
+	<div id="DrawTexture" class="dsl_function">
+		<p class="func_description">
+			Draw a <dfn>Texture</dfn>.
+			Keep the <a href="/dsl/render.html">general rules</a> of rendering in mind.
+			Use <a href="/dsl/library/render.html?GetTextureDisplayAspectRatio">GetTextureDisplayAspectRatio</a> to preserve the aspect ratio of the texture.
+			<dfn>X</dfn> and <dfn>Y</dfn> define the top left of the rectangle.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Texture</li>
+			<li class="lua_number">X</li>
+			<li class="lua_number">Y</li>
+			<li class="lua_number">Width</li>
+			<li class="lua_number">Height</li>
+			<li class="lua_opt_number">Red</li>
+			<li class="lua_opt_number">Green</li>
+			<li class="lua_opt_number">Blue</li>
+			<li class="lua_opt_number">Alpha</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> All color values are now optional, and <dfn>255</dfn> will be used for missing ones.
+		</p>
+	</div>
+	<div id="DrawTexture2" class="dsl_function">
+		<p class="func_description">
+			Draw a <dfn>Texture</dfn> just like <a href="/dsl/library/render.html?DrawTexture">DrawTexture</a>, but also with a <dfn>Rotation</dfn> specified in degrees.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Texture</li>
+			<li class="lua_number">X</li>
+			<li class="lua_number">Y</li>
+			<li class="lua_number">Width</li>
+			<li class="lua_number">Height</li>
+			<li class="lua_number">Rotation</li>
+			<li class="lua_opt_number">Red</li>
+			<li class="lua_opt_number">Green</li>
+			<li class="lua_opt_number">Blue</li>
+			<li class="lua_opt_number">Alpha</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> All color values are now optional, and <dfn>255</dfn> will be used for missing ones.
+		</p>
+	</div>
+	<div id="SetTextureBounds" class="dsl_function">
+		<p class="func_description">
+			Set the UV coords used for drawing a <dfn>Texture</dfn>.
+			This defines what section of a texture is actually drawn, for example passing <dfn>0, 0, 0.5, 0.5</dfn> will only draw the top left part of a texture.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Texture</li>
+			<li class="lua_number">X1</li>
+			<li class="lua_number">Y1</li>
+			<li class="lua_number">X2</li>
+			<li class="lua_number">Y2</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="GetTextureResolution" class="dsl_function">
+		<p class="func_description">
+			Return the resolution of a <dfn>Texture</dfn>.
+			Keep in mind that textures are drawn using <a href="/dsl/render.html#coords">normalized coords</a>, so you will not usually need the actual resolution.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Texture</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Width</li>
+			<li class="lua_number">Height</li>
+		</ul>
+	</div>
+	<div id="GetTextureAspectRatio" class="dsl_function">
+		<p class="func_description">
+			Return the aspect ratio of a <dfn>Texture</dfn>
+			This value is the same as dividing the <dfn>Width</dfn> and <dfn>Height</dfn> returned by <a href="/dsl/library/render.html?GetTextureResolution">GetTextureResolution</a>.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Texture</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Aspect ratio</li>
+		</ul>
+	</div>
+	<div id="GetTextureDisplayAspectRatio" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Return the ratio that should be used to draw a <dfn>Texture</dfn> without affecting its aspect ratio.
+				This value is the same as dividing the texture's aspect ratio by the display's aspect ratio.
+			</p>
+			<p>
+				For the reasons described in <a href="/dsl/library/render.html?GetDisplayResolution">GetDisplayResolution</a>, you should call this function each frame it is needed rather than just once at setup.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Texture</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Aspect ratio</li>
+		</ul>
+	</div>
+	<div id="CreateFont" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Create a <dfn>Font</dfn> to be used when drawing text.
+				This function only exists for future-proofing when there will be more ways to create a font, such as from a file.
+				For now it is usually better to just use a string where a <dfn>Font</dfn> is expected, as that will do the same thing but also cache the font for use by any script.
+			</p>
+			<p>
+				<dfn>Name</dfn> should correspond to a font installed on the system. A default font will be used if it does not exist.
+				Consider using a texture to draw text with a font that users of your script are not likely to have.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Name</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_userdata">Font</li>
+		</ul>
+	</div>
+	<div id="DrawText" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Draw some <dfn>Text</dfn> on screen using the current <a href="/dsl/render.html#text">text formatting</a> options, then discard the text formatting options.
+			</p>
+			<p>
+				If necessary, <dfn>Text</dfn> will be converted to a string using <dfn>tostring</dfn>.
+				If more values are given after it, <dfn>string.format</dfn> is used to format the text.
+			</p>
+			<p>
+				If you need to measure the text before drawing it, consider using <a href="/dsl/library/render.html?MeasureText">MeasureText</a>.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Text</li>
+			<li class="lua_vararg">Formatting arguments</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Width</li>
+			<li class="lua_number">Height</li>
+		</ul>
+		<h2>Example</h2>
+		<p>Draw some text for 3 seconds.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre style="font-family: monospace">function main()
+	local draw_until = GetTimer() + 3000
+	repeat
+		SetTextShadow()
+		SetTextColor(255, 0, 0, 255)
+		SetTextPosition(0.5, 0.2)
+		DrawText("Kill Sheldon!")
+		Wait(0)
+	until GetTimer() &gt;= draw_until
+end</pre>
+		</code>
+	</div>
+	<div id="MeasureText" class="dsl_function">
+		<p class="func_description">
+			Measures text like <a href="/dsl/library/render.html?DrawText">DrawText</a>, but without actually drawing anything and without discarding the current <a href="/dsl/render.html#text">text formatting</a>.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Text</li>
+			<li class="lua_vararg">Formatting arguments</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Width</li>
+			<li class="lua_number">Height</li>
+		</ul>
+	</div>
+	<div id="DiscardText" class="dsl_function">
+		<p class="func_description">
+			Discards the current <a href="/dsl/render.html#text">text formatting</a> options used by <a href="/dsl/library/render.html?DrawText">DrawText</a>, but without actually having to draw the text.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="SetTextPosition" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Set the position of the text to be drawn.
+				By default, <dfn>X</dfn> refers to the middle of the text and <dfn>Y</dfn> refers to the top of it.
+				Use <a href="/dsl/library/render.html?SetTextAlign">SetTextAlign</a> if you want a different alignment.
+			</p>
+			<p>
+				This is a <a href="/dsl/render.html#text">text formatting</a> option.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">X</li>
+			<li class="lua_number">Y</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="SetTextHeight" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Set the size of the text to be drawn, where <dfn>1</dfn> would be as tall as the whole screen.
+				Consider using <a href="/dsl/library/render.html?SetTextScale">SetTextScale</a> for general use, unless you are sizing the text to fit in a specific area.
+			</p>
+			<p>
+				This is a <a href="/dsl/render.html#text">text formatting</a> option.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Height</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="SetTextScale" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Set the size of the text to be drawn just like <a href="/dsl/library/render.html?SetTextHeight">SetTextHeight</a>, but using a pre-defined base value.
+				By default, text is drawn with a scale of <dfn>1</dfn>.
+			</p>
+			<p>
+				This is a <a href="/dsl/render.html#text">text formatting</a> option.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Scale</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="SetTextFont" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Set the font of the text to be drawn.
+				<dfn>Font</dfn> should be the name of a font installed on the system, <i>or</i> a <dfn>Font</dfn> object created by <a href="/dsl/library/render.html?CreateFont">CreateFont</a>.
+			</p>
+			<p>
+				This is a <a href="/dsl/render.html#text">text formatting</a> option.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Font</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="SetTextAlign" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Set the alignment of the text to be drawn.
+				Only the first letter of the alignment strings are actually needed, the full name is just allowed for readability.
+			</p>
+			<p>
+				This is a <a href="/dsl/render.html#text">text formatting</a> option.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Horizontal alignment</li>
+			<li class="lua_opt_string">Vertical alignment</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Horizontal Alignment</h2>
+		<ul class="func_details">
+			<li><b>LEFT</b>: align text to the left</li>
+			<li><b>CENTER</b>: (default) align text to the center</li>
+			<li><b>RIGHT</b>: align text to the right</li>
+		</ul>
+		<h2>Vertical Alignment</h2>
+		<ul class="func_details">
+			<li><b>TOP</b>: (default) align text to the top</li>
+			<li><b>CENTER</b>: align text to the center</li>
+			<li><b>BOTTOM</b>: align text to the bottom</li>
+		</ul>
+	</div>
+	<div id="SetTextColor" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Set the color of the text to be drawn.
+			</p>
+			<p>
+				This is a <a href="/dsl/render.html#text">text formatting</a> option.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Red</li>
+			<li class="lua_number">Green</li>
+			<li class="lua_number">Blue</li>
+			<li class="lua_opt_number">Alpha</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> Alpha is now optional, and <dfn>255</dfn> will be used if it is not present.
+		</p>
+	</div>
+	<div id="SetTextColour" class="dsl_function">
+		<div class="func_description">
+			<p>
+				An alias of <a href="/dsl/library/render.html?SetTextColor">SetTextColor</a>.
+			</p>
+			<p>
+				This is a <a href="/dsl/render.html#text">text formatting</a> option.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Red</li>
+			<li class="lua_number">Green</li>
+			<li class="lua_number">Blue</li>
+			<li class="lua_opt_number">Alpha</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> Alpha is now optional, and <dfn>255</dfn> will be used if it is not present.
+		</p>
+	</div>
+	<div id="SetTextShadow" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Apply a shadow to the text being drawn, and optionally set a color for it.
+				This will remove the text's outline if it has one.
+				If the full color is not specified, it will default to black.
+			</p>
+			<p>
+				This is a <a href="/dsl/render.html#text">text formatting</a> option.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_number">Red</li>
+			<li class="lua_opt_number">Green</li>
+			<li class="lua_opt_number">Blue</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL2</span> An optional color value can be specified instead of just using black.
+		</p>
+	</div>
+	<div id="SetTextOutline" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Apply an outline to the text being drawn, and optionally set a color for it.
+				This will remove the text's shadow if it has one.
+				If the full color is not specified, it will default to black.
+			</p>
+			<p>
+				This is a <a href="/dsl/render.html#text">text formatting</a> option.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_number">Red</li>
+			<li class="lua_opt_number">Green</li>
+			<li class="lua_opt_number">Blue</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL2</span> An optional color value can be specified instead of just using black.
+		</p>
+	</div>
+	<div id="SetTextBold" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Set if the text being drawn should be bold.
+				If <dfn>Bold</dfn> is not defined, it will default to true.
+			</p>
+			<p>
+				This is a <a href="/dsl/render.html#text">text formatting</a> option.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_boolean">Bold</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> The optional <dfn>Bold</dfn> argument has been added, as boldness could not be disabled after being applied before.
+		</p>
+	</div>
+	<div id="SetTextItalic" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Set if the text being drawn should be italic.
+				If <dfn>Italic</dfn> is not defined, it will default to true.
+			</p>
+			<p>
+				This is a <a href="/dsl/render.html#text">text formatting</a> option.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_boolean">Italic</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL4</span> The optional <dfn>Italic</dfn> argument has been added, as boldness could not be disabled after being applied before.
+		</p>
+	</div>
+	<div id="SetTextClipping" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Set the maximum size of the text being drawn.
+				If horizontal clipping is enabled while word wrapping is also enabled, the word wrapping will be disabled.
+			</p>
+			<p>
+				This function respects the alignment of the text.
+				For example if it is drawn horizontally centered, the left and right sides would be equally affected when clipping needs to be applied.
+			</p>
+			<p>
+				Both arguments are optional, meaning you must specify <dfn>nil</dfn> for the <dfn>Max width</dfn> if you only wish to specify a <dfn>Max height</dfn>.
+				Using <dfn>nil</dfn> or just not passing anything for either option will disable clipping for that dimension.
+				By default, clipping is disabled.
+			</p>
+			<p>
+				This is a <a href="/dsl/render.html#text">text formatting</a> option.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_number">Max width</li>
+			<li class="lua_opt_number">Max height</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="SetTextWrapping" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Set the maximum width of the text being drawn.
+				If word wrapping is enabled while horizontal clipping is also enabled, the horizontal clipping will be disabled.
+			</p>
+			<p>
+				Word wrapping will be disabled if <dfn>Max width</dfn> is <dfn>0</dfn>, not given, or just not a number.
+				By default, word wrapping is disabled.
+			</p>
+			<p>
+				This is a <a href="/dsl/render.html#text">text formatting</a> option.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_number">Max width</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="SetTextRedrawing" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Define the requirements for the text being drawn to be re-drawn instead of allowing the cached version to be used.
+				Only the first letter of the string is actually needed, the full name is just allowed for readability.
+			</p>
+			<p>
+				This is usually not needed, as text is already re-drawn whenever it will be noticeable by default.
+			</p>
+			<p>
+				This is a <a href="/dsl/render.html#text">text formatting</a> option.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Mode</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Redrawing Modes</h2>
+		<ul class="func_details">
+			<li><b>RESIZE</b>: (default) only re-draw text when there is no cached version or the cached version has a different size</li>
+			<li><b>ALWAYS</b>: always re-draw the text even if it has a cached version</li>
+			<li><b>NEEDED</b>: only re-draw text when it has no cached version</li>
+		</ul>
+	</div>
+	<div id="GetTextFormatting" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Get a <i>text formatting table</i> representing the current <a href="/dsl/render.html#text">text formatting</a> options
+				for later re-application with <a href="/dsl/library/render.html?SetTextFormatting">SetTextFormatting</a>.
+			</p>
+			<p>
+				This function is usually the less preferable option compared to <a href="/dsl/library/render.html?PopTextFormatting">PopTextFormatting</a>.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_table">Text formatting</li>
+		</ul>
+	</div>
+	<div id="PopTextFormatting" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Get a <i>text formatting table</i> representing the current <a href="/dsl/render.html#text">text formatting</a> options
+				for later re-application with <a href="/dsl/library/render.html?SetTextFormatting">SetTextFormatting</a>.
+			</p>
+			<p>
+				Unlike <a href="/dsl/library/render.html?GetTextFormatting">GetTextFormatting</a>, this function also discards the current text formatting options.
+				This makes this function the more preferable option when you are setting up a text format to be used later on in your script.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_table">Text formatting</li>
+		</ul>
+	</div>
+	<div id="SetTextFormatting" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Set the current <a href="/dsl/render.html#text">text formatting</a> options using a table returned by
+				<a href="/dsl/library/render.html?GetTextFormatting">GetTextFormatting</a> or <a href="/dsl/library/render.html?PopTextFormatting">PopTextFormatting</a>.
+			</p>
+			<p>
+				<dfn>Text formatting</dfn> can also be a number, in which case it will correspond to a pre-defined style.
+				<dfn>1</dfn> and <dfn>2</dfn> mimic the styles used by <a href="/function.html?TextPrint">TextPrint</a>,
+				but the full list of styles allowed are shared with <a href="/dsl/library/render.html?DrawTextInline">DrawTextInline</a>.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_table">Text formatting</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL3</span> The <dfn>Text formatting</dfn> argument can now be a number representing a pre-defined style.
+		</p>
+	</div>
+	<div id="DrawTextInline" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Draw text in a single function call rather than using <a href="/dsl/library/render.html?DrawText">DrawText</a> and related <a href="/dsl/render.html#text">text formatting</a> options.
+			</p>
+			<p>
+				<dfn>Width</dfn> is an optional number defining how long the text can be before word wrapping is applied.
+				If you do not want word wrapping, simply skip this argument (do not use <dfn>nil</dfn> in place of it).
+			</p>
+			<p>
+				<dfn>Text</dfn> defines the text to actually be drawn, and can contain an arbitrary amount of <i>inline format specifiers</i>.
+				If you want to draw anything besides an actual string, you must convert it using something like <dfn>tostring</dfn>.
+				Keep in mind the text will be drawn on the current layer set with <a href="/dsl/library/render.html?SetDrawLayer">SetDrawLayer</a> if a <a href="/dsl/render.html#cache">cached draw</a> is used.
+				If an inline format specifier takes extra arguments, they are expected to be given after the text string in the order that the specifiers appear.
+			</p>
+			<p>
+				<dfn>Duration</dfn> defines how many seconds the text will be drawn.
+				For the sake of not letting multiple things print over each other, only one <i>inline text draw</i> can be happening on any given <dfn>Style</dfn> at a time.
+				This means that if you draw two things at once using this function with the same <dfn>Style</dfn>, the first one will be replaced and only the second will be seen.
+				This behavior can be disabled by passing <dfn>-1</dfn> as the duration or by using the <dfn>~xy~</dfn> inline format specifier.
+				Using <dfn>0</dfn> or <dfn>-1</dfn> will only draw for a single frame.
+			</p>
+			<p>
+				<dfn>Style</dfn> defines the base style used for text.
+				It can be one of the pre-defined styles listed below, or a <i>text formatting table</i> just like the one used by <a href="/dsl/library/render.html?SetTextFormatting">SetTextFormatting</a>.
+				This is a good option for text that will be used like a custom HUD component, as it will keep subsequent inline text draws from overlapping.
+			</p>
+			<p>
+				If done from a <i>drawing thread</i>, text will be drawn immediately instead of during a <a href="/dsl/render.html#cache">cached draw</a>.
+				This prevent subsequent <dfn>DrawTextInline</dfn> calls from replacing it which can result in overlapping text.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_number">Width</li>
+			<li class="lua_string">Text</li>
+			<li class="lua_vararg">Inline format arguments</li>
+			<li class="lua_opt_number">Duration (in seconds)</li>
+			<li class="lua_opt_number">Style</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Width</li>
+			<li class="lua_number">Height</li>
+		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL2</span> The <dfn>DrawTextInline</dfn> function was introduced, but in such a limited way that the documentation labels it as a DSL3 function.<br/>
+			<span class="dsl_version">DSL4</span> An optional <dfn>Width</dfn> argument was added,
+			using <dfn>~xy~</dfn> keeps existing text from being replaced (as well as this text),
+			the total <dfn>Width</dfn> &#38; <dfn>Height</dfn> is returned.
+		</p>
+		<h2>Pre-Defined Styles</h2>
+		<table class="func_details">
+			<tr><th>Number</th><th>Description</th></tr>
+			<tr><td style="text-align: center"><b>1</b></td><td>Objective text that mimics using <b>1</b> with <dfn>TextPrint</dfn>.</td></tr>
+			<tr><td style="text-align: center"><b>2</b></td><td>Subtitle text that mimics using <b>2</b> with <dfn>TextPrint</dfn>.</td></tr>
+			<tr><td style="text-align: center"><b>3</b></td><td>Objective text like style <b>1</b>, but left-aligned.</td></tr>
+			<tr><td style="text-align: center"><b>4</b></td><td>Subtitle text like style <b>2</b>, but left-aligned.</td></tr>
+			<tr><td style="text-align: center"><b>5</b></td><td>Objective text like style <b>1</b>, but right-aligned.</td></tr>
+			<tr><td style="text-align: center"><b>6</b></td><td>Subtitle text like style <b>2</b>, but right-aligned.</td></tr>
+		</table>
+		<h2>Inline Format Specifiers</h2>
+		<table class="func_details">
+			<tr><th>Full Name</th><th>Short Name</th><th>Description &#38; Arguments</th></tr>
+			<tr><td style="text-align: center"><b>~alpha~</b></td><td style="text-align: center"><b>~a~</b></td><td>Take <b>1</b> extra argument to set the text's alpha value.</td></tr>
+			<tr><td style="text-align: center"><b>~bold~</b></td><td style="text-align: center"><b>~b~</b></td><td>Make the text bold.</td></tr>
+			<tr><td style="text-align: center"><b>~blue~</b></td><td></td><td>Make the text blue</td></tr>
+			<tr><td style="text-align: center"><b>~cyan~</b></td><td style="text-align: center"><b>~c~</b></td><td>Make the text cyan.</td></tr>
+			<tr><td style="text-align: center"><b>~font~</b></td><td style="text-align: center"><b>~f~</b></td><td>Take <b>1</b> extra argument to set the text's font using a string or <dfn>Font</dfn> object.</td></tr>
+			<tr><td style="text-align: center"><b>~green~</b></td><td style="text-align: center"><b>~g~</b></td><td>Make the text green.</td></tr>
+			<tr><td style="text-align: center"><b>~height~</b></td><td></td><td>Take <b>1</b> extra argument to set the text's height (replaces scale).</td></tr>
+			<tr><td style="text-align: center"><b>~italic~</b></td><td style="text-align: center"><b>~i~</b></td><td>Make the text italic.</td></tr>
+			<tr><td style="text-align: center"><b>~magenta~</b></td><td style="text-align: center"><b>~m~</b></td><td>Make the text magenta.</td></tr>
+			<tr><td style="text-align: center"><b>~normal~</b></td><td style="text-align: center"><b>~n~</b></td><td>Take away bold and italic formatting.</td></tr>
+			<tr><td style="text-align: center"><b>~objective~</b></td><td style="text-align: center"><b>~o~</b></td><td>Make the text use the color for objectives.</td></tr>
+			<tr><td style="text-align: center"><b>~red~</b></td><td style="text-align: center"><b>~r~</b></td><td>Make the text red.</td></tr>
+			<tr><td style="text-align: center"><b>~rgb~</b></td><td></td><td>Take <b>3</b> extra arguments to set the text's color.</td></tr>
+			<tr><td style="text-align: center"><b>~subtitle~</b></td><td style="text-align: center"><b>~s~</b></td><td>Make the text use the color for subtitles.</td></tr>
+			<tr><td style="text-align: center"><b>~scale~</b></td><td></td><td>Take <b>1</b> extra argument to set the text's scale (replaces height).</td></tr>
+			<tr><td style="text-align: center"><b>~texture~</b></td><td style="text-align: center"><b>~t~</b></td><td>Take <b>1</b> extra argument to draw an inline texture using a <dfn>Texture</dfn> object.</td></tr>
+			<tr><td style="text-align: center"><b>~white~</b></td><td style="text-align: center"><b>~w~</b></td><td>Make the text white.</td></tr>
+			<tr><td style="text-align: center"><b>~xy~</b></td><td></td><td>Take <b>2</b> extra arguments to set the text's position and not replace text of the same style.</td></tr>
+			<tr><td style="text-align: center"><b>~yellow~</b></td><td style="text-align: center"><b>~y~</b></td><td>Make the text yellow.</td></tr>
+		</table>
+	</div>
+	<div id="MeasureTextInline" class="dsl_function">
+		<p class="func_description">
+			Measure text like <a href="/dsl/library/render.html?DrawTextInline">DrawTextInline</a>, but without actually drawing.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Width</li>
+			<li class="lua_string">Text</li>
+			<li class="lua_vararg">Inline format arguments</li>
+			<li class="lua_opt_number">Duration (in seconds)</li>
+			<li class="lua_opt_number">Style</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Width</li>
+			<li class="lua_number">Height</li>
+		</ul>
+	</div>
+	<div id="ClearDisplay" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Immediately clear the back buffer.
+			</p>
+			<p>
+				This is an <i>advanced drawing function</i>, meaning it is meant for advanced users and does not use <a href="/dsl/render.html#cache">cached draws</a>.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="CreateRenderTarget" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Create a <dfn>Texture</dfn> that contains nothing by default, and should be filled in using targeted drawing functions.
+			</p>
+			<p>
+				This function does <i>not</i> take a <a href="/dsl/render.html#coords">normalized size</a>, the <dfn>Width</dfn> and <dfn>Height</dfn> are measured in pixels.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Width</li>
+			<li class="lua_number">Height</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_userdata">Texture</li>
+		</ul>
+	</div>
+	<div id="DrawBackBufferOntoTarget" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Draw the back buffer onto <dfn>Target</dfn>.
+			</p>
+			<p>
+				This is an <i>advanced drawing function</i>, meaning it is meant for advanced users and does not use <a href="/dsl/render.html#cache">cached draws</a>.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Texture</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="SetRendererAlphaBlending" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Set whether or not alpha blending is enabled.
+				If you turn this off, you should usually turn if back on after you're done drawing.
+			</p>
+			<p>
+				This is an <i>advanced drawing function</i>, meaning it is meant for advanced users.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Texture</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+	<script type="text/javascript">
+		setupRealFunctionPageDSL(location.search.substring(1));
+	</script>
+</body>

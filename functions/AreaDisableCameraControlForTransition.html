@@ -1,0 +1,37 @@
+<p class="func_description">
+	Disable camera fading during area switches.<br/>
+	You will need to keep this on until <a href="/function.html?AreaIsLoading">AreaIsLoading</a> returns <dfn>false</dfn> for full effect.
+</p>
+<h2>Arguments</h2>
+<ul class="func_arguments">
+	<li class="lua_boolean">Disable camera control</li>
+</ul>
+<h2>Results</h2>
+<p class="func_results">
+	None.
+</p>
+<h2>Example</h2>
+<p>Fade the screen out and move the player to the front of the boy's dorm, only unfading when the area is fully loaded.</p>
+<code class="func_example">
+	<button class="copy_code" onclick="copyCode(this)">copy</button>
+	<pre>-- go to the loading screen
+CameraFade(1000, 0)
+Wait(1000)
+
+-- move the player without letting PlayerSetPosXYZArea affect the camera fade
+AreaDisableCameraControlForTransition(true)
+PlayerSetPosXYZArea(270, -110, 6, 0)
+while AreaIsLoading() do
+	Wait(0)
+end
+AreaDisableCameraControlForTransition(false)
+
+-- wait for all loading to finish
+while IsStreamingBusy() do
+	Wait(0)
+end
+Wait(1000) -- wait an extra second for potential pop-in
+
+-- fade the camera back in
+CameraFade(1000, 1)</pre>
+</code>
