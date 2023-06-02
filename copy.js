@@ -9,7 +9,6 @@ function copyCode(button){
 		x.select();
 		document.execCommand("copy");
 		x.remove();
-		return;
 	}else
 		navigator.clipboard.writeText(button.nextElementSibling.innerHTML);
 }
