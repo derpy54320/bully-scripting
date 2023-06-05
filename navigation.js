@@ -363,7 +363,7 @@ var dsl_library_functions = [
 			"GetAnyKeyBeingReleased"
 		]],
 		[5,[
-			"DisableController",
+			"ZeroController",
 			"SetButtonPressed",
 			"SetStickValue",
 			"GetInputHardware",

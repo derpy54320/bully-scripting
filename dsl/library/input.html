@@ -36,10 +36,13 @@
 		<p class="func_description">
 			Returns if a key is pressed.
 			<dfn>Key</dfn> should be given as a DirectInput keyboard scan code name (listed below), but can also be given as a directly as a number.
+			If a <dfn>Controller</dfn> is specified, a game input device will be used instead of the DSL keyboard. This is a good way to respect when other scripts disable controls.
+			Using controller 0 also ensures that the player is actually using a keyboard to play rather than an xbox controller.
 		</p>
 		<h2>Arguments</h2>
 		<ul class="func_arguments">
 			<li class="lua_string">Key</li>
+			<li class="lua_opt_number">Controller</li>
 		</ul>
 		<h2>Results</h2>
 		<ul class="func_results">
@@ -49,6 +52,7 @@
 		<p class="func_versions">
 			<span class="dsl_version">DSL4</span> DirectInput keyboard scan codes are now used, but virtual key code names will still be converted for legacy support.<br/>
 			<span class="dsl_version">DSL5</span> Keys are also reported as pressed when they are being pressed, and no longer when they are being released.
+			<span class="dsl_version">DSL6</span> The optional <dfn>Controller</dfn> argument was added.
 		</p>
 		<h2>DirectInput Keyboard Scan Code Names</h2>
 		<code class="func_details">
@@ -218,11 +222,12 @@ CIRCUMFLEX</pre>
 	<div id="IsKeyBeingPressed" class="dsl_function">
 		<p class="func_description">
 			Returns if a key was just pressed, meaning it is pressed this frame but was not on the previous one.
-			<dfn>Key</dfn> is translated using the same rules as <a href="/dsl/library/input.html?IsKeyPressed">IsKeyPressed</a>.
+			<dfn>Key</dfn> and <dfn>Controller</dfn> are interpreted the same way as they are by <a href="/dsl/library/input.html?IsKeyPressed">IsKeyPressed</a>.
 		</p>
 		<h2>Arguments</h2>
 		<ul class="func_arguments">
 			<li class="lua_string">Key</li>
+			<li class="lua_opt_number">Controller</li>
 		</ul>
 		<h2>Results</h2>
 		<ul class="func_results">
@@ -231,16 +236,18 @@ CIRCUMFLEX</pre>
 		<h2>Versions</h2>
 		<p class="func_versions">
 			<span class="dsl_version">DSL4</span> DirectInput keyboard scan codes are now used, but virtual key code names will still be converted for legacy support.
+			<span class="dsl_version">DSL6</span> The optional <dfn>Controller</dfn> argument was added.
 		</p>
 	</div>
 	<div id="IsKeyBeingReleased" class="dsl_function">
 		<p class="func_description">
 			Returns if a key was just released, meaning it is not pressed this frame but was on the previous one.
-			<dfn>Key</dfn> is translated using the same rules as <a href="/dsl/library/input.html?IsKeyPressed">IsKeyPressed</a>.
+			<dfn>Key</dfn> and <dfn>Controller</dfn> are interpreted the same way as they are by <a href="/dsl/library/input.html?IsKeyPressed">IsKeyPressed</a>.
 		</p>
 		<h2>Arguments</h2>
 		<ul class="func_arguments">
 			<li class="lua_string">Key</li>
+			<li class="lua_opt_number">Controller</li>
 		</ul>
 		<h2>Results</h2>
 		<ul class="func_results">
@@ -249,6 +256,7 @@ CIRCUMFLEX</pre>
 		<h2>Versions</h2>
 		<p class="func_versions">
 			<span class="dsl_version">DSL4</span> DirectInput keyboard scan codes are now used, but virtual key code names will still be converted for legacy support.
+			<span class="dsl_version">DSL6</span> The optional <dfn>Controller</dfn> argument was added.
 		</p>
 	</div>
 	<div id="GetAnyKeyPressed" class="dsl_function">
