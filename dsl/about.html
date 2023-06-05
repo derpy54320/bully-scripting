@@ -121,6 +121,25 @@
 				<li>More input functions have been added to modify controller state.</li>
 				<li>A significant amount of small changes and patches.</li>
 			</ul>
+			<h2>version 6</h2>
+			<ul>
+				<li>192 total functions.</li>
+				<li>OpenFile supports the "ab" mode.</li>
+				<li>Fixed function hook and replacement functions.</li>
+				<li>The loadfile function doesn't raise an error if the path is unsafe (instead it returns nil + an error).</li>
+				<li>Optimized network messages slightly.</li>
+				<li>Fixed a problem that could happen when passing nil to compatibility functions.</li>
+				<li>A missing main_script will no longer raise an error if there are other types of scripts.</li>
+				<li>Fixed a crash related to the command parser.</li>
+				<li>Some script cleanup tasks now happen when the script is shutdown rather than when it is fully destroyed.</li>
+				<li>Fixed a couple memory leaks.</li>
+				<li>Added a message to tell the user if Lua has had an unrecoverable error.</li>
+				<li>Added pool functions to check or require pool sizes.</li>
+				<li>Added the SetScriptCleanup function for things that need to be cleaned up instantly rather than in a thread.</li>
+				<li>Added the CameraFaded event.</li>
+				<li>Added the GAME2 thread type.</li>
+				<li>Lots of other little fixes and changes as always.</li>
+			</ul>
 		</div>
 	</div>
 	<script type="text/javascript" src="/navigation.js"></script>
