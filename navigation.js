@@ -363,7 +363,6 @@ var dsl_library_functions = [
 			"GetAnyKeyBeingReleased"
 		]],
 		[5,[
-			"ZeroController",
 			"SetButtonPressed",
 			"SetStickValue",
 			"GetInputHardware",
@@ -372,6 +371,9 @@ var dsl_library_functions = [
 			"IsMousePressed",
 			"IsMouseBeingPressed",
 			"IsMouseBeingReleased"
+		]],
+		[6,[
+			"ZeroController"
 		]]
 	],
 	["locale",
