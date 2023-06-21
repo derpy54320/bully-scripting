@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
 	<title>DSL - Hook Functions</title>
+	<base href="http://bullyscripting.net">
 	<link rel="icon" href="/icon.ico"/>
 	<link rel="stylesheet" href="/style.css"/>
 	<script type="text/javascript" src="/copy.js"></script>
@@ -18,6 +19,109 @@
 				</p>
 			</div>
 		</div>
+	</div>
+	<div id="GetBaseGameFunction" class="dsl_function">
+		<p class="func_description">
+			Get the original version of a C function registered by Rockstar.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Name</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_function">Function</li>
+		</ul>
+	</div>
+	<div id="HookFunction" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Register a new function hook for a base game C function with a given <dfn>Name</dfn>.
+				Your <dfn>Callback</dfn> function will be called with 3 arguments after the function returns.
+			</p>
+			<p>
+				Callbacks are passed a table of arguments, a table of results, and a boolean indiciating whether or not the function was a replacement.
+			</p>
+			<p>
+				Registered hooks are tied to the current script, and will be automatically cleaned up when the script is terminated.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Name</li>
+			<li class="lua_function">Callback</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_userdata">Hook</li>
+		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL5</span> This function was introduced, but was not working properly.<br/>
+			<span class="dsl_version">DSL6</span> This function now works as intended.
+		</p>
+		<h2>Example</h2>
+		<p>Give all created peds a gun.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>HookFunction("PedCreatePoint", function(args, results)
+				local ped = results[1]
+				if PedIsValid(ped) then -- rare that PedCreatePoint would return an invalid ped, but it can
+					PedClearAllWeapons(ped)
+					PedSetWeapon(ped, 305, 8)
+				end
+			end)</pre>
+		</code>
+	</div>
+	<div id="RemoveFunctionHook" class="dsl_function">
+		<p class="func_description">
+			Remove a hook registered with <a href="/dsl/library/hook.html?HookFunction">HookFunction</a>.
+			Keep in mind that hooks are automatically removed when your script dies, so you do not need to call this manually.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Hook</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="ReplaceFunction" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Replace a base game C function with a given <dfn>Name</dfn> with a <dfn>Replacement</dfn> function.
+				If no replacement is given (or <dfn>nil</dfn>), then any existing replacement will be removed.
+				The replacement function is passed the original function and all the arguments that the function was called with.
+				An <dfn>Exclusive</dfn> replacement should only be used when absolutely needed by your mod, as itt will cause subsequent attempts to replace the function to fail.
+			</p>
+			<p>
+				Function replacements are tied to the current script, and will be automatically removed when the script is terminated.
+			<p>
+				Function replacements do not interfere with hooks, both can exist at the same time.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Name</li>
+			<li class="lua_opt_function">Replacement</li>
+			<li class="lua_opt_boolean">Exclusive</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Successful</li>
+		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL5</span> This function was introduced, but was not working properly.<br/>
+			<span class="dsl_version">DSL6</span> This function now works as intended.
+		</p>
+		<h2>Example</h2>
+		<p>Make all created peds random.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>ReplaceFunction("PedCreatePoint", function(original, model, point, index)
+				return original(4, point, index)
+			end)</pre>
+		</code>
 	</div>
 	<script type="text/javascript" src="/navigation.js"></script>
 	<script type="text/javascript">
