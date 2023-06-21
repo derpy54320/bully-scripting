@@ -65,12 +65,12 @@
 		<code class="func_example">
 			<button class="copy_code" onclick="copyCode(this)">copy</button>
 			<pre>HookFunction("PedCreatePoint", function(args, results)
-				local ped = results[1]
-				if PedIsValid(ped) then -- rare that PedCreatePoint would return an invalid ped, but it can
-					PedClearAllWeapons(ped)
-					PedSetWeapon(ped, 305, 8)
-				end
-			end)</pre>
+	local ped = results[1]
+	if PedIsValid(ped) then -- rare that PedCreatePoint would return an invalid ped, but it can
+		PedClearAllWeapons(ped)
+		PedSetWeapon(ped, 305, 8)
+	end
+end)</pre>
 		</code>
 	</div>
 	<div id="RemoveFunctionHook" class="dsl_function">
@@ -119,8 +119,8 @@
 		<code class="func_example">
 			<button class="copy_code" onclick="copyCode(this)">copy</button>
 			<pre>ReplaceFunction("PedCreatePoint", function(original, model, point, index)
-				return original(4, point, index)
-			end)</pre>
+	return original(4, point, index)
+end)</pre>
 		</code>
 	</div>
 	<script type="text/javascript" src="/navigation.js"></script>
