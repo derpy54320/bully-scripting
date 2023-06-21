@@ -395,6 +395,173 @@ end</pre>
 			<span class="dsl_version">DSL4</span> This function now works properly, without the need for running on a specific thread.
 		</p>
 	</div>
+	<div id="SetButtonPressed" class="dsl_function">
+		<p class="func_description">
+			Set a button as pressed. This function is intended to be called during a <a href="/dsl/library/event.html?RegisterLocalEventHandler">ControllerUpdating</a> event.
+			Calling it at any other time may produce unexpected results. This is often a good way of disabling a specific button on a specific controller.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Button</li>
+			<li class="lua_number">Controller</li>
+			<li class="lua_boolean">Pressed</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Example</h2>
+		<p>Disable the sprint button for all controllers.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>RegisterLocalEventHandler("ControllerUpdating", function(controller)
+	SetButtonPressed(7, controller, false)
+end)</pre>
+		</code>
+	</div>
+	<div id="SetStickValue" class="dsl_function">
+		<p class="func_description">
+			Set a stick's value. This function is intended to be called during a <a href="/dsl/library/event.html?RegisterLocalEventHandler">ControllersUpdated</a> event.
+			Calling it at any other time may produce unexpected results.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Stick</li>
+			<li class="lua_number">Controller</li>
+			<li class="lua_number">Value</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Example</h2>
+		<p>If player one is using keyboard, re-map their camera controls to use direct mouse input.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>RegisterLocalEventHandler("ControllersUpdated", function()
+	if not IsUsingJoystick(0) then
+		local x, y = GetMouseInput()
+		SetStickValue(18, 0, -x * 0.02)
+		SetStickValue(19, 0, -y * 0.02)
+	end
+end)</pre>
+		</code>
+	</div>
+	<div id="GetInputHardware" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Returns what hardware a certain input is bound to. The possible values for <dfn>Type</dfn> are as follows.
+			</p>
+			<ul>
+				<li><b>button</b>: <dfn>Value</dfn> is a button from an xbox controller [0-15]</li>
+				<li><b>analog</b>: <dfn>Value</dfn> is an analog stick from an xbox controller [16-23]
+				<li><b>special</b>: <dfn>Value</dfn> is the skateboard button from an xbox controller(24)</li>
+				<li><b>keyboard</b>: <dfn>Value</dfn> is a DirectInput Keyboard Scan Code [0,255]</li>
+				<li><b>mouse_button</b>: <dfn>Value</dfn> is a DirectInput Mouse button index [0,3]</li>
+				<li><b>mouse_movement</b>: <dfn>Value</dfn> represents DirectInput mouse movement [0,5]</li>
+			</ul>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="number">Button / Stick</li>
+			<li class="number">Controller</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_string">Type</li>
+			<li class="lua_number">Value</li>
+		</ul>
+	</div>
+	<div id="IsUsingJoystick" class="dsl_function">
+		<p class="func_description">
+			Returns if the controller is an xbox controller (otherwise it a keyboard).
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Controller</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Joystick</li>
+		</ul>
+	</div>
+	<div id="GetMouseScroll" class="dsl_function">
+		<p class="func_description">
+			Returns the scroll wheel value for the mouse.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Value</li>
+		</ul>
+	</div>
+	<div id="IsMousePressed" class="dsl_function">
+		<p class="func_description">
+			Returns if a mouse button is pressed. Mouse buttons are in the range of [0,3] for a total of 4 buttons.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Button</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Pressed</li>
+		</ul>
+	</div>
+	<div id="IsMouseBeingPressed" class="dsl_function">
+		<p class="func_description">
+			Returns if a mouse button was just pressed this frame. Mouse buttons are in the range of [0,3] for a total of 4 buttons.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Button</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Pressed</li>
+		</ul>
+	</div>
+	<div id="IsMouseBeingReleased" class="dsl_function">
+		<p class="func_description">
+			Returns if a mouse button was just released this frame. Mouse buttons are in the range of [0,3] for a total of 4 buttons.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Button</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Released</li>
+		</ul>
+	</div>
+	<div id="ZeroController" class="dsl_function">
+		<p class="func_description">
+			Zero all the input memory on a controller.
+			This is a good way to disable all input on an input device, but remember to call it on both controller-related events.
+			If you do not call it during both events, buttons may misbehave and act like they're being repeatedly pressed.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Controller</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL5</span> This function was released as <dfn>DisableController</dfn> but did not work properly.
+			<span class="dsl_version">DSL6</span> This function now works as intended and was re-named.
+		</p>
+		<h2>Example</h2>
+		<p>Disable the player's controls fully.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>RegisterLocalEventHandler("ControllerUpdating", function(controller)
+	if controller == 0 then
+		ZeroController(controller)
+	end
+end)
+RegisterLocalEventHandler("ControllersUpdated", function()
+	ZeroController(0)
+end)</pre>
+		</code>
+	</div>
 	<script type="text/javascript" src="/navigation.js"></script>
 	<script type="text/javascript">
 		setupRealFunctionPageDSL(location.search.substring(1));

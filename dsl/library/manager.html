@@ -382,6 +382,24 @@ end</pre>
 			<li class="lua_boolean">Zipped</li>
 		</ul>
 	</div>
+	<!-- SCRIPTS - MISCELLANEOUS -->
+	<div id="SetScriptCleanup" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Associate some cleanup function with the current script.
+				It will be called instantly when the script is shutdown, which can provide instant cleanup if <b>MissionCleanup</b> isn't good enough (since it runs in a thread).
+			</p>
+			<p>
+				Only one cleanup function can be associated with each script, and can't be changed after being set.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_function">Function</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
 	<!-- THREADS - CREATION -->
 	<div id="CreateThread" class="dsl_function">
 		<p class="func_description">
