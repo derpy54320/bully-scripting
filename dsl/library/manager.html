@@ -24,7 +24,7 @@
 		<p class="func_description">
 			This is a <i>header</i> function, meaning it is meant to go on the top of your main script as an alternative to using <a href="/dsl/collections.html#config">config.txt</a>.<br/>
 			Calling this function will instantly stop execution of your script and shut it down if it was <a href="/dsl/collections.html#startup">started automatically</a>.
-			If the main script of a collection is shutdown as a result of calling this function, the entire collection will also be shutdown.
+			If a main script of a collection is shutdown as a result of calling this function, the entire collection will also be shutdown.
 			It is worth noting that a script being loaded as a <i>dependency</i> to an automatically started script or collection will <i>not</i> be stopped by this function.
 		</p>
 		<h2>Arguments</h2>
@@ -44,7 +44,7 @@ PlayerAddMoney(10000)</pre>
 			This is a <i>header</i> function, meaning it is meant to go on the top of your main script as an alternative to using <a href="/dsl/collections.html#config">config.txt</a>.<br/>
 			This function makes sure that <dfn>Collection</dfn> is running, and if it is not then it should be started.
 			If it does not exist or it fails to start, then this script will be shutdown, execution will instantly stop, and the console will inform the user that they are missing a needed dependency.
-			If the main script of a collection is shutdown as a result of calling this function, the entire collection will also be shutdown.
+			If a main script of a collection is shutdown as a result of calling this function, the entire collection will also be shutdown.
 			A difference between setting a dependency in the config and requiring it using this function, is that requiring it in the config ensures it was running *before* starting the dependent collection at all.
 		</p>
 		<h2>Arguments</h2>
@@ -70,7 +70,7 @@ PlayerAddMoney(10000)</pre>
 			This function makes sure that the current version of DSL is at least <dfn>Version</dfn>.
 			If <dfn>Not backwards compatible</dfn> is true, then it requires that the current version of DSL is the exact version specified.
 			If the current DSL version does not match what is desired, then this script will be shutdown, execution will instantly stop, and the console will inform the user that they do not have the right version.
-			If the main script of a collection is shutdown as a result of calling this function, the entire collection will also be shutdown.
+			If a main script of a collection is shutdown as a result of calling this function, the entire collection will also be shutdown.
 		</p>
 		<h2>Arguments</h2>
 		<ul class="func_arguments">
@@ -106,6 +106,7 @@ end</pre>
 			This is a <i>header</i> function, meaning it is meant to go on the top of your main script as an alternative to using <a href="/dsl/collections.html#config">config.txt</a>.<br/>
 			This function makes sure that system access is enabled (see <dfn>allow_system_access</dfn> in DSL's config).
 			If system access is not enabled, then this script will be shutdown, execution will instantly stop, and the console will inform the user that they need system access enabled to continue.
+			If a main script of a collection is shutdown as a result of calling this function, the entire collection will also be shutdown.
 		</p>
 		<h2>Arguments</h2>
 		<p class="func_arguments">None.</p>

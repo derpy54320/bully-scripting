@@ -95,8 +95,7 @@ function setupRealFunctionPageDSL(name){
 		}else{
 			document.title = "Unknown Function";
 			document.getElementById("func_name").innerHTML = "Unknown Function";
-			document.getElementById("func_info").innerHTML = "<p>This function does not exist or is not documented. You can go back <a href=\"/\">home</a> if you got here by mistake.</p>"
-			+ "<p>Please note that not all DSL5 functions have been documented yet.</p>";
+			document.getElementById("func_info").innerHTML = "<p>This function does not exist or is not documented. You can go back <a href=\"/\">home</a> if you got here by mistake.</p>";
 		}
 	}else{
 		var functions = document.getElementsByClassName("dsl_function");

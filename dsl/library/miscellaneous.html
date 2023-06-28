@@ -19,6 +19,7 @@
 			</div>
 		</div>
 	</div>
+	<!-- SHARED MISC -->
 	<div id="GetFrameTime" class="dsl_function">
 		<p class="func_description">
 			Returns the amount of time that has passed since the last frame in seconds.
@@ -63,17 +64,6 @@ end</pre>
 			<li class="lua_table">Persistent data table</li>
 		</ul>
 	</div>
-	<div id="GetPlayerName" class="dsl_function">
-		<p class="func_description">
-			Returns the username set in <a href="/dsl/config.html#main">DSL's main config</a>, or "player" if nothing is set.
-		</p>
-		<h2>Arguments</h2>
-		<p class="func_arguments">None.</p>
-		<h2>Results</h2>
-		<ul class="func_results">
-			<li class="lua_string">Player name</li>
-		</ul>
-	</div>
 	<div id="GetSystemTimer" class="dsl_function">
 		<p class="func_description">
 			Returns the value of <a href="https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-gettickcount">GetTickCount</a>, primarily intended for use with <dfn>math.randomseed</dfn> to improve the random number generator.
@@ -83,6 +73,86 @@ end</pre>
 		<h2>Results</h2>
 		<ul class="func_results">
 			<li class="lua_number">Tick count</li>
+		</ul>
+	</div>
+	<div id="IsDslScriptRunning" class="dsl_function">
+		<p class="func_description">
+			Check if a DSL script is currently running so that you can conditionally make use of features that cannot be used by scripts in <dfn>Scripts.img</dfn>.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Running</li>
+		</ul>
+	</div>
+	<!-- SERVER MISC -->
+	<div id="GetTimer" class="dsl_function">
+		<div class="func_description">
+			<p>
+				This function is not defined on the client, so the normal <a href="/function.html?GetTimer">GetTimer</a> will be used instead.
+			</p>
+			<p>
+				On the server, this function returns how long the server has been running in milliseconds to copy the client behavior.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Milliseconds</li>
+		</ul>
+	</div>	
+	<!-- CLIENT MISC -->
+	<div id="ForceWindowUpdate" class="dsl_function">
+		<p class="func_description">
+			Forcefully activate the <dfn>UpdateWindow</dfn> event to possibly re-style the game's window.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="GetInternalResolution" class="dsl_function">
+		<p class="func_description">
+			Get the game's current internal resolution.
+			You may be looking for <a href="/dsl/library/render.html?GetDisplayResolution">GetDisplayResolution</a> instead.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Width</li>
+			<li class="lua_number">Height</li>
+		</ul>
+	</div>
+	<div id="GetPlayerName" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Returns the username set in <a href="/dsl/config.html#main">DSL's main config</a>, or "player" if nothing is set.
+			</p>
+			<p>
+				This is a <b>client</b> function, see the server version here: <a href="/dsl/library/server.html?GetPlayerName">GetPlayerName</a>.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_string">Name</li>
+		</ul>
+	</div>
+	<div id="GetScreenResolution" class="dsl_function">
+		<p class="func_description">
+			Get the size of the primary monitor.
+			Primarily intended for centering the window during the <dfn>UpdateWindow</dfn> event.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Width</li>
+			<li class="lua_number">Height</li>
 		</ul>
 	</div>
 	<div id="IsActionNodeValid" class="dsl_function">
@@ -98,17 +168,6 @@ end</pre>
 			<li class="lua_boolean">Valid</li>
 		</ul>
 	</div>
-	<div id="IsDslScriptRunning" class="dsl_function">
-		<p class="func_description">
-			Check if a DSL script is currently running so that you can conditionally make use of features that cannot be used by scripts in <dfn>Scripts.img</dfn>.
-		</p>
-		<h2>Arguments</h2>
-		<p class="func_arguments">None.</p>
-		<h2>Results</h2>
-		<ul class="func_results">
-			<li class="lua_boolean">Running</li>
-		</ul>
-	</div>
 	<div id="IsGamePaused" class="dsl_function">
 		<p class="func_description">
 			Returns if the game is... <b><i>paused</i></b>.
@@ -120,6 +179,20 @@ end</pre>
 			<li class="lua_boolean">Paused</li>
 		</ul>
 	</div>
+	<div id="QuitGame" class="dsl_function">
+		<p class="func_description">
+			Instantly exit the game's process.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_number">Status</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">
+			This function doesn't return.
+		</p>
+	</div>
+	<!-- COMPATIBILITY -->
 	<div id="CallFunctionFromScript" class="dsl_function">
 		<div class="func_description">
 			<p>
@@ -206,54 +279,6 @@ function MissionCleanup()
 end
 </pre>
 		</code>
-	</div>
-	<div id="QuitGame" class="dsl_function">
-		<p class="func_description">
-			Instantly exit the game's process.
-		</p>
-		<h2>Arguments</h2>
-		<ul class="func_arguments">
-			<li class="lua_opt_number">Status</li>
-		</ul>
-		<h2>Results</h2>
-		<p class="func_results">
-			This function doesn't return.
-		</p>
-	</div>
-	<div id="ForceWindowUpdate" class="dsl_function">
-		<p class="func_description">
-			Forcefully activate the <dfn>UpdateWindow</dfn> event to possibly re-style the game's window.
-		</p>
-		<h2>Arguments</h2>
-		<p class="func_arguments">None.</p>
-		<h2>Results</h2>
-		<p class="func_results">None.</p>
-	</div>
-	<div id="GetInternalResolution" class="dsl_function">
-		<p class="func_description">
-			Get the game's current internal resolution.
-			You may be looking for <a href="/dsl/library/render.html?GetDisplayResolution">GetDisplayResolution</a> instead.
-		</p>
-		<h2>Arguments</h2>
-		<p class="func_arguments">None.</p>
-		<h2>Results</h2>
-		<ul class="func_results">
-			<li class="lua_number">Width</li>
-			<li class="lua_number">Height</li>
-		</ul>
-	</div>
-	<div id="GetScreenResolution" class="dsl_function">
-		<p class="func_description">
-			Get the size of the primary monitor.
-			Primarily intended for centering the window during the <dfn>UpdateWindow</dfn> event.
-		</p>
-		<h2>Arguments</h2>
-		<p class="func_arguments">None.</p>
-		<h2>Results</h2>
-		<ul class="func_results">
-			<li class="lua_number">Width</li>
-			<li class="lua_number">Height</li>
-		</ul>
 	</div>
 	<script type="text/javascript" src="/navigation.js"></script>
 	<script type="text/javascript">

@@ -19,6 +19,107 @@
 			</div>
 		</div>
 	</div>
+	<div id="AllPlayers" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Returns an iterator function that will return each player one at a time. Usually you do not want to use <dfn>All</dfn>.
+			</p>
+			<p>
+				If <dfn>All</dfn> is true, even players that are not fully connected will be returned.
+			</p>
+			<p>
+				This is a <b>server</b> function.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_boolean">All</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_function">Iterator</li>
+		</ul>
+		<h2>Example</h2>
+		<p>Print connected players using a command.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>SetCommand("list_players", function()
+	for player in AllPlayers() do
+		print(GetPlayerName(player).." (id = "..player))
+	end
+end)
+</pre>
+		</code>
+	</div>
+	<div id="GetPlayerIp" class="dsl_function">
+		<p class="func_description">
+			Return a player's ip address.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Player</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_string">Ip</li>
+		</ul>
+	</div>
+	<div id="GetPlayerName" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Return a player's name.
+			</p>
+			<p>
+				This is a <b>server</b> function, see the client version here: <a href="/dsl/library/miscellaneous.html?GetPlayerName">GetPlayerName</a>.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Player</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_string">Name</li>
+		</ul>
+	</div>
+	<div id="GetServerHz" class="dsl_function">
+		<p class="func_description">
+			Return the server's refresh rate in hertz.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_string">Rate</li>
+		</ul>
+	</div>
+	<div id="IsPlayerValid" class="dsl_function">
+		<p class="func_description">
+			Return if a player is valid or not. If <dfn>Lenient</dfn> is true, the player does not have to be fully connected to be considered valid.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Player</li>
+			<li class="lua_opt_boolean">Lenient</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Valid</li>
+		</ul>
+	</div>
+	<div id="KickPlayer" class="dsl_function">
+		<p class="func_description">
+			Kick a player.
+			Players can be kicked at any time, or during a <a href="/dsl/library/event.html?PlayerConnecting">PlayerConnecting</a> event to keep the player from being connected.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Player</li>
+			<li class="lua_opt_string">Reason</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
 	<div id="SendNetworkEvent" class="dsl_function">
 		<div class="func_description">
 			<p>
@@ -31,7 +132,7 @@
 				This is a <b>server</b> function, see the client version here: <a href="/dsl/library/client.html?SendNetworkEvent">SendNetworkEvent</a>.
 			</p>
 			<p>
-				Data is sent to a specific <dfn>Player</dfn> or sent to all players by using -1.
+				Data is sent to a connected <dfn>Player</dfn> or sent to all connected players by using -1.
 			</p>
 			<p>
 				The same restrictions apply here as with <a href="/dsl/library/serialize.html?PackTable">PackTable</a>.

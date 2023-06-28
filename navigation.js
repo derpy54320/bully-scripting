@@ -442,21 +442,33 @@ var dsl_library_functions = [
 			"ForceWindowUpdate",
 			"GetInternalResolution",
 			"GetScreenResolution",
-			"QuitGame",
+			"QuitGame"
+		]]
+	],
+	["ped",
+		[5,[
 			"AllPeds",
 			"PedGetModelId",
 			"PedSetPosSimple",
-			"PedSpoofModel",
+			"PedSpoofModel"
 		]],
 		[6,[
-			"RequirePoolSize",
+			"PedCreateScriptless"
+		]],
+		[7,[
+			"PedGetThrottle",
+			"PedSetThrottle"
+		]]
+	],
+	["pool",
+		[6,[
 			"GetPoolSize",
 			"GetPoolUsage",
 			"GetPoolSpace",
 			"GetAllPoolInfo",
-			"PedCreateScriptless"
+			"RequirePoolSize"
 		]]
-	],
+	]
 	["render",
 		[1,[
 			"GetDisplayResolution",

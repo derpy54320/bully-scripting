@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Pool Functions</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+	<script type="text/javascript" src="/function.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1 id="func_name"></h1>
+			<div id="func_info">
+				<h1>Loading function...</h1>
+				<p>
+					Please make sure JavaScript is enabled.
+					Otherwise you will be unable to see the function documentation.
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="GetPoolSize" class="dsl_function">
+		<p class="func_description">
+			Return the maximum number of elements allowed in a pool.
+			Pool sizes can not normally be changed unless using DSL's <a href="/dsl/config.html#main">pool options</a> or another mod that resizes pools.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Pool</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Size</li>
+		</ul>
+		<h2>Pools (for the <dfn>Pool</dfn> argument)</h2>
+		<p>Please note that some pool names actually refer to multiple parallel pools. For example <dfn>PED</dfn> actually refers to 9 total pools.</p>
+		<ul>
+			<li>PTR_NODE</li>
+			<li>ENTRY_INFO_NODE</li>
+			<li>VEHICLE</li>
+			<li>PED</li>
+			<li>JOINT_CONSTRAINT</li>
+			<li>WEAPON</li>
+			<li>LUA_SCRIPT</li>
+			<li>DUMMY</li>
+			<li>PROP_ANIM</li>
+			<li>BUILDING</li>
+			<li>TREADABLE</li>
+			<li>COL_MODEL</li>
+			<li>STIMULUS</li>
+			<li>OBJECT</li>
+			<li>PROJECTILE</li>
+			<li>CUT_SCENE</li>
+			<li>UNKNOWN</li>
+		</ul>
+	</div>
+	<div id="GetPoolUsage" class="dsl_function">
+		<p class="func_description">
+			Return the number of elements currently used in a pool.
+			Pool names are the same as the ones used with <a href="/dsl/library/pool.html?GetPoolSize">GetPoolSize</a>.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Pool</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Usage</li>
+		</ul>
+	</div>
+	<div id="GetPoolSpace" class="dsl_function">
+		<p class="func_description">
+			Returns the amount of space left in a pool (the size minus the usage).
+			Pool names are the same as the ones used with <a href="/dsl/library/pool.html?GetPoolSize">GetPoolSize</a>.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Pool</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Space</li>
+		</ul>
+	</div>
+	<div id="GetAllPoolInfo" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Returns a table containing more tables with info about each individual pool.
+				Each table in the returned table contain 4 fields: <dfn>name</dfn>, <dfn>size</dfn>, <dfn>limit</dfn>, and <dfn>count</dfn>.
+			</p>
+			<p>
+				It is worth noting that the names of pools in the table do not directly match the names expected by <a href="/dsl/library/pool.html?GetPoolSize">GetPoolSize</a>.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Pool</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Info</li>
+		</ul>
+		<h2>Example</h2>
+		<p>Print all pool info.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>for _, pool in ipairs(GetAllPoolInfo()) do
+	print(pool.name..": "..pool.count.." / "..pool.limit.." (ElSize = "..pool.size..")")
+end
+</pre>
+		</code>
+	</div>
+	<div id="RequirePoolSize" class="dsl_function">
+		<p class="func_description">
+			This is a <i>header</i> function, meaning it is meant to go on the top of your main script as an alternative to using <a href="/dsl/collections.html#config">config.txt</a>.<br/>
+			This function makes sure that a <dfn>Pool</dfn> is at least a certain <dfn>Size</dfn>.
+			Pool names are the same as the ones used with <a href="/dsl/library/pool.html?GetPoolSize">GetPoolSize</a>.
+			If the pool is not big enough, then this script will be shutdown, execution will instantly stop, and the console will inform the user that they need a larger pool to continue.
+			If a main script of a collection is shutdown as a result of calling this function, the entire collection will also be shutdown.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Pool</li>
+			<li class="lua_number">Size</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+	<script type="text/javascript">
+		setupRealFunctionPageDSL(location.search.substring(1));
+	</script>
+</body>

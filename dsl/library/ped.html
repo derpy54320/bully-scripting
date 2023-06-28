@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<head>
+	<title>DSL - Ped Functions</title>
+	<link rel="icon" href="/icon.ico"/>
+	<link rel="stylesheet" href="/style.css"/>
+	<script type="text/javascript" src="/copy.js"></script>
+	<script type="text/javascript" src="/function.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="content">
+			<h1 id="func_name"></h1>
+			<div id="func_info">
+				<h1>Loading function...</h1>
+				<p>
+					Please make sure JavaScript is enabled.
+					Otherwise you will be unable to see the function documentation.
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="AllPeds" class="dsl_function">
+		<p class="func_description">
+			Returns an iterator function that will return each valid ped one at a time.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_function">Iterator</li>
+		</ul>
+		<h2>Example</h2>
+		<p>Make all peds fight the player on command.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>SetCommand("fight_me", function()
+	for ped in AllPeds() do
+		if ped ~= gPlayer then
+			PedSetPedToTypeAttitude(ped, 13, 0)
+			PedSetEmotionTowardsPed(ped, gPlayer, 0)
+			PedAttackPlayer(ped, 3)
+		end
+	end
+end)
+</pre>
+		</code>
+	</div>
+	<div id="PedGetModelId" class="dsl_function">
+		<p class="func_description">
+			Return a ped's model index.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Ped</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Model</li>
+		</ul>
+	</div>
+	<div id="PedSetPosSimple" class="dsl_function">
+		<p class="func_description">
+			Moves a ped without moving the player.
+			Normally this is not needed and you can use <a href="/function.html?PedSetPosXYZ">PedSetPosXYZ</a> unless you are moving a ped with the PLAYER1 faction.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Ped</li>
+			<li class="lua_number">X</li>
+			<li class="lua_number">Y</li>
+			<li class="lua_number">Z</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="PedSpoofModel" class="dsl_function">
+		<p class="func_description">
+			Set a ped's model index. This doesn't <i>actually</i> change the ped's model, which is why it is referred to as "spoofing" here.
+			This is a good way to get around certain hard coded behaviors of some models, such as dogs not being able to have a wanted level.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Ped</li>
+			<li class="lua_number">Model</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<div id="PedCreateScriptless" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Create a ped in a similar way to <a href="/function.html?PedCreateXYZ">PedCreateXYZ</a>, but do not attach them to the current script.
+			</p>
+			<p>
+				Usually this function should not be used unless you have a good reason for it.
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Model</li>
+			<li class="lua_number">X</li>
+			<li class="lua_number">Y</li>
+			<li class="lua_number">Z</li>
+			<li class="lua_opt_number">Heading</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Ped</li>
+		</ul>
+	</div>
+	<div id="PedGetThrottle" class="dsl_function">
+		<p class="func_description">
+			Get a ped's current throttle value.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Ped</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_number">Throttle</li>
+		</ul>
+	</div>
+	<div id="PedSetThrottle" class="dsl_function">
+		<p class="func_description">
+			Set a ped's current throttle value. Only has an effect if using during a <a href="/dsl/library/event.html?RegisterLocalEventHandler">PedUpdateThrottle</a> event.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_number">Ped</li>
+			<li class="lua_number">Throttle</li>
+		</ul>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
+	<script type="text/javascript" src="/navigation.js"></script>
+	<script type="text/javascript">
+		setupRealFunctionPageDSL(location.search.substring(1));
+	</script>
+</body>
