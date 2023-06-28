@@ -468,7 +468,7 @@ var dsl_library_functions = [
 			"GetAllPoolInfo",
 			"RequirePoolSize"
 		]]
-	]
+	],
 	["render",
 		[1,[
 			"GetDisplayResolution",
