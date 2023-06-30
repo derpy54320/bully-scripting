@@ -18,7 +18,8 @@
 			<hr/>
 			<h1>Types</h1>
 			<p>
-				<span class="dsl_version">DSL4</span> Support for zip files is only supported in version 4 and beyond.
+				<span class="dsl_version">DSL4</span> Support for zip files is only in version 4 and beyond.
+				<span class="dsl_version">DSL7</span> Support for categories is only in version 7 and beyond.
 			</p>
 			<p>
 				A script collection simply represents one of the things placed in DSL's <dfn>scripts</dfn> folder.
@@ -39,6 +40,16 @@
 				For example, if you have a normal collection as a folder (say <dfn>Some Mod</dfn>) and want to make <dfn>Some Mod.zip</dfn> then it is important you do not add the folder to the zip.
 				Instead, the contents of the folder are what should be in the root of the zip.
 				Basically put, make sure your config file can be found in the zip at <dfn>config.txt</dfn> rather than <dfn>Some Mod/config.txt</dfn>.
+			</p>
+			<h2>Collection Categories</h2>
+			<p>
+				Normally you just put script collections in the root of DSL's <dfn>scripts</dfn> folder, but you can also organize them inside <i>category folders</i>.
+				starting and ending with square brackets (such as <dfn>[CATEGORY]</dfn>).
+				A collection's category has no effect on how it is used or treated by DSL and is only meant to help organization.
+			</p>
+			<p>
+				Usually script collections should not be released inside any category folder.
+				This feature is only meant for the end-user to organize the scripts they've downloaded.
 			</p>
 			<hr/>
 			<h1 id="config">Config</h1>
