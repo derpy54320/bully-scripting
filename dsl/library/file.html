@@ -177,6 +177,18 @@
 			<li class="lua_table">Table</li>
 		</ul>
 	</div>
+	<div id="CanWriteFiles" class="dsl_function">
+		<p class="func_description">
+			Check if files can be written. If this returns <b>false</b>, then any functions that open files for writing or write files will fail.
+			As of now, file writing is only disabled once a server is connected to so that client scripts sent by servers cannot write files.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Allowed</li>
+		</ul>
+	</div>
 	<script type="text/javascript" src="/navigation.js"></script>
 	<script type="text/javascript">
 		setupRealFunctionPageDSL(location.search.substring(1));

@@ -332,6 +332,9 @@ var dsl_library_functions = [
 			"WriteFile",
 			"SaveTable",
 			"LoadTable"
+		]],
+		[7,[
+			"CanWriteFiles"
 		]]
 	],
 	["hook",
@@ -419,6 +422,10 @@ var dsl_library_functions = [
 		]],
 		[6,[
 			"SetScriptCleanup"
+		]],
+		[7,[
+			"AllowOnServer",
+			"StopCurrentScriptCollection"
 		]]
 	],
 	["miscellaneous",
@@ -547,7 +554,7 @@ var dsl_library_functions = [
 			"GetServerHz",
 			"IsPlayerValid",
 			"KickPlayer"
-			//SendNetworkEvent
+			//"SendNetworkEvent"
 		]]
 	]
 ];

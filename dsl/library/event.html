@@ -126,6 +126,14 @@ end)
 				<td>A ped's stat is being changed unless an event handler returns true. Beware setting the stat yourself will still activate the event.</td>
 			</tr>
 			<tr>
+				<td><span class="dsl_func_version">DSL7</span><b>PedUpdateThrottle(ped)</b></td>
+				<td>A ped is updating their action throttle, which can happen multiple times per frame. This is a good time to call <dfn>PedSetThrottle</dfn>.</td>
+			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL7</span><b>PlayerBuilding(is_player,is_cutscene)</b></td>
+				<td>A ped's model will rebuild unless an event handler returns true. This can prevent replacing ped models with player clothes.</td>
+			</tr>
+			<tr>
 				<td><span class="dsl_func_version">DSL5</span><b>PlayerSleepCheck()</b></td>
 				<td>The game wants to check if the player should fall asleep, but will skip the check if an event handler returns true.</td>
 			</tr>
@@ -134,27 +142,27 @@ end)
 				<td>A save game is going to be loaded unless an event handler returns true.</td>
 			</tr>
 			<tr>
-				<td><span class="dsl_func_version">DSL5</span><b>ServerConnected(address)</b></td>
-				<td>A server has been fully connected to.</td>
+				<td><span class="dsl_func_version">DSL7</span><b>ServerConnected()</b></td>
+				<td>The active server is now fully connected to.</td>
 			</tr>
 			<tr>
-				<td><span class="dsl_func_version">DSL5</span><b>ServerConnecting(address)</b></td>
-				<td>A server connection has begun.</td>
+				<td><span class="dsl_func_version">DSL7</span><b>ServerConnecting(address)</b></td>
+				<td>A server connection has begun, and can be considered "active" until the <dfn>ServerDisconnected</dfn> event.</td>
 			</tr>
 			<tr>
-				<td><span class="dsl_func_version">DSL5</span><b>ServerDisconnected(address)</b></td>
+				<td><span class="dsl_func_version">DSL7</span><b>ServerDisconnected(address)</b></td>
 				<td>A server has been disconnected from. Always comes after a <dfn>ServerConnecting</dfn> event (unless the game is quit).</td>
 			</tr>
 			<tr>
-				<td><span class="dsl_func_version">DSL5</span><b>ServerDownloading()</b></td>
-				<td>The server we're connecting to is downloading.</td>
+				<td><span class="dsl_func_version">DSL7</span><b>ServerDownloading()</b></td>
+				<td>The active server is downloading files for the first time.</td>
 			</tr>
 			<tr>
-				<td><span class="dsl_func_version">DSL5</span><b>ServerKicked(reason)</b></td>
-				<td>The server has issued a kick.</td>
+				<td><span class="dsl_func_version">DSL7</span><b>ServerKicked(reason)</b></td>
+				<td>The active server issued a kick (and a seperate <dfn>ServerDisconnected</dfn> event will still follow).</td>
 			</tr>
 			<tr>
-				<td><span class="dsl_func_version">DSL5</span><b>ServerListing(address, listing)</b></td>
+				<td><span class="dsl_func_version">DSL7</span><b>ServerListing(address, listing)</b></td>
 				<td>A server has provided listing information. The listing table contains <dfn>name</dfn>, <dfn>info</dfn>, <dfn>mode</dfn>, <dfn>icon</dfn>, <dfn>players</dfn>, and <dfn>max_players</dfn>.</td>
 			</tr>
 			<tr>

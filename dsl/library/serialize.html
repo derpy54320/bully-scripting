@@ -26,7 +26,7 @@
 				If you only want to pack a single table, consider using <a href="/dsl/library/serialize.html?PackTable">PackTable</a>.
 			</p>
 			<p>
-				Only the following values are allowed to be serialized: <b>boolean</b>, <b>number</b>, <b>string</b>, and <b>table</b>.
+				Only the following values are allowed to be serialized: <b>boolean</b>, <b>number</b>, <b>string</b>, <b>table</b>, and <b>light userdata</b>.
 				Do not use any tables that refer back to themselves.
 			</p>
 		</div>
@@ -38,6 +38,10 @@
 		<ul class="func_results">
 			<li class="lua_string">Serialized data</li>
 		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL7</span> <b>light userdata</b> is supported, which lets you serialize hashes returned by <a href="/function.html?ObjectNameToHashID">ObjectNameToHashID</a>.
+		</p>
 	</div>
 	<div id="UnpackData" class="dsl_function">
 		<p class="func_description">
@@ -59,7 +63,7 @@
 				This is a lower level version of the <a href="/dsl/library/serialize.html?PackData">PackData</a> function.
 			</p>
 			<p>
-				Only the following values are allowed to be serialized: <b>boolean</b>, <b>number</b>, <b>string</b>, and <b>table</b>.
+				Only the following values are allowed to be serialized: <b>boolean</b>, <b>number</b>, <b>string</b>, <b>table</b>, and <b>light userdata</b>.
 				Do not use any tables that refer back to themselves.
 			</p>
 		</div>
@@ -71,6 +75,10 @@
 		<ul class="func_results">
 			<li class="lua_string">Serialized table</li>
 		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL7</span> <b>light userdata</b> is supported, which lets you serialize hashes returned by <a href="/function.html?ObjectNameToHashID">ObjectNameToHashID</a>.
+		</p>
 	</div>
 	<div id="UnpackTable" class="dsl_function">
 		<p class="func_description">

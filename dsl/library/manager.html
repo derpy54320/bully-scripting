@@ -20,6 +20,16 @@
 		</div>
 	</div>
 	<!-- SCRIPTS - HEADERS -->
+	<div id="AllowOnServer" class="dsl_function">
+		<p class="func_description">
+			This is a <i>header</i> function, meaning it is meant to go on the top of your main script as an alternative to using <a href="/dsl/collections.html#config">config.txt</a>.<br/>
+			Similar to setting <dfn>allow_on_server</dfn> in config (which is usually the better option), this will allow your script to keep running even when connected to a server.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
 	<div id="DontAutoStartScript" class="dsl_function">
 		<p class="func_description">
 			This is a <i>header</i> function, meaning it is meant to go on the top of your main script as an alternative to using <a href="/dsl/collections.html#config">config.txt</a>.<br/>
@@ -164,6 +174,9 @@ end</pre>
 			<p>
 				You can optionally supply your own <dfn>Environment</dfn> instead of letting the default one be generated.
 			</p>
+			<p>
+				The <dfn>Script</dfn> may not be returned if the script is terminated before this function returns.
+			</p>
 		</div>
 		<h2>Arguments</h2>
 		<ul class="func_arguments">
@@ -172,7 +185,7 @@ end</pre>
 		</ul>
 		<h2>Results</h2>
 		<ul class="func_results">
-			<li class="lua_userdata">Script</li>
+			<li class="lua_opt_userdata">Script</li>
 		</ul>
 		<h2>Versions</h2>
 		<p class="func_versions">
@@ -230,6 +243,17 @@ end</pre>
 		</p>
 	</div>
 	<!-- SCRIPTS - CLEANUP -->
+	<div id="StopCurrentScriptCollection" class="dsl_function">
+		<p class="func_description">
+			Stops the current script collection.
+			Similar to <a href="/dsl/library/manager.html?TerminateCurrentScript">TerminateCurrentScript</a>, this will not <i>instantly</i> take control from your script.
+			The most common use for this function is to mark the script collection as <b>INACTIVE</b>, which does not happen automatically when your scripts die.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<p class="func_results">None.</p>
+	</div>
 	<div id="TerminateCurrentScript" class="dsl_function">
 		<p class="func_description">
 			This function replaces the existing <a href="/function.html?TerminateCurrentScript">TerminateCurrentScript</a>.
