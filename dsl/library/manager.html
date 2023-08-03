@@ -338,18 +338,31 @@ end</pre>
 		</ul>
 	</div>
 	<div id="GetScriptSharedTable" class="dsl_function">
-		<p class="func_description">
-			Returns the shared table of <dfn>Script</dfn>'s collection or of the current collection.
-			The shared table available to all scripts in the collection, and is empty by default.
-		</p>
+		<div class="func_description">
+			<p>
+				Returns a table that is available to all scripts in the current collection.
+				The table is only actually created the first time this function is called.
+				By default, the table will be accessible from anywhere using <a href="/dsl/globals.html#s">s</a>.
+			</p>
+			<p>
+				If <dfn>Share mode</dfn> is <b>true</b>, the shared table cannot be accessed through <dfn>s</dfn>.
+				If no value is given, the share mode will not be changed.
+				Attempting to change the share mode after the table is created will result in an error.
+			</p>
+		</div>
 		<h2>Arguments</h2>
 		<ul class="func_arguments">
-			<li class="lua_opt_userdata">Script</li>
+			<li class="lua_opt_boolean">Share mode</li>
 		</ul>
 		<h2>Results</h2>
 		<ul class="func_results">
 			<li class="lua_table">Table</li>
 		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL7</span> A mostly useless argument was removed, and the optional <dfn>Share mode</dfn> argument was added.
+		</p>
+		<h2>Example</h2>
 		<p>Communicate with a second script using a shared table.</p>
 		<h3>main.lua:</h3>
 		<code class="func_example">

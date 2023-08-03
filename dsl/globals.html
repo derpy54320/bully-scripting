@@ -9,8 +9,9 @@
 	<div id="main">
 		<div id="content">
 			<h1>derpy's script loader - Global Variables</h1>
+			<h2 id="gDerpyScriptLoader">gDerpyScriptLoader</h2>
 			<p>
-				The only global variable set by DSL (besides all of its functions) is <dfn>gDerpyScriptLoader</dfn>, which is set to the current <a href="/dsl/about.html#versions">version of DSL</a>.
+				Set to the current <a href="/dsl/about.html#versions">version of DSL</a>.
 			</p>
 			<p>
 				You can use this value to conditionally support certain features of DSL,
@@ -22,6 +23,49 @@
 	DrawTextInline("You can make use of DSL functions!", 3, 1)
 else
 	TextPrintString("Support running this script without DSL.", 3, 1)
+end</pre>
+			</code>
+			<h2 id="s">s</h2>
+			<p>
+				<span class="dsl_version">DSL7</span> This feature was introduced in version 7.
+			</p>
+			<p>
+				Short for <i>"shared"</i>, this table can be used to get shared tables from script collections that
+				share values using <a href="/dsl/library/manager.html?GetScriptSharedTable">GetScriptSharedTable</a>.
+				A shared table can be retrieved by indexing <dfn>s</dfn> using the desired script collection's name (case-insensitive).
+				If the collection does not exist, is shutting down, or isn't sharing its table then you will get <b>nil</b>.
+				You should not set values in <dfn>s</dfn>.
+			</p>
+			<p>
+				Please note that although <dfn>s</dfn> does stand for <i>"shared"</i>,
+				it is entirely seperate and unrelated to the game's normal <dfn>shared</dfn> table which can be used to share simple values between scripts.
+			</p>
+			<p>
+				Sometimes it may seem more tempting to just make a global function or put a value in <dfn>shared</dfn>,
+				but using a shared table is often the better choice for a few reasons.
+			</p>
+			<ul>
+				<li>It naturally creates a namespace for each mod (since you must do <dfn>s.modname</dfn>), so function names will never conflict with other mods.</li>
+				<li>The presence of a shared table can be tested for by checking if <dfn>s.modname</dfn> is <b>nil</b>, allowing simple conditional usage of shared functions from other mods.</li>
+				<li>Tables from <dfn>s</dfn> are <i>only</i> accessible while the collection is running, which ensures shared functions can only be called when the mod they came from is running.</li>
+				<li>It is DSL's standard way of sharing functions between multiple script collections, so using it will make your mod more consistent with other scripts and official DSL scripts.</li>
+			</ul>
+			<h3>chat/sv_chat.lua:</h3>
+			<code>
+				<button class="copy_code" onclick="copyCode(this)">copy</button>
+				<pre>sst = GetScriptSharedTable()
+
+sst.notify = function(text)
+	-- some code that sends some notification message to all players
+end</pre>
+			</code>
+			<h3>test.lua:</h3>
+			<code>
+				<button class="copy_code" onclick="copyCode(this)">copy</button>
+				<pre>function main()
+	if s.chat then
+		s.chat.notify("a chat notification from an entirely different mod")
+	end
 end</pre>
 			</code>
 		</div>
