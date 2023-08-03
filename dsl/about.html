@@ -155,6 +155,34 @@
 				<li>Added the GAME2 thread type.</li>
 				<li>Lots of other little fixes and changes as always.</li>
 			</ul>
+			<h2>version 7</h2>
+			<ul>
+				<li>197 total functions.</li>
+				<li>Servers can now be run on Linux.</li>
+				<li>Added ped throttle functions and events.</li>
+				<li>Added global dsl table for accessing shared tables.</li>
+				<li>Added categories for script collections to help organize large amounts of mods.</li>
+				<li>Added the PlayerBuilding event so that scripts can cancel the rebuilding of the player model.</li>
+				<li>Added the StopCurrentScriptCollection function so collections can set themselves as fully inactive.</li>
+				<li>Added the ability to serialize light userdata for the sake of hashes returned by some game functions.</li>
+				<li>Missing scripts are no longer included when * is used for a command.</li>
+				<li>The StartTyping function can now take an initial string instead of always starting blank.</li>
+				<li>Localized text can be registered using an initial string (though the feature is still experimental).</li>
+				<li>Improved error reporting when unable to open a file.</li>
+				<li>For security, scripts can no longer write files at all after connecting to a server.</li>
+				<li>Added a function to check if scripts are allowed to write files.</li>
+				<li>Added the AllowOnServer header function to do the same thing as allow_on_server from collection config.</li>
+				<li>Reworked client events related to server connections, no longer passing the address more than needed.</li>
+				<li>An error is now raised if SendNetworkEvent is called with an unconnected player.</li>
+				<li>The client now filters out files based on their type, only allowing whitelisted extensions.</li>
+				<li>The require function now properly sets _REQUIREDNAME in the same way the standard version did.</li>
+				<li>Fixed even more issues related to DrawTextInline, including some related to inline texture drawing.</li>
+				<li>Fixed an issue that let you restart network scripts after disconnecting.</li>
+				<li>Fixed stand-alone server scripts.</li>
+				<li>Fixed an issue where scripts loaded as a dependency would still get auto-started.</li>
+				<li>Fixed excessive CPU usage by the server.</li>
+				<li>Like always, many more small fixes.</li>
+			</ul>
 		</div>
 	</div>
 	<script type="text/javascript" src="/navigation.js"></script>
