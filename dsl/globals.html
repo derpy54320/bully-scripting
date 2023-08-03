@@ -41,8 +41,8 @@ end</pre>
 				but using a shared table from <dfn>dsl</dfn> is often the better choice for a few reasons.
 			</p>
 			<ul>
-				<li>It naturally creates a namespace for each mod (since you must do <dfn>s.modname</dfn>), so function names will never conflict with other mods.</li>
-				<li>The presence of a shared table can be tested for by checking if <dfn>s.modname</dfn> is <b>nil</b>, allowing simple conditional usage of shared functions from other mods.</li>
+				<li>It naturally creates a namespace for each mod (since you must do <dfn>dsl.modname</dfn>), so function names will never conflict with other mods.</li>
+				<li>The presence of a shared table can be tested for by checking if <dfn>dsl.modname</dfn> is <b>nil</b>, allowing simple conditional usage of shared functions from other mods.</li>
 				<li>Tables from <dfn>dsl</dfn> are <i>only</i> accessible while the collection is running, which ensures shared functions can only be called when the mod they came from is running.</li>
 				<li>It is DSL's standard way of sharing functions between multiple script collections, so using it will make your mod more consistent with other scripts and official DSL scripts.</li>
 			</ul>
