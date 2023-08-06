@@ -75,13 +75,18 @@ PlayerAddMoney(10000)</pre>
 		</code>
 	</div>
 	<div id="RequireLoaderVersion" class="dsl_function">
-		<p class="func_description">
-			This is a <i>header</i> function, meaning it is meant to go on the top of your main script as an alternative to using <a href="/dsl/collections.html#config">config.txt</a>.<br/>
-			This function makes sure that the current version of DSL is at least <dfn>Version</dfn>.
-			If <dfn>Not backwards compatible</dfn> is true, then it requires that the current version of DSL is the exact version specified.
-			If the current DSL version does not match what is desired, then this script will be shutdown, execution will instantly stop, and the console will inform the user that they do not have the right version.
-			If a main script of a collection is shutdown as a result of calling this function, the entire collection will also be shutdown.
-		</p>
+		<div class="func_description">
+			<p>
+				This is a <i>header</i> function, meaning it is meant to go on the top of your main script as an alternative to using <a href="/dsl/collections.html#config">config.txt</a>.<br/>
+				This function makes sure that the current version of DSL is at least <dfn>Version</dfn>.
+				If <dfn>Not backwards compatible</dfn> is true, then it requires that the current version of DSL is the exact version specified.
+				If the current DSL version does not match what is desired, then this script will be shutdown, execution will instantly stop, and the console will inform the user that they do not have the right version.
+				If a main script of a collection is shutdown as a result of calling this function, the entire collection will also be shutdown.
+			</p>
+			<p>
+				The version number required here should only be an integer, as any decimal part will be disregarded.
+			</p>
+		</div>
 		<h2>Arguments</h2>
 		<ul class="func_arguments">
 			<li class="lua_number">Version</li>

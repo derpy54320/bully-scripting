@@ -66,11 +66,11 @@
 			<p>
 				All values are optional, and only <dfn>main_script</dfn> will get a default value (except on the server version where there can be zero main scripts).
 				Standalone collections obviously use their own name for the main script, and other collections will default to using "main.lua".
-				Since the file generated is self-explanatory and there are no hidden options, it will not be discussed here.
+				Since the file generated is self-explanatory and there are no hidden options, most of it will not be explained here.
 			</p>
 			<p>
-				Please note that any requirements dealing with a version number only deal with the <i>major</i> version number, meaning you should never specify the decimal part of a version.
-				For example, something like <dfn>require_version 7.1</dfn> is not supported (and will only actually require version 7 because the decimal part will be ignored).
+				Please note that any requirements dealing with a version number only use the integer version number.
+				This means you should never require something like version <b>7.1</b>, but instead just require version <b>7</b>.
 			</p>
 			<hr/>
 			<h1 id="startup">Startup</h1>
