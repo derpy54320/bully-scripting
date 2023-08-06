@@ -68,6 +68,10 @@
 				Standalone collections obviously use their own name for the main script, and other collections will default to using "main.lua".
 				Since the file generated is self-explanatory and there are no hidden options, it will not be discussed here.
 			</p>
+			<p>
+				Please note that any requirements dealing with a version number only deal with the <i>major</i> version number, meaning you should never specify the decimal part of a version.
+				For example, something like <dfn>require_version 7.1</dfn> is not supported (and will only actually require version 7 because the decimal part will be ignored).
+			</p>
 			<hr/>
 			<h1 id="startup">Startup</h1>
 			<p>
