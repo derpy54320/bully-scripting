@@ -17,13 +17,13 @@
 			<h1>Client Scripts</h1>
 			<p>
 				Client scripts can be defined using <dfn>client_script</dfn> in the <dfn>config.txt</dfn> of a server script collection.
-				If the collection is running, these scripts are sent to players when the join and also sent when the collection is restarted.
-				Additional files the script may need (such as images) can be sent using <dfn>client_file</dfn>.
+				If the collection is running, these scripts are sent to players when they join and also sent when the collection is restarted.
+				Additional files the script may need (such as images or manually loaded scripts) can be sent using <dfn>client_file</dfn>.
 			</p>
 			<p>
 				When a player connects to a server, they stop all of their local script collections
-				(unless marked with <dfn>allow_on_server</dfn> for the sake of allowing mods like the window mod).
-				Then all active server script collections are then started using the sent client scripts and files.
+				(unless they're marked with <dfn>allow_on_server</dfn> for the sake of allowing mods like the window mod).
+				Then all active server script collections are started using the sent client scripts and files.
 				Server script collections can only be controlled by the server, although players can still use <dfn>/list</dfn> to see them.
 			</p>
 			<p>
@@ -39,11 +39,11 @@
 			<p>
 				By default no network events exist, and you can make your own events by just sending one as there is no "creation" of events.
 				Although events can be named whatever you like, it is advised you prefix your event to make sure it is unique and to make it easy to tell what script it may have come from.
-				For example instead of <dfn>"playerKilled"</dfn>, you may want to use something like <dfn>"mod_name:playerKilled"</dfn>.
+				For example instead of <dfn>"playerKilled"</dfn>, you are urged to use something like <dfn>"mod_name:playerKilled"</dfn>.
 			</p>
 			<p>
 				Network events can only be activated by the other side of the connection.
-				This means client network events can only be activated by the server, and server network events can only be activated by the client.
+				This means client network events can only be activated by the server, and server network events can only be activated by a client.
 				A server should not trust the events sent by clients, as a hacker or network error could affect the event sent and its arguments.
 				The only thing servers can count on with network events is that the first argument is a valid connected player.
 			</p>
@@ -55,15 +55,15 @@
 			<p>
 				You may need to make these on the server to respond to player related events.
 				Player events (such as <dfn>PlayerDropped</dfn>) are considered local because they come from the server itself,
-				which means you can always trust them unlike network events.
+				which means you can always trust them and their arguments unlike network events.
 			</p>
 			<hr/>
 			<h1>Server Player Objects</h1>
 			<p>
-				In Lua scripts, players are representing using their ID as a number.
+				In Lua scripts, players are represented using a numeric ID.
 				Player IDs start at zero, and a negative player ID is considered invalid.
-				When some player joins the server after another one leaves it is possible for them to re-use an old player ID,
-				so it is <b>very important</b> that you remove any references to a player during local <dfn>PlayerDropped</dfn> events to prevent unexpected behavior.
+				When some player joins the server after another has left, it is possible for them to re-use an old player ID.
+				This means it is <b>very important</b> that you remove any references to a player during local <dfn>PlayerDropped</dfn> events to prevent unexpected behavior.
 			</p>
 			<p>
 				Players can be said to have 3 states: <b>invalid</b>, <b>valid</b>, and <b>connected</b>.
@@ -72,10 +72,10 @@
 				except during a <dfn>PlayerListing</dfn> event where the player is only considered valid for the duration of that event.
 			</p>
 			<p>
-				You can always do some basic things with a player as long as their valid (such as kick them or get their name),
-				but you can only send data to peds that are connected.
+				You can always do some basic things with a player as long as they're valid (such as kick them or get their name),
+				but you can only send data to players that are connected.
 				A player returned by <a href="/dsl/library/server.html?AllPlayers">AllPlayers</a> is always connected,
-				unless the optional boolean is <dfn>true</dfn> which means it can return players that are only valid as well.
+				unless the optional argument for it is <dfn>true</dfn> which means it can return players that are only valid as well.
 				You can also use <a href="/dsl/library/server.html?IsPlayerValid">IsPlayerValid</a> to check if a player is connected or valid.
 			</p>
 			<p>
