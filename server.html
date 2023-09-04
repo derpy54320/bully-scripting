@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<!-- this file has not been integrated into bullyscripting's navigation yet but may be shared in other places -->
+<html>
+	<head>
+		<title>DSL Server Manual</title>
+		<style>
+			:root{
+				color-scheme: dark;
+				font-family: Helvetica, Arial;
+			}
+			body{
+				margin-left: auto;
+				margin-right: auto;
+				max-width: 80rem;
+			}
+			#content{
+				background-color: #0C0C0C;
+				border-radius: 10px;
+				padding-bottom: 1rem;
+				padding-left: 1rem;
+				padding-right: 1rem;
+			}
+			hr{
+				margin-top: 2rem;
+			}
+			h1{
+				font-family: Arial;
+				font-weight: 900;
+				text-align: center;
+			}
+			h2{
+				font-family: Arial;
+				font-weight: 900;
+			}
+			h3{
+				font-family: Arial;
+				font-weight: bold;
+			}
+			#index a{
+				display: block;
+				margin-bottom: 1rem;
+				text-decoration: none;
+			}
+			#index a:hover{
+				text-decoration: underline;
+			}
+			dfn{
+				background-color: #000000;
+				font-family: "Lucida Console", Consolas;
+				font-style: normal;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="content">
+			<h1>derpy's script server - server manual</h1>
+			<hr/>
+			<div id="index">
+				<h2>Setup</h2>
+				<a href="#start">Getting started</a>
+				<a href="#config">Configuring your server</a>
+				<a href="#setup">Setting up your scripts</a>
+				<a href="#host">Hosting your server</a>
+				<h2>Scripts</h2>
+				<a href="#account">extras/account</a>
+				<a href="#admin">extras/admin</a>
+				<a href="#chat">extras/chat</a>
+				<a href="#loadanim">extras/loadanim</a>
+				<a href="#menu">extras/menu</a>
+				<a href="#profanity">extras/profanity</a>
+			</div>
+			<hr/>
+			<h2 id="start">Getting started</h2>
+			<p>
+				Before setting up your server, you should already be familiar with the basics of <a href="http://bullyscripting.net/dsl/about.html">derpy's script loader (DSL)</a>
+				and how <a href="http://bullyscripting.net/dsl/collections.html">DSL collections<a> work.
+				Once you are confident with using the loader itself, you should be ready to setup a server (which you can download <a href="http://bullyscripting.net/downloads.html#dsl">here</a>).
+			</p>
+			<p>
+				Now that you have the server executable, you must decide if you want to run the server using Windows or Linux.
+				It is recommended you use Windows (<b>./derpy_script_server.exe</b>) while testing your server, and only move to Linux (<b>./derpy_script_server</b>) if it is more cost-effective for you to host.
+				If using Ubuntu you may need to install the <b>lib32z1</b> and <b>libc6-i386</b> packages since the executable is 32 bit. Other platforms have not been tested.
+			</p>
+			<p>
+				The directory (or folder) you run the executable in is where all your files will go.
+				You should at least have the executable and the <dfn>scripts</dfn> folder before you run the executable.
+				After you start the server for the first time, a <dfn>config.txt</dfn> file will be generated and you may configure it before starting again.
+			</p>
+			<p>
+				If you are interested in making network scripts, you can check out <a href="http://bullyscripting.net/dsl/network.html">this page</a>.
+			</p>
+			<h2 id="config">Configuring your server</h2>
+			<p>
+				For the most part, <dfn>config.txt</dfn> documents itself and you should be able to figure out what to change.
+				The only things that you should really need to change are <b>server_name</b>, <b>server_info</b>,
+				and if you'd like you can uncomment <b>server_icon</b> and set it to a 1:1 PNG in the same directory that is no more than 100 KiB.
+			</p>
+			<p>
+				If you are only making this server for a few friends and you want to make sure nobody joins that isn't supposed to, you can setup a whitelist by
+				setting <b>whitelist_instead</b> to <b>true</b> and uncommenting <b>whitelist_ip</b> and setting it to someone's IP.
+				You can then add as many more IPs as you want by duplicating that line.
+			</p>
+			<h2 id="setup">Setting up your scripts</h2>
+			<p>
+				By itself, a server will do nothing to players' games. It is only through scripts that anything happens, including any sort of sync.
+				There are a few scripts that come with the server (in the <dfn>extras</dfn> folder) and the rest will need to be downloaded elsewhere.
+				Copy (or move) as many scripts as you want to your server scripts, and control them using the same commands you'd use on the client.
+				Commands can be typed directly into Windows servers, but must be done remotely on Linux servers.
+			</p>
+			<p>
+				All scripts in <dfn>extras</dfn> have their own <dfn>config.txt</dfn> that you should check out and configure if you decide to use them.
+				Some scripts can integrate with each other, but none are configured to do so by default.
+			</p>
+			<h2 id="host">Hosting your server</h2>
+			<p>
+				It is recommended you host your server locally using Windows when setting one up for the first time, and move it to a dedicated server when it is ready to be played.
+				There are many services that will let you rent a <a href="https://en.wikipedia.org/wiki/Virtual_private_server">VPS</a> if you do not have a server yet,
+				<a href="https://www.vultr.com/">Vultr</a> being a fairly good choice.
+				It is often more cost-effective to rent a Linux server than a Windows one as mentioned earlier, but either will work of course.
+			</p>
+			<p>
+				Once your server is up, you should be able to connect to it by turning on <b>allow_networking</b> in your DSL <dfn>config.txt</dfn> and then using <i>/connect</i> in-game.
+				If everything seems okay, you can share your server's IP with your friends to start playing!
+				It is suggested you restart the server at least every few days to keep it running well.
+			</p>
+			<hr/>
+			<h2 id="account">extras/account</h2>
+			<h3>Summary</h3>
+			<p>
+				These scripts make players create an account to play on the server.
+				This ensures that every player has some unique identifier (their username) that other scripts can use when saving data that should be tied to a certain player.
+				Accounts also have <i>roles</i> attached to them, which other scripts can check for.
+			</p>
+			<h3>Integrations</h3>
+			<ul>
+				<li><b>profanity</b>: restrict players from creating accounts with profane usernames.</li>
+			</ul>
+			<h3>Commands (server)</h3>
+			<ul>
+				<li><b>/check_account &lt;user&gt;</b>: Check if an account exists, is being used, and what roles it has.</li>
+				<li><b>/check_accounts [count]</b>: Print statistics related to accounts, and optionally list accounts in alphabetical order.</li>
+				<li><b>/delete_account &lt;user&gt;</b>: Delete a specific account.</li>
+				<li><b>/demote_account &lt;user&gt; [role]</b>: Strip an account of a specific role or of all roles.</li>
+				<li><b>/promote_account &lt;user&gt; &lt;role&gt;</b>: Give an account some role that other scripts can check for.</li>
+				<li><b>/reset_accounts</b>: Reset all account data, totally destroying every account.</li>
+				<li><b>/unlimit_accounts &lt;player_id&gt;</b>: Temporarily allow a player to make as many accounts as they want.</li>
+				<li><b>/verify_accounts</b>: Tell all running scripts to verify their account data and cleanup anything related to deleted accounts.</li>
+			</ul>
+			<hr/>
+			<h2 id="admin">extras/admin</h2>
+			<h3>Summary</h3>
+			<p>
+				These scripts provide administrative and moderative commands. Players can be authenticated using an IP or an account role if applicable.
+				Commands are only registered for players that are allowed to use them (but even then the server will verify them before doing anything).
+			</p>
+			<h3>Integrations</h3>
+			<ul>
+				<li><b>account</b>: use roles to determine admins / mods, and show usernames in the <i>/players</i> command.</li>
+			</ul>
+			<h3>Commands (client)</h3>
+			<ul>
+				<li><b>/ban &lt;id&gt; [reason]</b>: temporarily ban a player (until the scripts are stopped).</li>
+				<li><b>/kick &lt;id&gt; [reason]</b>: kick a player.</li>
+				<li><b>/players</b>: list all player IDs.</li>
+				<li><b>/server ...</b>: run a command on the server.</li>
+			</ul>
+			<hr/>
+			<h2 id="chat">extras/chat</h2>
+			<h3>Summary</h3>
+			<p>
+				These scripts are for the chat. Press <b>enter</b> or <b>/</b> to start sending a message or run a command.
+			</p>
+			<h3>Integrations</h3>
+			<ul>
+				<li><b>account</b>: show usernames instead of player names, show player IDs to certain roles, and ensure proper timing.</li>
+				<li><b>profanity</b>: censor profane messages sent by players.</li>
+			</ul>
+			<hr/>
+			<h2 id="loadanim">extras/loadanim</h2>
+			<h3>Summary</h3>
+			<p>
+				The same loadanim.lua script that normally comes with DSL. Loads all animation groups so other scripts don't have to worry about it.
+			</p>
+			<hr/>
+			<h2 id="menu">extras/menu</h2>
+			<h3>Summary</h3>
+			<p>
+				These scripts are for the server menu. It is totally client side and serves as a central menu system for other scripts to integrate with.
+			</p>
+			<hr/>
+			<h2 id="profanity">extras/profanity</h2>
+			<h3>Summary</h3>
+			<p>
+				These scripts check for profanity. They do not do anything by themselves, and only provide other scripts with a way to check for profanity.
+			</p>
+		</div>
+	</body>
+</html>
