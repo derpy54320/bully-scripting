@@ -91,21 +91,17 @@
 				Once you are confident with using the loader itself, you should be ready to setup a server (which you can download <a href="http://bullyscripting.net/downloads.html#dsl">here</a>).
 			</p>
 			<p>
-				Now that you have the server executable, you must decide if you want to run the server using Windows or Linux.
-				It is recommended you use Windows (<b>./derpy_script_server.exe</b>) while testing your server, and only move to Linux (<b>./derpy_script_server</b>) if it is more cost-effective for you to host.
-				If using Ubuntu you may need to install the <b>lib32z1</b> and <b>libc6-i386</b> packages since the executable is 32 bit. Other platforms have not been tested.
+				Once you have the server version, you must decide if you want to run the server using Windows or Linux.
+				It is recommended you use Windows (<b>derpy_script_server.exe</b>) when starting out and only move to Linux (<b>./derpy_script_server</b>) later if you decide it is more cost-effective for you.
 			</p>
 			<p>
 				The directory (or folder) you run the executable in is where all your files will go.
-				You should at least have the executable and the <dfn>scripts</dfn> folder before you run the executable.
-				After you start the server for the first time, a <dfn>config.txt</dfn> file will be generated and you may configure it before starting again.
-			</p>
-			<p>
-				If you are interested in making network scripts, you can check out <a href="http://bullyscripting.net/dsl/network.html">this page</a>.
+				You should at least have the executable and the <b>scripts</b> folder before you run the executable.
+				After you start the server for the first time, a <b>config.txt</b> file will be generated and you may configure it before starting again.
 			</p>
 			<h2 id="config">Configuring your server</h2>
 			<p>
-				For the most part, <dfn>config.txt</dfn> documents itself and you should be able to figure out what to change.
+				For the most part, <b>config.txt</b> documents itself and you should be able to figure out what to change.
 				The only things that you should really need to change are <b>server_name</b>, <b>server_info</b>,
 				and if you'd like you can uncomment <b>server_icon</b> and set it to a 1:1 PNG in the same directory that is no more than 100 KiB.
 			</p>
@@ -116,26 +112,33 @@
 			</p>
 			<h2 id="setup">Setting up your scripts</h2>
 			<p>
-				By itself, a server will do nothing to players' games. It is only through scripts that anything happens, including any sort of sync.
-				There are a few scripts that come with the server (in the <dfn>extras</dfn> folder) and the rest will need to be downloaded elsewhere.
+				By itself, a server will do nothing to players' games. It is only through scripts that anything happens, including any sort of game sync.
+				There are a few script collections that come with the server (in the <b>extras</b> folder) and the rest will need to be downloaded elsewhere.
 				Copy (or move) as many scripts as you want to your server scripts, and control them using the same commands you'd use on the client.
-				Commands can be typed directly into Windows servers, but must be done remotely on Linux servers.
+				Commands can be typed directly into Windows servers, but must be done remotely on Linux servers (for now).
 			</p>
 			<p>
-				All scripts in <dfn>extras</dfn> have their own <dfn>config.txt</dfn> that you should check out and configure if you decide to use them.
+				All scripts in <b>extras</b> have their own <b>config.txt</b> that you should check out and configure if you decide to use them.
 				Some scripts can integrate with each other, but none are configured to do so by default.
+				All of these scripts are documented in this manual for both server owners and scripters looking to integrate with them.
+			</p>
+			<p>
+				If you are interested in making your own network scripts, you can check out <a href="http://bullyscripting.net/dsl/network.html">this page</a> to get started.
 			</p>
 			<h2 id="host">Hosting your server</h2>
 			<p>
-				It is recommended you host your server locally using Windows when setting one up for the first time, and move it to a dedicated server when it is ready to be played.
+				It is recommended you host your server locally using Windows when setting one up for the first time, and move it to a dedicated server when it is ready to be played by the public.
 				There are many services that will let you rent a <a href="https://en.wikipedia.org/wiki/Virtual_private_server">VPS</a> if you do not have a server yet,
 				<a href="https://www.vultr.com/">Vultr</a> being a fairly good choice.
 				It is often more cost-effective to rent a Linux server than a Windows one as mentioned earlier, but either will work of course.
 			</p>
 			<p>
-				Once your server is up, you should be able to connect to it by turning on <b>allow_networking</b> in your DSL <dfn>config.txt</dfn> and then using <i>/connect</i> in-game.
+				Once your server is up, you should be able to connect to it by turning on <b>allow_networking</b> in your DSL <b>config.txt</b> and then using <i>/connect</i> in-game.
 				If everything seems okay, you can share your server's IP with your friends to start playing!
 				It is suggested you restart the server at least every few days to keep it running well.
+			</p>
+			<p>
+				If you have problems, make sure the port for your server is open (<b>17017</b> by default) and that your firewall allows in-bound connections for the server.
 			</p>
 			<hr/>
 			<h2 id="account">extras/account</h2>
