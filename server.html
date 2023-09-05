@@ -96,7 +96,7 @@
 			</p>
 			<p>
 				The directory (or folder) you run the executable in is where all your files will go.
-				You should at least have the executable and the <b>scripts</b> folder before you run the executable.
+				You should at least have the <b>scripts</b> folder by the executable before you run it.
 				After you start the server for the first time, a <b>config.txt</b> file will be generated and you may configure it before starting again.
 			</p>
 			<h2 id="config">Configuring your server</h2>
@@ -138,7 +138,7 @@
 				It is suggested you restart the server at least every few days to keep it running well.
 			</p>
 			<p>
-				If you have problems, make sure the port for your server is open (<b>17017</b> by default) and that your firewall allows in-bound connections for the server.
+				If you have problems, make sure to port for your server is open (<b>17017</b> by default) and that your firewall allows in-bound connections for the server.
 			</p>
 			<hr/>
 			<h2 id="account">extras/account</h2>
@@ -247,22 +247,46 @@
 				If you do make your own menu at a different time, return <b>true</b> during <i>menu:openMain</i> while it is running.
 			</p>
 			<ul>
-				<li><b>dsl.menu.create(title, help)</b>: create a new <i>menu</i> (see menu methods).</li>
-				<li><b>dsl.menu.extend(title, help)</b>: create a new <i>menu</i> that extends to the right of the main menu.</li>
+				<li><b>dsl.menu.create(title, help)</b>: creates a new <i>menu</i> object (see menu methods).</li>
+				<li><b>dsl.menu.extend(title, help)</b>: creates a new <i>menu</i> object that extends to the right of the main menu.</li>
 				<li><b>dsl.menu.is_active()</b>: returns true if the menu is active.</li>
 			</ul>
-			<h3>Menu Methods (client)</h3>
+			<h3>Menu Object (client)</h3>
 			<p>
-				These are methods for <i>menu</i> objects returned by <i>dsl.menu.create</i> and <i>dsl.menu.extend</i>.
+				These are methods for <i>menu</i> objects returned by <b>dsl.menu.create</b> and <b>dsl.menu.extend</b>.
 			</p>
 			<ul>
-				<li><b>W.I.P.</b></li>
+				<li><b>menu:extend(help)</b>: creates and returns a new menu that extends to the right of this one.<br/>
+				Usually it is neater to just make a new menu than to keep extending right.</li>
+				<li><b>menu:active()</b>: returns true while the menu is active, and updates the menu if needed.<br/>
+				Usually you will be simply using this method in a <b>while</b> to loop make your menu loop.</li>
+				<li><b>menu:option(text, right_text, description_text)</b>: adds an option to the menu, and updates the menu if needed.<br/>
+				Returns <b>true</b> if it was just selected. All arguments are optional and can be skipped using <b>nil</b>.</li>
+				<li><b>menu:alert(text, seconds)</b>: show some text in the description box. Takes priority over menu and option help text.<br/>
+				If <i>seconds</i> is not given (or isn't positive), it will only be used for one draw.</li>
+				<li><b>menu:help(text)</b>: set the help text associated with the menu. Has the lowest priority for the description box.<br/>
+				This sets the same thing as the <i>help</i> argument for menu creation. It can also be <b>nil</b>.</li>
+				<li><b>menu:draw(keep)</b>: draws the menu, and updates it first if needed. Resets all added options and allows input to be processed next menu update.<br/>
+				If <i>keep</i> is given, options will not reset. If <i>keep</i> is given but not a boolean, it updates the <i>right_text</i> for the current option to allow a "selector".</li>
+				<li><b>menu:up()</b>: uses the menu navigation controls and logic to determine if the user hit up. Also plays a sound.<br/>
+				There are also methods for <b>down</b>, <b>left</b>, and <b>right</b> that do not explicitly listed here.
 			</ul>
-			<h3>Menu Example (client)</h3>
 			<p>
-				Here's an example of how to properly add your own sub menu to the main menu.
+				These are fields in <i>menu</i> objects that can be changed (other fields should not be changed).
 			</p>
-			<code>RegisterLocalEventHandler("menu:openMain",function(add)
+			<ul>
+				<li><b>menu.can_exit</b>: determines if the menu can be exited by pressing left.<br/>
+				By default this is <b>true</b>.</li>
+				<li><b>menu.fix_camera</b>: determines if the game's camera will be scripted to not change when hitting up.<br/>
+				By default this is <b>true</b>.</li>
+				<li><b>menu.title_format</b>: a text formatting table for the format of title text.<br/>
+				There are also fields for <b>option_format</b> and <b>description_format</b>.</li>
+				<li><b>menu.draw_metrics</b>: a table that describes how the menu should be drawn.<br/>
+				Check inside the source code for default values.</li>
+			</ul>
+			<code>-- menu example: make a new menu that can be accessed from the main menu
+
+RegisterLocalEventHandler("menu:openMain",function(add)
 	add("My Menu", M_MyMenu)
 end)
 function M_MyMenu()
@@ -283,7 +307,7 @@ end</code>
 			</p>
 			<h3>Shared Functions (server &amp; client)</h3>
 			<ul>
-				<li><b>dsl.profanity.is_dirty_str(str, level)</b>: returns <b>true</b> if the string contains profanity, and optionally specify a custom profanity level.</li>
+				<li><b>dsl.profanity.is_dirty_str(str, level)</b>: returns <b>true</b> if the string contains profanity, optionally using a custom profanity level.</li>
 				<li><b>dsl.profanity.get_clean_str(str, level)</b>: returns a censored version of the string (can be slow, so it is suggested you don't use it on the server).</li>
 			</ul>
 		</div>
