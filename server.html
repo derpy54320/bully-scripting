@@ -15,10 +15,37 @@
 			}
 			#content{
 				background-color: #0C0C0C;
-				border-radius: 10px;
+				border-radius: 1rem;
 				padding-bottom: 1rem;
 				padding-left: 1rem;
 				padding-right: 1rem;
+			}
+			#index a{
+				display: block;
+				margin-bottom: 1rem;
+				text-decoration: none;
+			}
+			#index a:hover{
+				text-decoration: underline;
+			}
+			code{
+				background-color: #202020;
+				border-radius: 0.5rem;
+				display: block;
+				font-family: "Lucida Console", Consolas;
+				font-style: normal;
+				overflow-x: clip;
+				padding: 0.5rem;
+				tab-size: 4;
+				white-space: pre-wrap;
+			}
+			dfn{
+				background-color: #000000;
+				font-family: "Lucida Console", Consolas;
+				font-style: normal;
+			}
+			li{
+				margin-bottom: 0.5rem;
 			}
 			hr{
 				margin-top: 2rem;
@@ -35,19 +62,6 @@
 			h3{
 				font-family: Arial;
 				font-weight: bold;
-			}
-			#index a{
-				display: block;
-				margin-bottom: 1rem;
-				text-decoration: none;
-			}
-			#index a:hover{
-				text-decoration: underline;
-			}
-			dfn{
-				background-color: #000000;
-				font-family: "Lucida Console", Consolas;
-				font-style: normal;
 			}
 		</style>
 	</head>
@@ -129,7 +143,7 @@
 			<p>
 				These scripts make players create an account to play on the server.
 				This ensures that every player has some unique identifier (their username) that other scripts can use when saving data that should be tied to a certain player.
-				Accounts also have <i>roles</i> attached to them, which other scripts can check for.
+				Accounts can also have <i>roles</i> attached to them, which other scripts can check for.
 			</p>
 			<h3>Integrations</h3>
 			<ul>
@@ -137,14 +151,40 @@
 			</ul>
 			<h3>Commands (server)</h3>
 			<ul>
-				<li><b>/check_account &lt;user&gt;</b>: Check if an account exists, is being used, and what roles it has.</li>
-				<li><b>/check_accounts [count]</b>: Print statistics related to accounts, and optionally list accounts in alphabetical order.</li>
-				<li><b>/delete_account &lt;user&gt;</b>: Delete a specific account.</li>
-				<li><b>/demote_account &lt;user&gt; [role]</b>: Strip an account of a specific role or of all roles.</li>
-				<li><b>/promote_account &lt;user&gt; &lt;role&gt;</b>: Give an account some role that other scripts can check for.</li>
-				<li><b>/reset_accounts</b>: Reset all account data, totally destroying every account.</li>
-				<li><b>/unlimit_accounts &lt;player_id&gt;</b>: Temporarily allow a player to make as many accounts as they want.</li>
-				<li><b>/verify_accounts</b>: Tell all running scripts to verify their account data and cleanup anything related to deleted accounts.</li>
+				<li><b>/check_account &lt;user&gt;</b>: check if an account exists, is being used, and what roles it has.</li>
+				<li><b>/check_accounts [count]</b>: print statistics related to accounts, and optionally list accounts in alphabetical order.</li>
+				<li><b>/delete_account &lt;user&gt;</b>: delete a specific account.</li>
+				<li><b>/demote_account &lt;user&gt; [role]</b>: strip an account of a specific role or of all roles.</li>
+				<li><b>/promote_account &lt;user&gt; &lt;role&gt;</b>: give an account some role that other scripts can check for.</li>
+				<li><b>/reset_accounts</b>: reset all account data, totally destroying every account.</li>
+				<li><b>/unlimit_accounts &lt;player_id&gt;</b>: temporarily allow a player to make as many accounts as they want.</li>
+				<li><b>/verify_accounts</b>: tell all running scripts to verify their account data and cleanup anything related to deleted accounts.</li>
+			</ul>
+			<h3>Local Events (server)</h3>
+			<ul>
+				<li><b>account:deleteAccount(user)</b>: an account has been deleted and all references to this username should be removed.<br/>
+				Return <b>true</b> to tell the server something failed, which will tell the server owner to try <i>/verify_accounts</i>.</li>
+				<li><b>account:playerSignedIn(player, user)</b>: a player has signed in and was not signed in before.<br/>
+				This event is only run when the player is valid and connected.</li>
+				<li><b>account:playerSignedOut(player)</b>: a player has signed out (and may not be valid anymore).<br/>
+				All players are signed out when the account scripts stop or when accounts are reset using <i>/reset_accounts</i>.</li>
+				<li><b>account:playerUpdatedRoles(player)</b>: a player had their roles changed (happens after a sign-in, sign-out, promotion, or demotion).<br/>
+				This event is only run when the player is valid and connected.</li>
+				<li><b>account:scriptStopping</b>: the account system's script collection is stopping.<br/>
+				Runs before players are signed out, so you can remove player account references early if desired.</li>
+				<li><b>account:verifyAccounts(check)</b>: the server wants all scripts to verify that all their references to usernames are valid (using <dfn>if check(user) then ...</dfn>).<br/>
+				Return <b>true</b> to tell the server something failed, which will tell the server owner to try <i>/verify_accounts</i>.</li>
+			</ul>
+			<h3>Shared Functions (server)</h3>
+			<ul>
+				<li><b>dsl.account.all_players()</b>: returns an iterator for all signed in players (so you can use <dfn>for player, user do ...</dfn>).</li>
+				<li><b>dsl.account.get_player_username(player)</b>: returns the username of a player if they're signed in (and <b>nil</b> otherwise, so you can check <i>if</i> they're even signed in).</li>
+				<li><b>dsl.account.is_player_role(player, role)</b>: returns <b>true</b> if the player is signed in and has the role (and <b>false</b> otherwise).</li>
+			</ul>
+			<h3>Shared Functions (client)</h3>
+			<ul>
+				<li><b>dsl.account.get_username()</b>: returns the username of the player if they're signed in (and <b>nil</b> otherwise, so you can check <i>if</i> they're even signed in).</li>
+				<li><b>dsl.account.is_ui_active()</b>: returns <b>true</b> if the account UI is active (and <b>false</b> otherwise, so you can disable your UI while it is up).</li>
 			</ul>
 			<hr/>
 			<h2 id="admin">extras/admin</h2>
@@ -175,6 +215,11 @@
 				<li><b>account</b>: show usernames instead of player names, show player IDs to certain roles, and ensure proper timing.</li>
 				<li><b>profanity</b>: censor profane messages sent by players.</li>
 			</ul>
+			<h3>Shared Functions (client)</h3>
+			<ul>
+				<li><b>dsl.chat.notify(message, red, green, blue)</b>: print a notification in the chat, and optionally specify a custom text color.</li>
+				<li><b>dsl.chat.say(name, message, red, green, blue)</b>: print a message in the chat, and optionally specify a custom name color.</li>
+			</ul>
 			<hr/>
 			<h2 id="loadanim">extras/loadanim</h2>
 			<h3>Summary</h3>
@@ -187,12 +232,57 @@
 			<p>
 				These scripts are for the server menu. It is totally client side and serves as a central menu system for other scripts to integrate with.
 			</p>
+			<h3>Local Events (client)</h3>
+			<ul>
+				<li><b>menu:openMain(add)</b>: the main menu is opening and you should add options (using <dfn>add("name", CB_Func)</dfn>).<br/>
+				Return <b>true</b> to stop the menu from opening.</li>
+			</ul>
+			<h3>Shared Functions (client)</h3>
+			<p>
+				You should usually only create a menu during a callback registered during the <i>menu:openMain</i> event.
+				Callbacks run on the same thread as the main menu, so they will properly keep it from being used until your callback returns.
+				If you do make your own menu at a different time, return <b>true</b> during <i>menu:openMain</i> while it is running.
+			</p>
+			<ul>
+				<li><b>dsl.menu.create(title, help)</b>: create a new <i>menu</i> (see menu methods).</li>
+				<li><b>dsl.menu.extend(title, help)</b>: create a new <i>menu</i> that extends to the right of the main menu.</li>
+				<li><b>dsl.menu.is_active()</b>: returns true if the menu is active.</li>
+			</ul>
+			<h3>Menu Methods (client)</h3>
+			<p>
+				These are methods for <i>menu</i> objects returned by <i>dsl.menu.create</i> and <i>dsl.menu.extend</i>.
+			</p>
+			<ul>
+				<li><b>W.I.P.</b></li>
+			</ul>
+			<h3>Menu Example (client)</h3>
+			<p>
+				Here's an example of how to properly add your own sub menu to the main menu.
+			</p>
+			<code>RegisterLocalEventHandler("menu:openMain",function(add)
+	add("My Menu", M_MyMenu)
+end)
+function M_MyMenu()
+	local menu = dsl.menu.create("My Menu")
+	while menu:active() do
+		if menu:option("Give Spud Gun") then
+			PedSetWeapon(gPlayer, 305, 8, false)
+		end
+		menu:draw()
+		Wait(0)
+	end
+end</code>
 			<hr/>
 			<h2 id="profanity">extras/profanity</h2>
 			<h3>Summary</h3>
 			<p>
 				These scripts check for profanity. They do not do anything by themselves, and only provide other scripts with a way to check for profanity.
 			</p>
+			<h3>Shared Functions (server &amp; client)</h3>
+			<ul>
+				<li><b>dsl.profanity.is_dirty_str(str, level)</b>: returns <b>true</b> if the string contains profanity, and optionally specify a custom profanity level.</li>
+				<li><b>dsl.profanity.get_clean_str(str, level)</b>: returns a censored version of the string (can be slow, so it is suggested you don't use it on the server).</li>
+			</ul>
 		</div>
 	</body>
 </html>
