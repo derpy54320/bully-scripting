@@ -125,6 +125,9 @@
 			<p>
 				If you are interested in making your own network scripts, you can check out <a href="http://bullyscripting.net/dsl/network.html">this page</a> to get started.
 			</p>
+			<p>
+				The most recent version of the official scripts are available on <a href="https://github.com/derpy54320/dss-extras">github</a>.
+			</p>
 			<h2 id="host">Hosting your server</h2>
 			<p>
 				It is recommended you host your server locally using Windows when setting one up for the first time, and move it to a dedicated server when it is ready to be played by the public.
@@ -229,6 +232,20 @@
 				<li><b>account</b>: show usernames instead of player names and ensure proper UI timing.</li>
 				<li><b>admin</b>: show player ID numbers to moderators.</li>
 				<li><b>profanity</b>: censor profane player messages.</li>
+			</ul>
+			<h3>Commands (server)</h3>
+			<ul>
+				<li><b>/say &lt;message&gt;</b>: send a server message to all players.</li>
+			</ul>
+			<h3>Local Events (server)</h3>
+			<ul>
+				<li><b>chat:playerMessage(player,msg)</b>: a player is sending a message. The <i>msg</i> table contains data about the message, some of which can be modified.<br/>
+				Return <b>true</b> to not send the message. The <i>msg</i> table contains these fields: <i>name</i>, <i>message</i>, <i>moderator</i>, and <i>color</i>.</li>
+			</ul>
+			<h3>Shared Functions (server)</h3>
+			<ul>
+				<li><b>dsl.chat.notify(target, message, red, green, blue)</b>: same as the client version, but takes a target player. Use <b>-1</b> for all players.</li>
+				<li><b>dsl.chat.say(target, name, message, red, green, blue)</b>: same as the client version, but takes a target player. Use <b>-1</b> for all players.</li>
 			</ul>
 			<h3>Shared Functions (client)</h3>
 			<ul>
