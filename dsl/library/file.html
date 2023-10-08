@@ -20,12 +20,18 @@
 		</div>
 	</div>
 	<div id="GetScriptFilePath" class="dsl_function">
-		<p class="func_description">
-			Get a full path given a <a href="/dsl/paths.html">relative path</a>.
-			Usually not needed, as most DSL functions expect the relative path.
-			If no <dfn>File name</dfn> is given, then it's just as if <dfn>""</dfn> was used.
-			A <dfn>Full path</dfn> in this context is not a full system path, but rather just a path that is relative to <dfn>Bully.exe</dfn> rather than the running collection.
-		</p>
+		<div class="func_description">
+			<p>
+				<span class="dsl_warning">WARNING</span>
+				This function has not been working properly for an unknown amount of versions, and does not reliably return the expected path.
+			</p>
+			<p>
+				Get a full path given a <a href="/dsl/paths.html">relative path</a>.
+				Usually not needed, as most DSL functions expect the relative path.
+				If no <dfn>File name</dfn> is given, then it's just as if <dfn>""</dfn> was used.
+				A <dfn>Full path</dfn> in this context is not a full system path, but rather just a path that is relative to <dfn>Bully.exe</dfn> rather than the running collection.
+			</p>
+		</div>
 		<h2>Arguments</h2>
 		<ul class="func_arguments">
 			<li class="lua_opt_string">File name</li>
@@ -34,6 +40,10 @@
 		<ul class="func_results">
 			<li class="lua_string">Full path</li>
 		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL8</span> This function works as intended again. Since it was not working for some time, it is now marked as a DSL8 function.
+		</p>
 	</div>
 	<div id="GetPackageFilePath" class="dsl_function">
 		<p class="func_description">

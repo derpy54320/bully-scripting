@@ -317,7 +317,6 @@ var dsl_library_functions = [
 	],
 	["file",
 		[1,[
-			"GetScriptFilePath",
 			"IsSystemAccessAllowed"
 		]],
 		[3,[
@@ -335,6 +334,9 @@ var dsl_library_functions = [
 		]],
 		[7,[
 			"CanWriteFiles"
+		]],
+		[8,[
+			"GetScriptFilePath"
 		]]
 	],
 	["hook",
