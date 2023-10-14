@@ -689,6 +689,8 @@ function recolorVersionTagsDSL(name){
 			tag.style.backgroundColor = "#8020FF";
 		else if(version == "DSL7")
 			tag.style.backgroundColor = "#00C0FF";
+		else if(version == "DSL8")
+			tag.style.backgroundColor = "#C8C878";
 	}
 }
 
