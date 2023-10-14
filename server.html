@@ -265,7 +265,7 @@
 			</p>
 			<h3>Local Events (client)</h3>
 			<ul>
-				<li><b>menu:openMain(add)</b>: the main menu is opening and you should add options (using <dfn>add("My Option", F_MyOption)</dfn>).<br/>
+				<li><b>menu:openMain(add)</b>: the main menu is opening and you should add options (using <dfn>add("Name", "Description", CB_Function)</dfn>).<br/>
 				Return <b>true</b> to stop the menu. The <i>add</i> function creates a thread in the handling script that runs when selected.</li>
 			</ul>
 			<h3>Shared Functions (client)</h3>
@@ -327,7 +327,7 @@
 			<code>-- menu example: make a new menu that can be accessed from the main menu
 
 RegisterLocalEventHandler("menu:openMain",function(add)
-	add("My Menu", M_MyMenu)
+	add("My Menu", "An example sub-menu in the main server menu.", M_MyMenu)
 end)
 
 function M_MyMenu()
