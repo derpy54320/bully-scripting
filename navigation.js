@@ -428,6 +428,9 @@ var dsl_library_functions = [
 		[7,[
 			"AllowOnServer",
 			"StopCurrentScriptCollection"
+		]],
+		[8,[
+			"GetScriptNetworkTable"
 		]]
 	],
 	["miscellaneous",

@@ -41,6 +41,28 @@ end</pre>
 				You should not set values in <dfn>dsl</dfn>.
 			</p>
 			<p>
+				If you are making network scripts, it is suggested you use the <a href="#net">net</a> table instead
+				since the <dfn>dsl</dfn> table does not differentiate between local and network scripts.
+				This would mean that a table from a local script could override the one you may expect from a network script.
+			</p>
+			<p>
+				Usually you should only use <dfn>dsl</dfn> instead of <dfn>net</dfn> if you are not making network scripts.
+			</p>
+			<h2 id="net">net</h2>
+			<p>
+				<span class="dsl_version">DSL8</span> This feature was introduced in version 8.
+			</p>
+			<p>
+				The <dfn>net</dfn> table behaves very similarly to the <dfn>dsl</dfn> table,
+				but it gets tables from <a href="/dsl/library/manager.html?GetScriptNetworkTable"> instead.
+				Only network scripts (client scripts from a server or main scripts on a server) can make these tables,
+				so it helps ensure that network scripts have their own "namespace" independent from local scripts.
+			</p>
+			<p>
+				When making client network scripts, it is suggested you use <dfn>net</dfn> instead of <dfn>dsl</dfn>.
+				Although server scripts can't have naming conflicts like the client can, using <dfn>net</dfn> will still make your code more consistent.
+			</p>
+			<p>
 				Sometimes it may seem more tempting to just make a global function or put a value in <dfn>shared</dfn>,
 				but using a shared table from <dfn>dsl</dfn> is often the better choice for a few reasons.
 			</p>
@@ -53,9 +75,9 @@ end</pre>
 			<h3>chat/sv_chat.lua:</h3>
 			<code>
 				<button class="copy_code" onclick="copyCode(this)">copy</button>
-				<pre>sst = GetScriptSharedTable()
+				<pre>api = GetScriptNetworkTable()
 
-sst.notify = function(text)
+api.notify = function(text)
 	-- some code that sends some notification message to all players
 end</pre>
 			</code>
@@ -63,8 +85,8 @@ end</pre>
 			<code>
 				<button class="copy_code" onclick="copyCode(this)">copy</button>
 				<pre>function main()
-	if dsl.chat then
-		dsl.chat.notify("a chat notification from an entirely different mod")
+	if net.chat then
+		net.chat.notify("a chat notification from an entirely different mod")
 	end
 end</pre>
 			</code>

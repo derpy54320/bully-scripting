@@ -399,6 +399,30 @@ function main()
 end</pre>
 		</code>
 	</div>
+	<div id="GetScriptNetworkTable" class="dsl_function">
+		<div class="func_description">
+			<p>
+				Returns a table that is available to all scripts in the current collection.
+				The table is only actually created the first time this function is called.
+				The table will be accessible from anywhere using <a href="/dsl/globals.html#net">net</a>.
+			</p>
+			<p>
+				This function will fail if it is not called by a network script (client scripts from a server or main scripts on a server).
+			</p>
+		</div>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_opt_boolean">Share mode</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_table">Table</li>
+		</ul>
+		<h2>Versions</h2>
+		<p class="func_versions">
+			<span class="dsl_version">DSL7</span> A mostly useless argument was removed, and the optional <dfn>Share mode</dfn> argument was added.
+		</p>
+	</div>
 	<div id="IsScriptRunning" class="dsl_function">
 		<p class="func_description">
 			Returns if <dfn>Script</dfn> is running, as in not shutdown or shutting down.
