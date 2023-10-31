@@ -303,6 +303,17 @@ end</pre>
 		<p class="func_results">None.</p>
 	</div>
 	<!-- SCRIPTS - QUERY -->
+	<div id="GetCurrentScript" class="dsl_function">
+		<p class="func_description">
+			Returns the current <dfn>Script</dfn>.
+		</p>
+		<h2>Arguments</h2>
+		<p class="func_arguments">None.</p>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_userdata">Script</li>
+		</ul>
+	</div>
 	<div id="GetScriptCollection" class="dsl_function">
 		<p class="func_description">
 			Returns the name of <dfn>Script</dfn>'s collection, or of the current collection.
@@ -448,28 +459,6 @@ end</pre>
 		<ul class="func_results">
 			<li class="lua_boolean">Zipped</li>
 		</ul>
-	</div>
-	<!-- SCRIPTS - MISCELLANEOUS -->
-	<div id="SetScriptCleanup" class="dsl_function">
-		<div class="func_description">
-			<p>
-				<span class="dsl_warning">WARNING</span>
-				The callback function is meant to run in the context of a script, but currently it is not. This means DSL will not know your script is running during the callback which may cause unexpected behavior.
-			</p>
-			<p>
-				Associate some cleanup function with the current script.
-				It will be called instantly when the script is shutdown, which can provide instant cleanup if <b>MissionCleanup</b> isn't good enough (since it runs in a thread).
-			</p>
-			<p>
-				Only one cleanup function can be associated with each script, and can't be changed after being set.
-			</p>
-		</div>
-		<h2>Arguments</h2>
-		<ul class="func_arguments">
-			<li class="lua_function">Function</li>
-		</ul>
-		<h2>Results</h2>
-		<p class="func_results">None.</p>
 	</div>
 	<!-- THREADS - CREATION -->
 	<div id="CreateThread" class="dsl_function">

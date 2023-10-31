@@ -191,11 +191,14 @@
 			<ul>
 				<li>198 total functions.</li>
 				<li>Added the PRE_GAME thread type.</li>
+				<li>Added the ScriptShutdown and ScriptDestroyed events.</li>
+				<li>Added the GetCurrentScript function.</li>
 				<li>Added the GetScriptNetworkTable function for sharing values between network scripts.</li>
 				<li>Added global net table for accessing shared network tables.</li>
 				<li>Added the CreateAdvancedThread function to the server version.</li>
 				<li>Added the /quit command on servers for graceful shutdown.</li>
 				<li>Added a SIGTERM signal handler for graceful shutdown on Linux servers.</li>
+				<li>Removed the SetScriptCleanup function as it was broken and has been superseded by ScriptShutdown.</li>
 				<li>Fixed the GetScriptFilePath function.</li>
 			</ul>
 		</div>

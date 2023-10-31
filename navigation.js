@@ -422,14 +422,12 @@ var dsl_library_functions = [
 			"GetThreadName",
 			"ImportScript"
 		]],
-		[6,[
-			"SetScriptCleanup"
-		]],
 		[7,[
 			"AllowOnServer",
 			"StopCurrentScriptCollection"
 		]],
 		[8,[
+			"GetCurrentScript",
 			"GetScriptNetworkTable"
 		]]
 	],
