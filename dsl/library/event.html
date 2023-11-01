@@ -208,6 +208,10 @@ end)
 				<td><span class="dsl_func_version">DSL5</span><b>PlayerListing(player, listing)</b></td>
 				<td>A player requested listing information for the server. You can modify the listing table's <dfn>info</dfn> and <dfn>mode</dfn>. The player is only valid for the duration of this event.</td>
 			</tr>
+			<tr>
+				<td><span class="dsl_func_version">DSL8</span><b>ServerShutdown()</b></td>
+				<td>The server is being shutdown. The Lua state closes immediately after this event. This event is only triggered when the server is "gracefully" shutdown.</td>
+			</tr>
 		</table>
 		<h2>Events (shared)</h2>
 		<table class="func_details">

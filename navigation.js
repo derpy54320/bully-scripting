@@ -453,6 +453,10 @@ var dsl_library_functions = [
 			"GetInternalResolution",
 			"GetScreenResolution",
 			"QuitGame"
+		]],
+		[8,[
+			"ObjectNameToHashID",
+			"QuitServer"
 		]]
 	],
 	["ped",
