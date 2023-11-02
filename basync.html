@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>BASYNC Reference</title>
+		<meta charset="UTF-8"/>
+		<style>
+			:root{
+				color-scheme: dark;
+				font-family: Helvetica, Arial;
+			}
+			#main{
+				background-color: #0C0C0C;
+				border-radius: 1rem;
+				margin-left: auto;
+				margin-right: auto;
+				max-width: 80rem;
+				padding-bottom: 1rem;
+				padding-left: 1rem;
+				padding-right: 1rem;
+			}
+			.indent{
+				margin-left: 1rem;
+				margin-right: auto;
+			}
+			code{
+				background-color: #202020;
+				border-radius: 0.5rem;
+				display: block;
+				font-family: "Lucida Console", Consolas;
+				font-style: normal;
+				overflow-x: clip;
+				padding: 0.5rem;
+				tab-size: 4;
+				white-space: pre-wrap;
+			}
+			dfn{
+				background-color: #202020;
+				font-family: "Lucida Console", Consolas;
+				font-style: normal;
+			}
+			h1{
+				color: #C8C878;
+				font-family: Arial;
+				font-size: 3rem;
+				font-weight: 900;
+				text-align: center;
+				text-decoration: underline;
+			}
+			h2{
+				color: #C8C878;
+				font-family: Arial;
+				font-size: 2rem;
+				font-weight: 900;
+				margin-bottom: 0;
+			}
+			h3{
+				color: #C8C878;
+				font-family: Arial;
+				font-size: 1.5rem;
+				font-weight: 900;
+				margin-bottom: 0;
+			}
+			th{
+				font-weight: bold;
+				padding-left: 1rem;
+				padding-right: 1rem;
+				text-align: left;
+				vertical-align: top;
+			}
+			td{
+				text-align: left;
+				vertical-align: top;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="main">
+			<h1 class="title">BASYNC</h1>
+			<h2>Summary</h2>
+			<p>
+				BASYNC is a basic sync system for derpy's script server.
+				It has an emphasis on scriptability and modularity rather than striving to do everything by itself.
+			</p>
+			<p>
+				By default, basync will spawn players around the center of the school grounds.
+				No network objects besides player peds will be created until another script creates some.
+			</p>
+			<p>
+				Before using it, it's important to understand the scope of basync.
+				It will never provide perfect sync for the game, it will only get closer and try to provide a fun platform for scripters to build off of.
+				It is also not meant to create a cooperative story-mode experience, although it <i>could</i> be used by other scripts to attempt such a thing.
+			</p>
+			<h2>Install</h2>
+			<p>
+				If you don't know how servers work yet, read the <a href="http://bullyscripting.net/server.html">server manual</a>.
+			</p>
+			<p>
+				Put the "<i>basync</i>" folder into your server's "<i>scripts</i>" folder.
+				Make sure you aren't using "<i>sync</i>" scripts from <a href="https://github.com/derpy54320/dss-extras">dss-extras</a> as they would conflict horribly.
+			</p>
+			<h2>Modules</h2>
+			<p>
+				Basync always syncs the most basic state (such as models and positions), but a lot of state sync is implemented using <i>basync modules</i>.
+				This allows more developers to create their own bits of sync (by making modules), and it allows server owners to decide what is actually needed for their server.
+				There are a few modules included with basync, but you may want to disable some depending on your server and what you want other scripts to control.
+				For example, the "<i>ped_actions.lua</i>" module attempts to sync ped action nodes but is known to cause crashes.
+			</p>
+			<p>
+				All modules are located in "<i>basync/modules</i>" and must be enabled in "<i>basync/config.txt</i>" by adding it as a <i>client_file</i>.
+				Make sure that you enable any modules that other scripts you download might require.
+				Similarly, some scripts may expect certain modules to <i>not</i> be enabled as they may provide their own code for syncing something.
+			</p>
+			<p>
+				Developing your own module will require a fairly deep understanding of how basync works under the hood, as each module is loaded
+				in the environment of other basync scripts.
+				Because of this, module development will not be extensively documented here (instead just look at the source files).
+			</p>
+			<h2>Scripting</h2>
+			<p>
+				The main purpose of basync is to serve as a base for other scripts to work with.
+				The rest of this page will document the various functions and events you may need to use in your scripts.
+				Even if you have looked in the basync scripts, it is advised you <b>do not</b> directly access or change fields inside basync objects (tables).
+				Instead you should be using the functions (and object methods) described here for those purposes.
+				If there isn't a function to do the thing you want, it probably means basync doesn't support it.
+			</p>
+			<p>
+				When making a script collection that uses basync, make sure to list basync as a dependency (<dfn>require_dependency basync</dfn>).
+			</p>
+			<h2>World</h2>
+			<p>
+				The world state is kept on the server and runs entirely independent from any players.
+			</p>
+			<div class="indent">
+				<h3>Server Functions</h3>
+				<table>
+					<tr><th>net.basync.get_chapter()</th><td>Return the current chapter.</td></tr>
+					<tr><th>net.basync.get_weather()</th><td>Return the current weather type.</td></tr>
+					<tr><th>net.basync.get_time()</th><td>Return the current hour and minute.</td></tr>
+					<tr><th>net.basync.get_time_rate()</th><td>Return how many real milliseconds are in a game minute (or 0 if time is frozen).</td></tr>
+					<tr><th>net.basync.set_chapter(chapter)</th><td>Set the current chapter.</td></tr>
+					<tr><th>net.basync.set_weather(weather)</th><td>Set the current weather type.</td></tr>
+					<tr><th>net.basync.set_time(hour,minute)</th><td>Set the current hour and minute.</td></tr>
+					<tr><th>net.basync.set_time_rate(ms)</th><td>Set how many real milliseconds are in a game minute (or 0 to freeze time).</td></tr>
+				</table>
+				<h3>Client Functions</h3>
+				<table>
+					<tr><th>net.basync.get_chapter()</th><td>Return the current chapter.</td></tr>
+					<tr><th>net.basync.get_weather()</th><td>Return the current weather type.</td></tr>
+					<tr><th>net.basync.get_time()</th><td>Return the current hour and minute.</td></tr>
+					<tr><th>net.basync.get_time_rate()</th><td>Return how many real milliseconds are in a game minute (or 0 if time is frozen).</td></tr>
+					<tr><th>net.basync.is_world_ready()</th><td>rRturn if the client has got at least one message from the server about world sync.<br/>
+					If the world is not ready, it means all other client world functions will just return 0.</td></tr>
+				</table>
+			</div>
+			<h2>Peds</h2>
+			<p>
+				While ped objects exist on and are controlled by the server, players are still relied upon to update peds.
+				This is done by giving each ped an <i>owner</i>, which is generally going to be the nearest player.
+				Players always own their own player ped,
+				but other than that ped ownership will change automatically based on who basync determines would be the best owner.
+				You can disable automatic owner switching through scripting and assign your own owner if desired though.
+			</p>
+			<p>
+				On the client, it is important to keep track of the difference between <i>ped objects</i> and <i>ped handles</i>.
+				The term <i>ped handle</i> refers to the "real" ped, as in the value you'd get from functions like <b>PedCreateXYZ</b>.
+				A <i>ped object</i> is something created by basync, and it has a bunch of methods for you to use to interact with basync's representation of the ped.
+				A valid <i>ped object</i> does not mean there is a valid <i>ped handle</i>, as basync will create and delete the "real" ped based on multiple factors.
+				If you need to get a <i>ped handle</i> from a <i>ped object</i>, simply use <b>ped:get_ped()</b> and ensure that ped is valid (using <b>PedIsValid</b>).
+			</p>
+			<p>
+				Ped modules are prefixed with "<i>ped_</i>". Methods from modules are not documented here, you'll need to check their files.
+			</p>
+			<div class="indent">
+				<h3>Server Functions</h3>
+				<table>
+					<tr><th>net.basync.create_ped(model)</th><td>Create and return a new ped object.</td></tr>
+					<tr><th>net.basync.is_ped_valid(ped)</th><td>Returns if the value is a valid ped object.</td></tr>
+					<tr><th>net.basync.get_player_ped(player)</th><td>Return a player's ped object, or <b>nil</b> if they don't have a valid one.</td></tr>
+					<tr><th>net.basync.get_ped_from_player(player,id)</th><td>Return a valid ped object if the player knows about one with the network ID.</td></tr>
+					<tr><th>net.basync.all_player_peds()</th><td>Return an iterator that returns each a player and ped object for each valid player ped.<br/>
+					For example: <dfn>for player, ped in net.basync.all_player_peds() do --[[ do something ]] end</dfn>.</td></tr>
+					<tr><th>net.basync.all_peds()</th><td>Return an iterator that returns each valid ped object.<br/>
+					For example: <dfn>for ped in net.basync.all_peds() do --[[ do something ]] end</dfn>.</td></tr>
+				</table>
+				<h3>Client Functions</h3>
+				<table>
+					<tr><th>net.basync.get_player_ped()</th><td>Return the local player's ped object, or <b>nil</b> if they don't have a valid one.</td></tr>
+					<tr><th>net.basync.get_ped_by_ped(ped)</th><td>Return a ped object for the ped handle (a "real" ped) if a valid one exists.</td></tr>
+					<tr><th>net.basync.get_ped_from_server(id, pre)</th><td>Return a valid ped object if one exists with the network ID.<br/>
+					If the ped has not received its first state update, the function will not return anything unless pre is <b>true</b>.</td></tr>
+					<tr><th>net.basync.all_peds()</th><td>Return an iterator that returns each valid ped object.</td></tr>
+				</table>
+				<h3>Server Ped Methods</h3>
+				<table>
+					<tr><th>ped:delete()</th><td>Delete the ped. This instantly makes the ped invalid, so you cannot use it anymore.</td></tr>
+					<tr><th>ped:is_valid()</th><td>Returns if the ped is valid. Any other function will fail if the ped isn't valid.</td></tr>
+					<tr><th>ped:is_player()</th><td>Returns if the ped is a player ped (you cannot create player peds, they are only made by basync).</td></tr>
+					<tr><th>ped:get_owner()</th><td>Return the ped's owning player. Could be <b>-1</b> which means it has no owner.</td></tr>
+					<tr><th>ped:lock_owner()</th><td>Don't allow the ped's owner to switch automatically, meaning it can only be switched by <b>set_owner</b>.</td></tr>
+					<tr><th>ped:unlock_owner()</th><td>Allow the ped's owner to switch automatically again (the default behavior).</tr>
+					<tr><th>ped:set_owner(player)</th><td>Set the ped's owner. This could instantly change to another player if the ped's owner isn't locked.<br/>
+					If you try to set the owner to a player that hasn't been initialized by basync yet, <b>false</b> is returned (instead of <b>true</b>).</td></tr>
+					<tr><th>ped:set_name(name)</th><td>Set the ped's name.</td></tr>
+					<tr><th>ped:set_model(model)</th><td>Set the ped's model index.</td></tr>
+					<tr><th>ped:set_area(area)</th><td>Set the ped's area code. The ped will only show up for players who are also in that area.<br/>
+					When changing a player ped's area, it will force the player to move to that area. Make sure they're in a valid position.</td></tr>
+					<tr><th>ped:set_position(x, y, z, h)</th><td>Set the ped's position, and optionally set their heading (0 by default).</td></tr>
+					<tr><th>ped:warp_into_vehicle(veh, seat)</th><td>Set the ped's vehicle. Only use seat <b>0</b> unless you enabled passengers in basync's config.txt.</td></tr>
+					<tr><th>ped:warp_out_of_car()</th><td>Take the ped out of any vehicle they're in.</td></tr>
+				</table>
+				<h3>Client Ped Methods</h3>
+				<table>
+					<tr><th>ped:is_valid(pre)</th><td>Returns if the ped is valid. Any other function will fail if the ped isn't valid.<br/>
+					If the ped has not received its first state update, the function will return <b>false</b> unless pre is <b>true</b>.<br/>
+					Remember this does not mean there is a valid ped handle associated with this ped object.</td></tr>
+					<tr><th>ped:is_player()</th><td>Returns if the ped is a player ped (not necessarily the local player's ped).<br/>
+					<tr><th>ped:is_owner()</th><td>Returns if the ped is owned by the local player.</td></tr>
+					<tr><th>ped:get_ped()</th><td>Return the ped handle associated with this ped. Remember to check if they are valid using <b>PedIsValid</b>.</td></tr>
+				</table>
+				<h3>Shared Ped Methods</h3>
+				<table>
+					<tr><th>ped:get_id()</th><td>Return the ped's network ID.</tr>
+					<tr><th>ped:get_name()</th><td>Return the ped's name.</td></tr>
+					<tr><th>ped:get_model()</th><td>Return the ped's model index.</td></tr>
+					<tr><th>ped:get_area()</th><td>Return the ped's current area code. It is not guaranteed to be a valid area, but it is at least a number.</td></tr>
+					<tr><th>ped:get_position()</th><td>Return the ped's position and heading (4 values).</td></tr>
+					<tr><th>ped:get_vehicle()</th><td>Return the vehicle object the ped is in if they're in a valid one.</td></tr>
+				</table>
+				<h3>Local Server Events</h3>
+				<table>
+					<tr><th>basync:spawnedPlayer(player, ped)</th><td>A player ped was just created. This should only happen once when basync initializes the player.<br/>
+					This is a good time to change the player's model or spawn them in a different place.</td></tr>
+				</table>
+				<h3>Local Client Events</h3>
+				<table>
+					<tr><th>basync:hidePed(ped)</th><td>An unwanted ped (a "real" ped handle) was detected and is about to be "hidden".<br/>
+					Return true to cancel this and mark the ped as "ignored" instead.</td></tr>
+				</table>
+			</div>
+			<h2>Vehicles</h2>
+			<p>
+				Vehicles work similarly to peds. They are represented by <i>"vehicle objects"</i> and rely on owning players to be updated.
+			</p>
+			<p>
+				Vehicle modules are prefixed with "<i>veh_</i>". Methods from modules are not documented here, you'll need to check their files.
+			</p>
+			<div class="indent">
+				<h3>Server Functions</h3>
+				<table>
+					<tr><th>net.basync.create_vehicle(model)</th><td>Create and return a new vehicle object.</td></tr>
+					<tr><th>net.basync.is_vehicle_valid(veh)</th><td>Returns if the value is a valid vehicle object.</td></tr>
+					<tr><th>net.basync.get_vehicle_from_player(player,id)</th><td>Return a valid vehicle object if the player knows about one with the network ID.</td></tr>
+					<tr><th>net.basync.all_vehicles()</th><td>Return an iterator that returns each valid vehicle object.<br/>
+					For example: <dfn>for veh in net.basync.all_vehicles() do --[[ do something ]] end</dfn>.</td></tr>
+				</table>
+				<h3>Client Functions</h3>
+				<table>
+					<tr><th>net.basync.get_vehicle_by_vehicle(veh)</th><td>Return a vehicle object for the vehicle handle (a "real" vehicle) if a valid one exists.</td></tr>
+					<tr><th>net.basync.get_vehicle_from_server(id)</th><td>Return a valid vehicle object if one exists with the network ID.<br/>
+					If the vehicle has not received its first state update, the function will not return anything unless pre is <b>true</b>.</td></tr>
+					<tr><th>net.basync.all_vehicles()</th><td>Return an iterator that returns each valid vehicle object.</td></tr>
+				</table>
+				<h3>Server Vehicle Methods</h3>
+				<table>
+					<tr><th>veh:delete()</th><td>Delete the vehicle. This instantly makes the vehicle invalid, so you cannot use it anymore.</td></tr>
+					<tr><th>veh:is_valid()</th><td>Returns if the vehicle is valid. Any other function will fail if the vehicle isn't valid.</td></tr>
+					<tr><th>veh:get_owner()</th><td>Return the vehicle's owning player. Could be <b>-1</b> which means it has no owner.</td></tr>
+					<tr><th>veh:get_seat(seat)</th><td>Returns a valid ped if one is in the vehicle's seat. Only use seat <b>0</b> unless you enabled passengers.</td></tr>
+					<tr><th>veh:lock_owner()</th><td>Don't allow the vehicle's owner to switch automatically, meaning it can only be switched by <b>set_owner</b>.</td></tr>
+					<tr><th>veh:unlock_owner()</th><td>Allow the vehicle's owner to switch automatically again (the default behavior).</tr>
+					<tr><th>veh:set_owner(player)</th><td>Set the vehicle's owner. This could instantly change to another player if the vehicle's owner isn't locked.<br/>
+					If you try to set the owner to a player that hasn't been initialized by basync yet, <b>false</b> is returned (instead of <b>true</b>).</td></tr>
+					<tr><th>veh:set_name(name)</th><td>Set the vehicle's name.</td></tr>
+					<tr><th>veh:set_model(model)</th><td>Set the vehicle's model index.</td></tr>
+					<tr><th>veh:set_area(area)</th><td>Set the vehicle's area code. The vehicle will only show up for players who are also in that area.</tr>
+					<tr><th>veh:set_position(x, y, z, h)</th><td>Set the vehicle's position, and optionally set its heading (0 by default).</td></tr>
+					<tr><th>veh:set_seat(seat, ped)</th><td>Set the ped in the vehicle's seat. Only use seat <b>0</b> unless you enabled passengers.<br/>
+					If you want to clear the seat, pass <b>nil</b> instead of a ped.</td></tr>
+				</table>
+				<h3>Client Vehicle Methods</h3>
+				<table>
+					<tr><th>veh:is_valid()</th><td>Returns if the vehicle is valid. Any other function will fail if the vehicle isn't valid.<br/>
+					If the vehicle has not received its first state update, the function will return <b>false</b> unless pre is <b>true</b>.<br/>
+					Remember this does not mean there is a valid vehicle handle associated with this vehicle object.</td></tr>
+					<tr><th>veh:is_owner()</th><td>Returns if the vehicle is owned by the local player.</td></tr>
+					<tr><th>veh:get_vehicle()</th><td>Return the vehicle handle associated with this vehicle. Remember to check it using <b>VehicleIsValid</b>.</td></tr>
+				</table>
+				<h3>Shared Vehicle Methods</h3>
+				<table>
+					<tr><th>veh:get_id()</th><td>Return the vehicle's network ID.</tr>
+					<tr><th>veh:get_name()</th><td>Return the vehicle's name.</td></tr>
+					<tr><th>veh:get_model()</th><td>Return the vehicle's model index.</td></tr>
+					<tr><th>veh:get_area()</th><td>Return the vehicle's current area code. It is not guaranteed to be a valid area, but it is at least a number.</td></tr>
+					<tr><th>veh:get_position()</th><td>Return the vehicle's position and heading (4 values).</td></tr>
+					<tr><th>veh:get_vehicle()</th><td>Return the vehicle object the vehicle is in if they're in a valid one.</td></tr>
+				</table>
+				<h3>Local Client Events</h3>
+				<table>
+					<tr><th>basync:hideVehicle(veh)</th><td>An unwanted vehicle (a "real" vehicle handle) was detected and is about to be "hidden".<br/>
+					Return true to cancel this and mark the vehicle as "ignored" instead.</td></tr>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>

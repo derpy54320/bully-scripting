@@ -69,18 +69,18 @@
 			<h1>derpy's script server - server manual</h1>
 			<hr/>
 			<div id="index">
-				<h2>Setup</h2>
+				<h2>Server Setup</h2>
 				<a href="#start">Getting started</a>
 				<a href="#config">Configuring your server</a>
 				<a href="#setup">Setting up your scripts</a>
 				<a href="#host">Hosting your server</a>
-				<h2>Scripts</h2>
-				<a href="#account">extras/account</a>
-				<a href="#admin">extras/admin</a>
-				<a href="#chat">extras/chat</a>
-				<a href="#loadanim">extras/loadanim</a>
-				<a href="#menu">extras/menu</a>
-				<a href="#profanity">extras/profanity</a>
+				<h2>Official Scripts</h2>
+				<a href="#account">account</a>
+				<a href="#admin">admin</a>
+				<a href="#chat">chat</a>
+				<a href="#loadanim">loadanim</a>
+				<a href="#menu">menu</a>
+				<a href="#profanity">profanity</a>
 			</div>
 			<hr/>
 			<h2 id="start">Getting started</h2>
@@ -112,20 +112,21 @@
 			<h2 id="setup">Setting up your scripts</h2>
 			<p>
 				By itself, a server will do nothing to players' games. It is only through scripts that anything happens, including any sort of game sync.
-				There are a few script collections that come with the server (in the <b>extras</b> folder) and the rest will need to be downloaded elsewhere.
-				Copy (or move) as many scripts as you want to your server scripts, and control them using the same commands you'd use on the client.
+				Scripts used to come with the server (in an <b>extras</b> folder) but are now you will have to download or make any scripts you want.
+				Once you get some scripts you can control them using the same commands you'd use on the client.
 				Commands can be typed directly into Windows servers, but must be done remotely on Linux servers (for now).
 			</p>
 			<p>
-				All scripts in <b>extras</b> have their own <b>config.txt</b> that you should check out and configure if you decide to use them.
+				Official scripts (made or endorsed by derpy54320) are available on <a href="https://github.com/derpy54320/dss-extras">github</a>.
+				These scripts all have their own <b>config.txt</b> that you should check out and configure if you decide to use them.
 				Some scripts can integrate with each other, but none are configured to do so by default.
-				All of these scripts are documented in this manual for both server owners and scripters looking to integrate with them.
+			</p>
+			<p>
+				While most official scripts are documented here, <a href="http://bullyscripting.net/basync.html">basync</a> has its own page due to how complex it is.
+				It provides a basic and modular base for a multiplayer experience.
 			</p>
 			<p>
 				If you are interested in making your own network scripts, you can check out <a href="http://bullyscripting.net/dsl/network.html">this page</a> to get started.
-			</p>
-			<p>
-				The most recent version of the official scripts are available on <a href="https://github.com/derpy54320/dss-extras">github</a>.
 			</p>
 			<h2 id="host">Hosting your server</h2>
 			<p>
@@ -143,7 +144,7 @@
 				If you have problems, make sure the port for your server is open (<b>17017</b> by default) and that your firewall allows in-bound connections for the server.
 			</p>
 			<hr/>
-			<h2 id="account">extras/account</h2>
+			<h2 id="account">account</h2>
 			<h3>Summary</h3>
 			<p>
 				These scripts make players create an account to play on the server.
@@ -182,17 +183,17 @@
 			</ul>
 			<h3>Shared Functions (server)</h3>
 			<ul>
-				<li><b>dsl.account.all_players()</b>: returns an iterator for all signed in players (so you can use <dfn>for player, user do ...</dfn>).</li>
-				<li><b>dsl.account.get_player_username(player)</b>: returns the username of a player if they're signed in (and <b>nil</b> otherwise, so you can check <i>if</i> they're even signed in).</li>
-				<li><b>dsl.account.is_player_role(player, role)</b>: returns <b>true</b> if the player is signed in and has the role (and <b>false</b> otherwise).</li>
+				<li><b>net.account.all_players()</b>: returns an iterator for all signed in players (so you can use <dfn>for player, user do ...</dfn>).</li>
+				<li><b>net.account.get_player_username(player)</b>: returns the username of a player if they're signed in (and <b>nil</b> otherwise, so you can check <i>if</i> they're even signed in).</li>
+				<li><b>net.account.is_player_role(player, role)</b>: returns <b>true</b> if the player is signed in and has the role (and <b>false</b> otherwise).</li>
 			</ul>
 			<h3>Shared Functions (client)</h3>
 			<ul>
-				<li><b>dsl.account.get_username()</b>: returns the username of the player if they're signed in (and <b>nil</b> otherwise, so you can check <i>if</i> they're even signed in).</li>
-				<li><b>dsl.account.is_ui_active()</b>: returns <b>true</b> if the account UI is active (and <b>false</b> otherwise, so you can disable your UI while it is up).</li>
+				<li><b>net.account.get_username()</b>: returns the username of the player if they're signed in (and <b>nil</b> otherwise, so you can check <i>if</i> they're even signed in).</li>
+				<li><b>net.account.is_ui_active()</b>: returns <b>true</b> if the account UI is active (and <b>false</b> otherwise, so you can disable your UI while it is up).</li>
 			</ul>
 			<hr/>
-			<h2 id="admin">extras/admin</h2>
+			<h2 id="admin">admin</h2>
 			<h3>Summary</h3>
 			<p>
 				These scripts provide administrative and moderative commands. Players can be authenticated using an IP or an account role if applicable.
@@ -216,18 +217,18 @@
 			</ul>
 			<h3>Shared Functions (server)</h3>
 			<ul>
-				<li><b>dsl.admin.is_player_admin(player)</b>: returns <b>true</b> if the player is an admin, and <b>false</b> otherwise.</li>
-				<li><b>dsl.admin.is_player_mod(player)</b>: returns <b>true</b> if the player is an admin <i>or</i> moderator, and <b>false</b> otherwise.</li>
-				<li><b>dsl.admin.update_player(player)</b>: update the player's rank and trigger an <i>admin:playerUpdated</i> event. Usually not needed unless you have a reason.</li>
+				<li><b>net.admin.is_player_admin(player)</b>: returns <b>true</b> if the player is an admin, and <b>false</b> otherwise.</li>
+				<li><b>net.admin.is_player_mod(player)</b>: returns <b>true</b> if the player is an admin <i>or</i> moderator, and <b>false</b> otherwise.</li>
+				<li><b>net.admin.update_player(player)</b>: update the player's rank and trigger an <i>admin:playerUpdated</i> event. Usually not needed unless you have a reason.</li>
 			</ul>
 			<hr/>
 			<h3>Shared Functions (client)</h3>
 			<ul>
-				<li><b>dsl.admin.is_admin()</b>: returns <b>true</b> if the player is an admin, and <b>false</b> otherwise.</li>
-				<li><b>dsl.admin.is_mod()</b>: returns <b>true</b> if the player is an admin <i>or</i> moderator, and <b>false</b> otherwise.</li>
+				<li><b>net.admin.is_admin()</b>: returns <b>true</b> if the player is an admin, and <b>false</b> otherwise.</li>
+				<li><b>net.admin.is_mod()</b>: returns <b>true</b> if the player is an admin <i>or</i> moderator, and <b>false</b> otherwise.</li>
 			</ul>
 			<hr/>
-			<h2 id="chat">extras/chat</h2>
+			<h2 id="chat">chat</h2>
 			<h3>Summary</h3>
 			<p>
 				These scripts are for the chat. Press <b>enter</b> or <b>/</b> to start sending a message or run a command.
@@ -249,22 +250,22 @@
 			</ul>
 			<h3>Shared Functions (server)</h3>
 			<ul>
-				<li><b>dsl.chat.notify(target, message, red, green, blue)</b>: same as the client version, but takes a target player. Use <b>-1</b> for all players.</li>
-				<li><b>dsl.chat.say(target, name, message, red, green, blue)</b>: same as the client version, but takes a target player. Use <b>-1</b> for all players.</li>
+				<li><b>net.chat.notify(target, message, red, green, blue)</b>: same as the client version, but takes a target player. Use <b>-1</b> for all players.</li>
+				<li><b>net.chat.say(target, name, message, red, green, blue)</b>: same as the client version, but takes a target player. Use <b>-1</b> for all players.</li>
 			</ul>
 			<h3>Shared Functions (client)</h3>
 			<ul>
-				<li><b>dsl.chat.notify(message, red, green, blue)</b>: print a notification in the chat, and optionally specify a custom text color.</li>
-				<li><b>dsl.chat.say(name, message, red, green, blue)</b>: print a message in the chat, and optionally specify a custom name color.</li>
+				<li><b>net.chat.notify(message, red, green, blue)</b>: print a notification in the chat, and optionally specify a custom text color.</li>
+				<li><b>net.chat.say(name, message, red, green, blue)</b>: print a message in the chat, and optionally specify a custom name color.</li>
 			</ul>
 			<hr/>
-			<h2 id="loadanim">extras/loadanim</h2>
+			<h2 id="loadanim">loadanim</h2>
 			<h3>Summary</h3>
 			<p>
 				The same loadanim.lua script that normally comes with DSL. Loads all animation groups so other scripts don't have to worry about it.
 			</p>
 			<hr/>
-			<h2 id="menu">extras/menu</h2>
+			<h2 id="menu">menu</h2>
 			<h3>Summary</h3>
 			<p>
 				These scripts are for the server menu. It is totally client side and serves as a central menu system for other scripts to integrate with.
@@ -281,10 +282,10 @@
 				If you do make your own menu at a different time, return <b>true</b> during <i>menu:openMain</i> while it is running.
 			</p>
 			<ul>
-				<li><b>dsl.menu.create(title, help)</b>: creates a new <i>menu</i> object.</li>
-				<li><b>dsl.menu.submenu(title, help)</b>: creates a new <i>menu</i> object that inherits the style of the main menu.</li>
-				<li><b>dsl.menu.extend(help)</b>: creates a new <i>menu</i> object that inherits the style of the main menu and draws to the right of it.</li>
-				<li><b>dsl.menu.is_active()</b>: returns true if the menu is active.</li>
+				<li><b>net.menu.create(title, help)</b>: creates a new <i>menu</i> object.</li>
+				<li><b>net.menu.submenu(title, help)</b>: creates a new <i>menu</i> object that inherits the style of the main menu.</li>
+				<li><b>net.menu.extend(help)</b>: creates a new <i>menu</i> object that inherits the style of the main menu and draws to the right of it.</li>
+				<li><b>net.menu.is_active()</b>: returns true if the menu is active.</li>
 			</ul>
 			<h3>Menu Object (client)</h3>
 			<p>
@@ -295,7 +296,7 @@
 				which helps you not have to worry about control flow as much (which means you can <b>elseif</b> options together for convenience).
 			</p>
 			<p>
-				These are methods for <i>menu</i> objects returned by <b>dsl.menu.create</b> and <b>dsl.menu.extend</b>.
+				These are methods for <i>menu</i> objects returned by <b>net.menu.create</b> and <b>net.menu.extend</b>.
 			</p>
 			<ul>
 				<li><b>menu:active()</b>: returns true while the menu is active, and updates the menu if needed.<br/>
@@ -337,7 +338,7 @@ RegisterLocalEventHandler("menu:openMain",function(add)
 end)
 
 function M_MyMenu()
-	local menu = dsl.menu.create("My Menu")
+	local menu = net.menu.create("My Menu")
 	while menu:active() do
 		if menu:option("Give Spud Gun") then
 			PedSetWeapon(gPlayer, 305, 8, false)
@@ -349,15 +350,15 @@ function M_MyMenu()
 	end
 end</code>
 			<hr/>
-			<h2 id="profanity">extras/profanity</h2>
+			<h2 id="profanity">profanity</h2>
 			<h3>Summary</h3>
 			<p>
 				These scripts check for profanity. They do not do anything by themselves, and only provide other scripts with a way to check for profanity.
 			</p>
 			<h3>Shared Functions (server &amp; client)</h3>
 			<ul>
-				<li><b>dsl.profanity.is_dirty_str(str, level)</b>: returns <b>true</b> if the string contains profanity, optionally using a custom profanity level.</li>
-				<li><b>dsl.profanity.get_clean_str(str, level)</b>: returns a censored version of the string (can be slow, so it is suggested you don't use it on the server).</li>
+				<li><b>net.profanity.is_dirty_str(str, level)</b>: returns <b>true</b> if the string contains profanity, optionally using a custom profanity level.</li>
+				<li><b>net.profanity.get_clean_str(str, level)</b>: returns a censored version of the string (can be slow, so it is suggested you don't use it on the server).</li>
 			</ul>
 		</div>
 	</body>
