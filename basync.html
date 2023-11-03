@@ -96,7 +96,6 @@
 			</p>
 			<p>
 				Put the "<i>basync</i>" folder into your server's "<i>scripts</i>" folder.
-				Make sure you aren't using "<i>sync</i>" scripts from <a href="https://github.com/derpy54320/dss-extras">dss-extras</a> as they would conflict horribly.
 			</p>
 			<h2>Modules</h2>
 			<p>
@@ -126,6 +125,22 @@
 			<p>
 				When making a script collection that uses basync, make sure to list basync as a dependency (<dfn>require_dependency basync</dfn>).
 			</p>
+			<h2>Common</h2>
+			<p>
+				A few common functions and events you may need to use a lot.
+			</p>
+			<div class="indent">
+				<h3>Server Functions</h3>
+				<table>
+					<tr><th>net.basync.is_player_connected(player)</th><td>Returns true if the player has been initialized.</td></tr>
+				</table>
+				<h3>Local Server Events</h3>
+				<table>
+					<tr><th>basync:initPlayer(player)</th><td>A player has been initialized. This is a good time to send players net IDs if needed.<br/>
+					You should usually also have your own init event where you check if a player is connected.<br/>
+					That way players are initialized when basync <i>or</i> your script restarts.</td></tr>
+				</table>
+			</div>
 			<h2>World</h2>
 			<p>
 				The world state is kept on the server and runs entirely independent from any players.
@@ -228,7 +243,10 @@
 				</table>
 				<h3>Local Server Events</h3>
 				<table>
-					<tr><th>basync:spawnedPlayer(player, ped)</th><td>A player ped was just created. This should only happen once when basync initializes the player.<br/>
+					<tr><th>basync:createPed(ped)</th><td>A ped was just created.</td></tr>
+					<tr><th>basync:deletePed(ped)</th><td>A ped is going to be deleted because of a player unless an event handler returns true.</td></tr>
+					<tr><th>basync:updatePed(ped)</th><td>A ped's state was updated by a player. You can check for (and correct) any forbidden changes here.</td></tr>
+					<tr><th>basync:spawnPlayer(player, ped)</th><td>A player ped was just created. This should only happen once when basync initializes the player.<br/>
 					This is a good time to change the player's model or spawn them in a different place.</td></tr>
 				</table>
 				<h3>Local Client Events</h3>
@@ -293,6 +311,12 @@
 					<tr><th>veh:get_area()</th><td>Return the vehicle's current area code. It is not guaranteed to be a valid area, but it is at least a number.</td></tr>
 					<tr><th>veh:get_position()</th><td>Return the vehicle's position and heading (4 values).</td></tr>
 					<tr><th>veh:get_vehicle()</th><td>Return the vehicle object the vehicle is in if they're in a valid one.</td></tr>
+				</table>
+				<h3>Local Client Events</h3>
+				<table>
+					<tr><th>basync:createPed(veh)</th><td>A vehicle was just created.</td></tr>
+					<tr><th>basync:deletePed(veh)</th><td>A vehicle is going to be deleted because of a player unless an event handler returns true.</td></tr>
+					<tr><th>basync:updatePed(veh)</th><td>A vehicle's state was updated by a player. You can check for (and correct) any forbidden changes here.</td></tr>
 				</table>
 				<h3>Local Client Events</h3>
 				<table>
