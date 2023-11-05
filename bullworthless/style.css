@@ -5,13 +5,16 @@
 body{
 	margin-left: auto;
 	margin-right: auto;
-	max-width: 60rem;
+	max-width: 80rem;
 }
-div{
+.section{
 	background-color: #080808;
 	border-radius: 1rem;
 	margin-bottom: 1rem;
 	padding: 1rem;
+}
+hr{
+	margin-top: 2rem;
 }
 h1{
 	font-family: Arial;
@@ -30,10 +33,16 @@ li{
 table{
 	padding: 1rem;
 }
+td,th{
+	background-color: #202020;
+	font-size: 1rem;
+	padding: 0.5rem;
+}
 th{
-	padding-right: 1rem;
-	text-align: right;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
 }
 tr{
+	font-size: 1rem;
 	margin-bottom: 0.5rem;
 }

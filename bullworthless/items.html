@@ -4,14 +4,34 @@
 		<title>Bullworthless - Items</title>
 		<link rel="stylesheet" href="style.css"/>
 		<meta charset="UTF-8"/>
-		<style>
-			hr{
-				margin-top: 2rem;
-			}
-		</style>
+		<script type="text/javascript">
+			var items = [
+				// ID, ICON, NAME, DESCRIPTION
+				["algiesheet",     null, "Algie's Character Sheet",    "Algie's Character Sheet"],
+				["anarchyposter",  null, "Anarchist Poster",           "Anarchist Poster"],
+				["arsonkit",       null, "Arsonist Kit",               "(craft this using 5 cans of gas and a lighter)"],
+				["biftrophy",      null, "Boxing Championship Trophy", "(description mentions bif won this or something)"],
+				["bullyball",      null, "Bully Dodgeball",            "(is it too meta to feature a real thing?)"],
+				["cheerposter",    null, "Cheerleader Poster",         "Cheerleader Poster"],
+				["dicebag",        null, "Limited Edition Dice Set",   "(the icon is a little bag)"],
+				["football",       null, "Football",                   "Football"],
+				["ggcard",         null, "G&G Card",                   "Official Grottos & Gremlins trading card."],
+				["mascothead",     null, "Mascot Head",                "Mascot Head"],
+				["melvinsheet",    null, "Melvin's Character Sheet",   "The G&G character sheet for Melvin's OC. Known to cast hay spells."],
+				["mintcomic",      null, "Mint Condition Comic Book",  "(we'll look around the shop for a name)"],
+				["ratbox",         null, "Box of Rats",                "(description mentions edgar has plans for it)"],
+				["shopcarkey",     null, "Shop Car Keys",              "Keys to the car in the auto shop (that you can eventually actually drive with the keys too)"],
+				["signedfootball", null, "Signed Football",            "Signed Football"],
+				["sledgehammer",   null, "Norton's Sledgehammer",      "Norton's Sledgehammer"],
+				["smoke",          null, "Smokes",                     "Smokes"],
+				["supplement",     null, "Supplement Bottle",          "Supplement Bottle"],
+				["toolbox",        null, "Toolbox",                    "Toolbox"],
+				["xxxmag",         null, "XXX Magazine",               "(requested by earnest)"]
+			];
+		</script>
 	</head>
 	<body>
-		<div>
+		<div class="section">
 			<h1>Faction Items</h1>
 			<p>
 				Items are desired by different factions.
@@ -112,33 +132,39 @@
 				<li>???</li>
 			</ul>
 		</div>
-		<div id="items">
+		<div id="items" class="section">
 			<h1>Items</h1>
 			<p>
 				These are all the items.
 			</p>
-			<table>
-				<tr id="algiesheet"><th>Algie's Character Sheet</th><td>Algie's Character Sheet</td></tr>
-				<tr id="anarchyposter"><th>Anarchist Poster</th><td>Anarchist Poster</td></tr>
-				<tr id="arsonkit"><th>Arsonist Kit</th><td>(craft this using 5 cans of gas and a lighter)</td></tr>
-				<tr id="biftrophy"><th>Boxing Championship Trophy</th><td>(description mentions bif won this or something)</td></tr>
-				<tr id="bullyball"><th>Bully Dodgeball</th><td>(is it too meta to feature a real thing?)</td></tr>
-				<tr id="cheerposter"><th>Cheerleader Poster</th><td>Cheerleader Poster</td></tr>
-				<tr id="dicebag"><th>Limited Edition Dice Set</th><td>(the icon is a little bag)</td></tr>
-				<tr id="football"><th>Footballs</th><td>Footballs</td></tr>
-				<tr id="ggcard"><th>G&G Card</th><td>Official Grottos & Gremlins trading card.</td></tr>
-				<tr id="mascothead"><th>Mascot Head</th><td>Mascot Head</td></tr>
-				<tr id="melvinsheet"><th>Melvin's Character Sheet</th><td>The G&G character sheet for Melvin's OC. Known to cast hay spells.</td></tr>
-				<tr id="mintcomic"><th>Mint Condition Comic Book</th><td>(we'll look around the shop for a name)</td></tr>
-				<tr id="ratbox"><th>Box of Rats</th><td>(description mentions edgar has plans for it)</td></tr>
-				<tr id="shopcarkey"><th>Shop Car Keys</th><td>Keys to the car in the auto shop (that you can eventually actually drive with the keys too)</td></tr>
-				<tr id="signedfootball"><th>Signed Football</th><td>Signed Football</td></tr>
-				<tr id="sledgehammer"><th>Norton's Sledgehammer</th><td>Norton's Sledgehammer</td></tr>
-				<tr id="smoke"><th>Smokes</th><td>Smokes</td></tr>
-				<tr id="supplement"><th>Supplement Bottle</th><td>Supplement Bottle</td></tr>
-				<tr id="toolbox"><th>Toolbox</th><td>Toolbox</td></tr>
-				<tr id="xxxmag"><th>XXX Magazine</th><td>(requested by earnest)</td></tr>
+			<table id="items_table">
 			</table>
+			<script type="text/javascript">
+				(function(){
+					var rows = document.getElementById("items_table");
+					items.forEach(function(item){
+						var row = document.createElement("tr");
+						var id = document.createElement("th");
+						var icon = document.createElement("td");
+						var name = document.createElement("td");
+						var description = document.createElement("td");
+						var image = document.createElement("img");
+						row.id = item[0];
+						id.innerHTML = "\"" + item[0] + "\"";
+						image.src = item[1] ? "items/" + item[1] : "items/temp.png";
+						image.style.height = "3rem";
+						image.style.textAlign = "center";
+						name.innerHTML = item[2];
+						icon.appendChild(image);
+						description.innerHTML = item[3];
+						row.appendChild(id);
+						row.appendChild(icon);
+						row.appendChild(name);
+						row.appendChild(description);
+						rows.appendChild(row);
+					});
+				})();
+			</script>
 		</div>
 	</body>
 </html>
