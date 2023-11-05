@@ -61,6 +61,7 @@
 				margin-bottom: 0;
 			}
 			th{
+				font-size: 1rem;
 				font-weight: bold;
 				padding-left: 1rem;
 				padding-right: 1rem;
@@ -68,6 +69,7 @@
 				vertical-align: top;
 			}
 			td{
+				font-size: 1rem;
 				text-align: left;
 				vertical-align: top;
 			}
@@ -125,6 +127,25 @@
 			<p>
 				When making a script collection that uses basync, make sure to list basync as a dependency (<dfn>require_dependency basync</dfn>).
 			</p>
+			<h2>Convenience</h2>
+			<p>
+				If the <i>"sv_api.lua"</i> script is enabled (which it is by default), these convenience functions are added to the global environment on the server.
+				They do not do anything that the other basync functions cannot do (and those functions usually offer more control).
+				It is an error to call any of these functions when basync is not running.
+			</p>
+			<p>
+				The goal of these functions is to try and replicate normal game functions (on the client) that you may be more familiar with using.
+				Still, make sure to read the description of each function as they may behave slightly different than you'd expect the client one to.
+			</p>
+			<p>
+				Functions from modules are not documented here, you'll need to check their files.
+			</p>
+			<div class="indent">
+				<h3>Peds</h3>
+				<table>
+					<tr><th>W.I.P.</th><td>Too lazy to do this right now, just check sv_api.lua.</td></tr>
+				</table>
+			</div>
 			<h2>Common</h2>
 			<p>
 				A few common functions and events you may need to use a lot.
@@ -253,6 +274,8 @@
 				<table>
 					<tr><th>basync:hidePed(ped)</th><td>An unwanted ped (a "real" ped handle) was detected and is about to be "hidden".<br/>
 					Return true to cancel this and mark the ped as "ignored" instead.</td></tr>
+					<tr><th>basync:updatePed(ped)</th><td>A "real" ped was assigned to a network ped. Will be <b>-1</b> when the ped despawns.<br/>
+					This event only triggers when the ped handle for a ped object changes.</td></tr>
 				</table>
 			</div>
 			<h2>Vehicles</h2>
@@ -322,6 +345,8 @@
 				<table>
 					<tr><th>basync:hideVehicle(veh)</th><td>An unwanted vehicle (a "real" vehicle handle) was detected and is about to be "hidden".<br/>
 					Return true to cancel this and mark the vehicle as "ignored" instead.</td></tr>
+					<tr><th>basync:updateVehicle(veh)</th><td>A "real" vehicle was assigned to a network vehicle. Will be <b>-1</b> when the vehicle despawns.<br/>
+					This event only triggers when the vehicle handle for a vehicle object changes.</td></tr>
 				</table>
 			</div>
 		</div>
