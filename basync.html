@@ -212,7 +212,7 @@
 					<tr><th>net.basync.create_ped(model)</th><td>Create and return a new ped object.</td></tr>
 					<tr><th>net.basync.is_ped_valid(ped)</th><td>Returns if the value is a valid ped object.</td></tr>
 					<tr><th>net.basync.get_player_ped(player)</th><td>Return a player's ped object, or <b>nil</b> if they don't have a valid one.</td></tr>
-					<tr><th>net.basync.get_ped_from_player(player,id)</th><td>Return a valid ped object if the player knows about one with the network ID.</td></tr>
+					<tr><th>net.basync.get_ped_from_player(id)</th><td>Return a valid ped object if one exists with this network ID.</td></tr>
 					<tr><th>net.basync.all_player_peds()</th><td>Return an iterator that returns each a player and ped object for each valid player ped.<br/>
 					For example: <dfn>for player, ped in net.basync.all_player_peds() do --[[ do something ]] end</dfn>.</td></tr>
 					<tr><th>net.basync.all_peds()</th><td>Return an iterator that returns each valid ped object.<br/>
@@ -222,7 +222,7 @@
 				<table>
 					<tr><th>net.basync.get_player_ped()</th><td>Return the local player's ped object, or <b>nil</b> if they don't have a valid one.</td></tr>
 					<tr><th>net.basync.get_ped_by_ped(ped)</th><td>Return a ped object for the ped handle (a "real" ped) if a valid one exists.</td></tr>
-					<tr><th>net.basync.get_ped_from_server(id, pre)</th><td>Return a valid ped object if one exists with the network ID.<br/>
+					<tr><th>net.basync.get_ped_from_server(id, pre)</th><td>Return a valid ped object if one exists with this network ID.<br/>
 					If the ped has not received its first state update, the function will not return anything unless pre is <b>true</b>.</td></tr>
 					<tr><th>net.basync.all_peds()</th><td>Return an iterator that returns each valid ped object.</td></tr>
 				</table>
@@ -290,14 +290,14 @@
 				<table>
 					<tr><th>net.basync.create_vehicle(model)</th><td>Create and return a new vehicle object.</td></tr>
 					<tr><th>net.basync.is_vehicle_valid(veh)</th><td>Returns if the value is a valid vehicle object.</td></tr>
-					<tr><th>net.basync.get_vehicle_from_player(player,id)</th><td>Return a valid vehicle object if the player knows about one with the network ID.</td></tr>
+					<tr><th>net.basync.get_vehicle_from_player(player,id)</th><td>Return a valid vehicle object if one exists with this network ID.</td></tr>
 					<tr><th>net.basync.all_vehicles()</th><td>Return an iterator that returns each valid vehicle object.<br/>
 					For example: <dfn>for veh in net.basync.all_vehicles() do --[[ do something ]] end</dfn>.</td></tr>
 				</table>
 				<h3>Client Functions</h3>
 				<table>
 					<tr><th>net.basync.get_vehicle_by_vehicle(veh)</th><td>Return a vehicle object for the vehicle handle (a "real" vehicle) if a valid one exists.</td></tr>
-					<tr><th>net.basync.get_vehicle_from_server(id)</th><td>Return a valid vehicle object if one exists with the network ID.<br/>
+					<tr><th>net.basync.get_vehicle_from_server(id)</th><td>Return a valid vehicle object if one exists with this network ID.<br/>
 					If the vehicle has not received its first state update, the function will not return anything unless pre is <b>true</b>.</td></tr>
 					<tr><th>net.basync.all_vehicles()</th><td>Return an iterator that returns each valid vehicle object.</td></tr>
 				</table>
@@ -335,11 +335,11 @@
 					<tr><th>veh:get_position()</th><td>Return the vehicle's position and heading (4 values).</td></tr>
 					<tr><th>veh:get_vehicle()</th><td>Return the vehicle object the vehicle is in if they're in a valid one.</td></tr>
 				</table>
-				<h3>Local Client Events</h3>
+				<h3>Local Server Events</h3>
 				<table>
-					<tr><th>basync:createPed(veh)</th><td>A vehicle was just created.</td></tr>
-					<tr><th>basync:deletePed(veh)</th><td>A vehicle is going to be deleted because of a player unless an event handler returns true.</td></tr>
-					<tr><th>basync:updatePed(veh)</th><td>A vehicle's state was updated by a player. You can check for (and correct) any forbidden changes here.</td></tr>
+					<tr><th>basync:createVehicle(veh)</th><td>A vehicle was just created.</td></tr>
+					<tr><th>basync:deleteVehicle(veh)</th><td>A vehicle is going to be deleted because of a player unless an event handler returns true.</td></tr>
+					<tr><th>basync:updateVehicle(veh)</th><td>A vehicle's state was updated by a player. You can check for (and correct) any forbidden changes here.</td></tr>
 				</table>
 				<h3>Local Client Events</h3>
 				<table>
