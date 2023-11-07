@@ -30,6 +30,20 @@
 				<li>Take advantage of more new functions that are too numerous to list here!</li>
 			</ul>
 			<hr/>
+			<h1 id="server">derpy's script server</h1>
+			<p>
+				derpy's script server is the server version of DSL. It can be downloaded <a href="/downloads.html#dsl">here</a>.<br/>
+				If you want to know more about making network scripts for DSL see <a href="/dsl/network.html">network scripting</a>.<br/>
+				A server can send scripts to players and facilitate communication between players via scripting.<br/>
+				No form of game sync is done by DSL or the server itself. Here are some things you can expect from the server.
+			</p>
+			<ul>
+				<li>Start and stop script collections using the server console just like you would in the client DSL console.</li>
+				<li>Send client scripts to players, including updated scripts when the script collection is restarted.</li>
+				<li>Make server scripts that have access to most of the same DSL functions as the client.</li>
+				<li>Use network events to send arbitrary Lua data between client and server scripts.</li>
+			</ul>
+			<hr/>
 			<h1>Getting Started</h1>
 			<p>
 				Use the navigation bar on the left if you are looking for DSL functions.
@@ -47,20 +61,6 @@
 				Open the console (using <dfn>~</dfn> by default) to see if you got any errors, and type <span class="sample_input">/restart mymod.lua</span> to restart your script.
 			</p>
 			<hr/>
-			<h1 id="server">derpy's script server</h1>
-			<p>
-				derpy's script server is the server version of DSL. It can be downloaded <a href="/downloads.html#dsl">here</a>.<br/>
-				If you want to know more about making network scripts for DSL see <a href="/dsl/network.html">network scripting</a>.<br/>
-				A server can send scripts to players and facilitate communication between players via scripting.<br/>
-				No form of game sync is done by DSL or the server itself. Here are some things you can expect from the server.
-			</p>
-			<ul>
-				<li>Start and stop script collections using the server console just like you would in the client DSL console.</li>
-				<li>Send client scripts to players, including updated scripts when the script collection is restarted.</li>
-				<li>Make server scripts that have access to most of the same DSL functions as the client.</li>
-				<li>Use network events to send arbitrary Lua data between client and server scripts.</li>
-			</ul>
-			<hr/>
 			<h1 id="versions">Version History</h1>
 			<p>
 				Versions are represented using a single number that goes up with every full release.
@@ -69,90 +69,34 @@
 			<p>
 				If a version only provides small fixes and doesn't add new features, it may be released as a patch with a decimal part (like <b>7.1</b>).
 			</p>
-			<h2>pre-alpha (0)</h2>
+			<h2>version 9</h2>
 			<ul>
-				<li>Pre-alpha versions were only shared between a tight group of testers, and are only listed here for the sake of completeness.</li>
+				<li>183 client functions, 81 server functions.</li>
+				<li>Added the GetScriptHash function.</li>
 			</ul>
-			<h2>alpha 1</h2>
+			<h2>version 8</h2>
 			<ul>
-				<li>82 total functions.</li>
-				<li>The first public release.</li>
+				<li>182 client functions, 81 server functions (count no longer includes replaced functions or standard Lua functions).</li>
+				<li>Added the PRE_GAME thread type.</li>
+				<li>Added the ScriptShutdown and ScriptDestroyed events.</li>
+				<li>Added the ServerShutdown event.</li>
+				<li>Added the GetCurrentScript function.</li>
+				<li>Added the ObjectNameToHashID function on the server, which acts just like the client one.</li>
+				<li>Added the QuitServer command on the server for graceful shutdown.</li>
+				<li>Added the GetScriptNetworkTable function for sharing values between network scripts.</li>
+				<li>Added global net table for accessing shared network tables.</li>
+				<li>Added the CreateAdvancedThread function to the server version.</li>
+				<li>Added the /quit command on servers for graceful shutdown.</li>
+				<li>Added a SIGTERM signal handler for graceful shutdown on Linux servers.</li>
+				<li>Added a server config option for showing performance warnings (it was always shown before, now it is off by default).</li>
+				<li>Re-organized client config options so that networking options are at the top (but there aren't new options).</li>
+				<li>Removed the SetScriptCleanup function as it was broken and has been superseded by ScriptShutdown.</li>
+				<li>Fixed the GetScriptFilePath function.</li>
 			</ul>
-			<h2>alpha 2</h2>
+			<h2>version 7.1</h2>
 			<ul>
-				<li>87 total functions.</li>
-				<li>Temporarily added allow_mouse to loader config, so that mouse-related issues can be narrowed down and reported by those who have problems.</li>
-				<li>Added SetTextBold, SetTextItalic, SetTextClipping, PopTextFormatting, and DrawTextInline.</li>
-			</ul>
-			<h2>alpha 3</h2>
-			<ul>
-				<li>90 total functions.</li>
-				<li>Scripts do not shutdown when main returns anymore, as this design seems better.</li>
-				<li>There is a package system now so anyone can neatly add C functions to use in lua if system access is on.</li>
-				<li>Config is generated instead of released with updates so that updating is a simple drag/drop/replace.</li>
-				<li>The loadlib function is now allowed when system access is turned on in config.</li>
-				<li>DrawTextInline can now draw "directly" instead of only allowing one text at a time per-style.</li>
-				<li>DrawTextInline doesn't round down duration and the texture alpha has been fixed.</li>
-				<li>DrawTextInline preserves formatting on new lines.</li>
-				<li>DrawTexture2 can draw a centered texture with optional rotation.</li>
-				<li>IsGamePaused returns true if the game is paused.</li>
-				<li>GetPackageFilePath returns a file name relative to the "packages" directory.</li>
-				<li>SetTextFormatting can take a style number like the ones given to DrawTextInline.</li>
-				<li>Other small fixes too minor to list.</li>
-			</ul>
-			<h2>version 4</h2>
-			<ul>
-				<li>130 total functions.</li>
-				<li>Added an event system, providing scripts with a way to influence game behavior and trigger their own events.</li>
-				<li>Argument checking is a little more strict to help the debugging process rather than just taking bad values.</li>
-				<li>Collections can now be installed as a zip archive by simply putting a zip with the mod files into the scripts folder.</li>
-				<li>Collections have their own config files where custom settings, requirements, or script names can be specified.</li>
-				<li>Commands can now have help text associated with them.</li>
-				<li>Console output has been improved, such as now showing the collection and thread names in errors.</li>
-				<li>Countless major under-the-hood changes to generally improve DSL.</li>
-				<li>Direct input keyboard scan codes are now used instead of virtual key codes.</li>
-				<li>Dynamic textures were introduced, allowing you to do things like draw the game's current back buffer onto a texture to draw later.</li>
-				<li>ImportScript is now supported in a way that mimics the base game, allowing you to import scripts from Scripts.img into your script.</li>
-				<li>Improved the way normal script objects are emulated to be more accurate.</li>
-				<li>Inline text now has an optional width argument that goes before the text.</li>
-				<li>Localized text can now be replaced with new text, and new text entries can be registered.</li>
-				<li>More thread types were made for improved control with rendering functions.</li>
-				<li>Patched the custom save data system heavily, as it was pretty broken before.</li>
-				<li>Persistent data tables have been added as a way for scripts to store information in between DSL resets.</li>
-				<li>Pre-init scripts are now a thing, allowing you to run scripts much earlier than normal even if in a limited way.</li>
-				<li>Render cache functions now draw before camera fade is applied, but this can be scripted using the new draw layer system.</li>
-				<li>Significant additions to the library of script functions, and many improvements to already existing ones.</li>
-				<li>Standard file input / output functions have been added for a safer alternative to allowing full system access.</li>
-				<li>Smaller things that are too numerous to list fully here.</li>
-			</ul>
-			<h2>version 5</h2>
-			<ul>
-				<li>183 total functions.</li>
-				<li>The server version has been released, allowing players to connect to it and communicate through scripted events.</li>
-				<li>More local events have been added that offer scripts greater control over the game.</li>
-				<li>A new global function hook and replacement system has been created.</li>
-				<li>More input functions have been added to modify controller state.</li>
-				<li>A significant amount of small changes and patches.</li>
-			</ul>
-			<h2>version 6</h2>
-			<ul>
-				<li>192 total functions.</li>
-				<li>OpenFile supports the "ab" mode.</li>
-				<li>Fixed function hook and replacement functions.</li>
-				<li>The loadfile function doesn't raise an error if the path is unsafe (instead it returns nil + an error).</li>
-				<li>Optimized network messages slightly.</li>
-				<li>Fixed a problem that could happen when passing nil to compatibility functions.</li>
-				<li>A missing main_script will no longer raise an error if there are other types of scripts.</li>
-				<li>Fixed a crash related to the command parser.</li>
-				<li>Some script cleanup tasks now happen when the script is shutdown rather than when it is fully destroyed.</li>
-				<li>Fixed a couple memory leaks.</li>
-				<li>Removed the broken DisableController function and replaced it with the ZeroController function.</li>
-				<li>Added a message to tell the user if Lua has had an unrecoverable error.</li>
-				<li>Added pool functions to check or require pool sizes.</li>
-				<li>Added the SetScriptCleanup function for things that need to be cleaned up instantly rather than in a thread.</li>
-				<li>Added the CameraFaded event.</li>
-				<li>Added the GAME2 thread type.</li>
-				<li>Lots of other little fixes and changes as always.</li>
+				<li>Fixed scripted text entry (pasting the clipboard would cause issues after StartTyping was called).</li>
+				<li>Fixed script collection discovery for Linux servers.</li>
 			</ul>
 			<h2>version 7</h2>
 			<ul>
@@ -181,29 +125,90 @@
 				<li>Fixed excessive CPU usage by the server.</li>
 				<li>Like always, many more small fixes.</li>
 			</ul>
-			<h2>version 7.1</h2>
+			<h2>version 6</h2>
 			<ul>
-				<li>Fixed scripted text entry (pasting the clipboard would cause issues after StartTyping was called).</li>
-				<li>Fixed script collection discovery for Linux servers.</li>
+				<li>192 total functions.</li>
+				<li>OpenFile supports the "ab" mode.</li>
+				<li>Fixed function hook and replacement functions.</li>
+				<li>The loadfile function doesn't raise an error if the path is unsafe (instead it returns nil + an error).</li>
+				<li>Optimized network messages slightly.</li>
+				<li>Fixed a problem that could happen when passing nil to compatibility functions.</li>
+				<li>A missing main_script will no longer raise an error if there are other types of scripts.</li>
+				<li>Fixed a crash related to the command parser.</li>
+				<li>Some script cleanup tasks now happen when the script is shutdown rather than when it is fully destroyed.</li>
+				<li>Fixed a couple memory leaks.</li>
+				<li>Removed the broken DisableController function and replaced it with the ZeroController function.</li>
+				<li>Added a message to tell the user if Lua has had an unrecoverable error.</li>
+				<li>Added pool functions to check or require pool sizes.</li>
+				<li>Added the SetScriptCleanup function for things that need to be cleaned up instantly rather than in a thread.</li>
+				<li>Added the CameraFaded event.</li>
+				<li>Added the GAME2 thread type.</li>
+				<li>Lots of other little fixes and changes as always.</li>
 			</ul>
-			<h2>version 8</h2>
+			<h2>version 5</h2>
 			<ul>
-				<li>182 client functions, 81 server functions (count no longer includes replaced functions or standard Lua functions).</li>
-				<li>Added the PRE_GAME thread type.</li>
-				<li>Added the ScriptShutdown and ScriptDestroyed events.</li>
-				<li>Added the ServerShutdown event.</li>
-				<li>Added the GetCurrentScript function.</li>
-				<li>Added the ObjectNameToHashID function on the server, which acts just like the client one.</li>
-				<li>Added the QuitServer command on the server for graceful shutdown.</li>
-				<li>Added the GetScriptNetworkTable function for sharing values between network scripts.</li>
-				<li>Added global net table for accessing shared network tables.</li>
-				<li>Added the CreateAdvancedThread function to the server version.</li>
-				<li>Added the /quit command on servers for graceful shutdown.</li>
-				<li>Added a SIGTERM signal handler for graceful shutdown on Linux servers.</li>
-				<li>Added a server config option for showing performance warnings (it was always shown before, now it is off by default).</li>
-				<li>Re-organized client config options so that networking options are at the top (but there aren't new options).</li>
-				<li>Removed the SetScriptCleanup function as it was broken and has been superseded by ScriptShutdown.</li>
-				<li>Fixed the GetScriptFilePath function.</li>
+				<li>183 total functions.</li>
+				<li>The server version has been released, allowing players to connect to it and communicate through scripted events.</li>
+				<li>More local events have been added that offer scripts greater control over the game.</li>
+				<li>A new global function hook and replacement system has been created.</li>
+				<li>More input functions have been added to modify controller state.</li>
+				<li>A significant amount of small changes and patches.</li>
+			</ul>
+			<h2>version 4</h2>
+			<ul>
+				<li>130 total functions.</li>
+				<li>Added an event system, providing scripts with a way to influence game behavior and trigger their own events.</li>
+				<li>Argument checking is a little more strict to help the debugging process rather than just taking bad values.</li>
+				<li>Collections can now be installed as a zip archive by simply putting a zip with the mod files into the scripts folder.</li>
+				<li>Collections have their own config files where custom settings, requirements, or script names can be specified.</li>
+				<li>Commands can now have help text associated with them.</li>
+				<li>Console output has been improved, such as now showing the collection and thread names in errors.</li>
+				<li>Countless major under-the-hood changes to generally improve DSL.</li>
+				<li>Direct input keyboard scan codes are now used instead of virtual key codes.</li>
+				<li>Dynamic textures were introduced, allowing you to do things like draw the game's current back buffer onto a texture to draw later.</li>
+				<li>ImportScript is now supported in a way that mimics the base game, allowing you to import scripts from Scripts.img into your script.</li>
+				<li>Improved the way normal script objects are emulated to be more accurate.</li>
+				<li>Inline text now has an optional width argument that goes before the text.</li>
+				<li>Localized text can now be replaced with new text, and new text entries can be registered.</li>
+				<li>More thread types were made for improved control with rendering functions.</li>
+				<li>Patched the custom save data system heavily, as it was pretty broken before.</li>
+				<li>Persistent data tables have been added as a way for scripts to store information in between DSL resets.</li>
+				<li>Pre-init scripts are now a thing, allowing you to run scripts much earlier than normal even if in a limited way.</li>
+				<li>Render cache functions now draw before camera fade is applied, but this can be scripted using the new draw layer system.</li>
+				<li>Significant additions to the library of script functions, and many improvements to already existing ones.</li>
+				<li>Standard file input / output functions have been added for a safer alternative to allowing full system access.</li>
+				<li>Smaller things that are too numerous to list fully here.</li>
+			</ul>
+			<h2>alpha 3</h2>
+			<ul>
+				<li>90 total functions.</li>
+				<li>Scripts do not shutdown when main returns anymore, as this design seems better.</li>
+				<li>There is a package system now so anyone can neatly add C functions to use in lua if system access is on.</li>
+				<li>Config is generated instead of released with updates so that updating is a simple drag/drop/replace.</li>
+				<li>The loadlib function is now allowed when system access is turned on in config.</li>
+				<li>DrawTextInline can now draw "directly" instead of only allowing one text at a time per-style.</li>
+				<li>DrawTextInline doesn't round down duration and the texture alpha has been fixed.</li>
+				<li>DrawTextInline preserves formatting on new lines.</li>
+				<li>DrawTexture2 can draw a centered texture with optional rotation.</li>
+				<li>IsGamePaused returns true if the game is paused.</li>
+				<li>GetPackageFilePath returns a file name relative to the "packages" directory.</li>
+				<li>SetTextFormatting can take a style number like the ones given to DrawTextInline.</li>
+				<li>Other small fixes too minor to list.</li>
+			</ul>
+			<h2>alpha 2</h2>
+			<ul>
+				<li>87 total functions.</li>
+				<li>Temporarily added allow_mouse to loader config, so that mouse-related issues can be narrowed down and reported by those who have problems.</li>
+				<li>Added SetTextBold, SetTextItalic, SetTextClipping, PopTextFormatting, and DrawTextInline.</li>
+			</ul>
+			<h2>alpha 1</h2>
+			<ul>
+				<li>82 total functions.</li>
+				<li>The first public release.</li>
+			</ul>
+			<h2>pre-alpha (0)</h2>
+			<ul>
+				<li>Pre-alpha versions were only shared between a tight group of testers, and are only listed here for the sake of completeness.</li>
 			</ul>
 		</div>
 	</div>
