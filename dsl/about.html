@@ -71,11 +71,20 @@
 			</p>
 			<h2>version 9</h2>
 			<ul>
-				<li>186 client functions, 83 server functions.</li>
-				<li>Added the GetAllScriptInfo function.</li>
-				<li>Added the GetNativeScripts function.</li>
-				<li>Added the GetContentHash function.</li>
+				<li>184 client functions, 83 server functions.</li>
+				<li>Added the IsHash function.</li>
 				<li>Added the GetHash function.</li>
+				<li>Added support for console input on Linux servers.</li>
+				<li>Added the console_no_input option (but didn't change config version so it won't reset your config).</li>
+				<li>Added another argument to the PlayerConnecting function.</li>
+				<li>Updated example scripts and extra scripts.</li>
+				<li>Removed the ability to start local scripts while on a server.</li>
+				<li>Improved console behavior on Windows servers.</li>
+				<li>Fixed a crash when using StopCurrentScriptCollection in a script's initial run.</li>
+				<li>Fixed a crash when the server generated its default config.</li>
+				<li>Fixed an issue that would make players invalid during certain events.</li>
+				<li>Fixed the ScriptDestroyed and ScriptShutdown events.</li>
+				<li>Fixed and adjusted a few other things.</li>
 			</ul>
 			<h2>version 8</h2>
 			<ul>
