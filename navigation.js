@@ -457,6 +457,10 @@ var dsl_library_functions = [
 		[8,[
 			"ObjectNameToHashID",
 			"QuitServer"
+		]],
+		[9,[
+			"GetHash",
+			"IsHash"
 		]]
 	],
 	["ped",
@@ -696,6 +700,10 @@ function recolorVersionTagsDSL(name){
 			tag.style.backgroundColor = "#00C0FF";
 		else if(version == "DSL8")
 			tag.style.backgroundColor = "#C8C878";
+		else if(version == "DSL9"){
+			tag.style.backgroundColor = "#00FF00";
+			tag.style.color = "#000000";
+		}
 	}
 }
 

@@ -130,6 +130,43 @@ end</pre>
 		<h2>Results</h2>
 		<p class="func_results">None.</p>
 	</div>
+	<div id="GetHash" class="dsl_function">
+		<p class="func_description">
+			Works just like <a href="/function.html?ObjectNameToHashID">ObjectNameToHashID</a>, but it is case-sensitive.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_string">Name</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_userdata">Hash</li>
+		</ul>
+	</div>
+	<div id="IsHash" class="dsl_function">
+		<p class="func_description">
+			Check if a hash (returned by functions like <a href="/function.html?ObjectNameToHashID">ObjectNameToHashID</a>) is equal to a number represented by a string.
+			The string is specified in hexadecimal.
+		</p>
+		<h2>Arguments</h2>
+		<ul class="func_arguments">
+			<li class="lua_userdata">Hash</li>
+			<li class="lua_string">Check</li>
+		</ul>
+		<h2>Results</h2>
+		<ul class="func_results">
+			<li class="lua_boolean">Equal</li>
+		</ul>
+		<h2>Example</h2>
+		<p>Add a ground blip in front of the boy's dorm.</p>
+		<code class="func_example">
+			<button class="copy_code" onclick="copyCode(this)">copy</button>
+			<pre>if IsHash(ClothingGetPlayer(1),"65A6B72C") then
+	TextPrintString("Wearing Bullworth vest.",0,1)
+end
+</pre>
+		</code>
+	</div>
 	<!-- CLIENT MISC -->
 	<div id="ForceWindowUpdate" class="dsl_function">
 		<p class="func_description">
