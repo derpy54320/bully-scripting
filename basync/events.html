@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>BASYNC - Events</title>
+		<link rel="stylesheet" href="style.css"/>
+		<meta charset="UTF-8"/>
+	</head>
+	<body>
+		<h1><a href="index.html">BASYNC</a> - Events</h1>
+		<h2>usage</h2>
+		<p>
+			All of these are <b>local events</b>, meaning you should use <a href="http://bullyscripting.net/dsl/library/event.html?RegisterLocalEventHandler">RegisterLocalEventHandler</a> to register handlers for them.
+		</p>
+		<h2>general (server)</h2>
+		<table>
+			<tr><th>basync:initPlayer(player)</th><td>a player has been initialized for basync (after their ped is spawned)</td></tr>
+		</table>
+		<h2>general (client)</h2>
+		<table>
+			<tr><th>basync:updateServer()</th><td>activated at the same rate as the server's refresh rate (by default 30 hz)</td></tr>
+		</table>
+		<h2>peds (server)</h2>
+		<table>
+			<tr><th>basync:spawnedPlayer(player, ped)</th><td>a player ped was spawned (only happens once during initialization)</td></tr>
+			<tr><th>basync:enterVehicle(ped, vehicle)</th><td>a ped is entering a vehicle because a player's game said to (cancelled by returning true)</td></tr>
+			<tr><th>basync:exitVehicle(ped)</th><td>a ped is exiting a vehicle because a player's game said to (cancelled by returning true)</td></tr>
+			<tr><th>basync:updatePed(ped)</th><td>a ped was updated by a player (so you can check for any bad changes and possibly revert them)</td></tr>
+			<tr><th>basync:createdPed(ped)</th><td>a new ped was created</td></tr>
+			<tr><th>basync:deletePed(ped)</th><td>a ped is being deleted by a player (but this can be cancelled by returning true)</td></tr>
+			<tr><th>basync:deletedPed(ped)</th><td>a ped was deleted (either by a player or the server)</td></tr>
+		</table>
+		<h2>peds (server, advanced)</h2>
+		<table>
+			<tr><th>basync:initPed(ped)</th><td>a ped object was created (but is not yet valid) and it's time to initialize its state</td></tr>
+			<tr><th>basync:setPed(k, v)</th><td>a field is being changed by a player (ped.server[k] = v, return true to allow it or the player is kicked)</td></tr>
+		</table>
+		<h2>peds (client)</h2>
+		<table>
+			<tr><th>basync:assignPed(ped, real)</th><td>a ped was assigned a real ped (which could be invalid if they are currently despawned)</td></tr>
+			<tr><th>basync:hidePed(real)</th><td>a real ped (not a basync ped object) is going to be "hidden" unless cancelled by returning true</td></tr>
+			<tr><th>basync:createdPed(ped)</th><td>a new ped was created</td></tr>
+			<tr><th>basync:deletePed(ped)</th><td>a ped is being deleted (this cannot be cancelled)</td></tr>
+		</table>
+		<h2>peds (client, advanced)</h2>
+		<table>
+			<tr><th>basync:getPed(ped, state)</th><td>a ped is getting data to send to the server</td></tr>
+			<tr><th>basync:setPed(ped)</th><td>a ped is being updated</td></tr>
+		</table>
+		<h2>vehicles (server)</h2>
+		<table>
+			<tr><th>basync:updateVehicle(vehicle)</th><td>a vehicle was updated by a player (so you can check for any bad changes and possibly revert them)</td></tr>
+			<tr><th>basync:createdVehicle(vehicle)</th><td>a new vehicle was created</td></tr>
+			<tr><th>basync:deleteVehicle(vehicle)</th><td>a vehicle is being deleted by a player (but this can be cancelled by returning true)</td></tr>
+			<tr><th>basync:deletedVehicle(vehicle)</th><td>a vehicle was deleted (either by a player or the server)</td></tr>
+		</table>
+		<h2>vehicles (server, advanced)</h2>
+		<table>
+			<tr><th>basync:initVehicle(vehicle)</th><td>a vehicle object was created (but is not yet valid) and it's time to initialize its state</td></tr>
+			<tr><th>basync:setVehicle(k, v)</th><td>a field is being changed by a player (vehicle.server[k] = v, return true to allow it or the player is kicked)</td></tr>
+		</table>
+		<h2>vehicles (client)</h2>
+		<table>
+			<tr><th>basync:assignVehicle(vehicle, real)</th><td>a vehicle was assigned a real vehicle (which could be invalid if they are currently despawned)</td></tr>
+			<tr><th>basync:hideVehicle(real)</th><td>a real vehicle (not a basync vehicle object) is going to be "hidden" unless cancelled by returning true</td></tr>
+			<tr><th>basync:createdVehicle(vehicle)</th><td>a new vehicle was created</td></tr>
+			<tr><th>basync:deleteVehicle(vehicle)</th><td>a vehicle is being deleted (this cannot be cancelled)</td></tr>
+		</table>
+		<h2>vehicles (client, advanced)</h2>
+		<table>
+			<tr><th>basync:getVehicle(vehicle, state)</th><td>a vehicle is getting data to send to the server</td></tr>
+			<tr><th>basync:setVehicle(vehicle)</th><td>a vehicle is being updated</td></tr>
+		</table>
+	</body>
+</html>

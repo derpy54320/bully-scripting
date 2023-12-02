@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>BASYNC - Global API</title>
+		<link rel="stylesheet" href="style.css"/>
+		<meta charset="UTF-8"/>
+	</head>
+	<body>
+		<h1><a href="index.html">BASYNC</a> - Global API</h1>
+		<h2>summary</h2>
+		<p>
+			Normally, you'd use the <a href="http://bullyscripting.net/dsl/globals.html#net">net table</a> to access <a href="functions.html">basync functions</a> and then use methods to interact with basync objects.
+			This is still useful when you need more direct control over things, but it is often easier to use basync's <b>global api</b>.
+			Many global functions are made by basync (and its <a href="modules.html">modules</a>) that try to mock the game's normal functions.
+		</p>
+		<p>
+			Keep in mind that even though the point of these functions is to make server scripting more like client scripting, not everything will work exactly the same.
+			There are some limitations, some changes, and some entirely new functions. So make sure to read the description for whatever function you're using.
+		</p>
+		<p>
+			For example, see these two approaches to spawning a ped on a server script. To most people, the 2nd approach is more intuitive.
+		</p>
+		<code>-- approach #1: using normal basync functions
+ped = net.basync.create_ped(75)
+ped:set_position(270, -110, 7)</code>
+		<code>-- approach #2: using basync's global api
+ped = PedCreateXYZ(75, 270, -110, 7)</code>
+		<h2>built-in</h2>
+		<p>
+			These functions are defined in <b>sv_api.lua</b>, and are always available when basync is running.
+		</p>
+		<table>
+			<tr><th>AllPeds()</th><td>Returns an iterator to use with for loops (<dfn>for ped in AllPeds() do --[[ stuff ]] end</dfn>).</td></tr>
+			<tr><th>AllVehicles()</th><td>Returns an iterator to use with for loops (<dfn>for ped in AllPeds() do --[[ stuff ]] end</dfn>).</td></tr>
+			<tr><th>ChapterGet()</th><td>Returns the current chapter.</td></tr>
+			<tr><th>ChapterSet(chapter)</th><td>Set the current chapter (zero-based).</td></tr>
+			<tr><th>ClockGet()</th><td>Returns the current hour and minute.</td></tr>
+			<tr><th>ClockGetTickRate()</th><td>Returns how many game seconds pass per real second.</td></tr>
+			<tr><th>ClockSet(hour, minute)</th><td>Set the current hour and minute.</td></tr>
+			<tr><th>ClockSetTickRate(min_per_sec)</th><td>Set how many game seconds pass per real second.</td></tr>
+			<tr><th>PedCreateXYZ(model, x, y, z, h)</th><td>Create (and return) a ped with a custom position and heading.</td></tr>
+			<tr><th>PedDelete(ped)</th><td>Delete a ped.</td></tr>
+			<tr><th>PedFaceHeading(ped, h)</th><td>Set a ped's heading in degrees.</td></tr>
+			<tr><th>PedFindInAreaXYZ(x1, y1, z1, range)</th><td>Returns a boolean saying if any peds were found, and all found peds.</td></tr>
+			<tr><th>PedGetArea(ped)</th><td>Returns a ped's area code (not guaranteed to be a valid area).</td></tr>
+			<tr><th>PedGetHeading(ped)</th><td>Returns a ped's heading in radians.</td></tr>
+			<tr><th>PedGetModelId(ped)</th><td>Returns a ped's model id (number).</td></tr>
+			<tr><th>PedGetName(ped)</th><td>Returns a ped's name (the name used by basync, not their localized name tag).</td></tr>
+			<tr><th>PedGetPosXYZ(ped)</th><td>Returns a ped's position (in 3 values).</td></tr>
+			<tr><th>PedInRectangle(ped, lx, ly, hx, hy)</th><td>Returns true if a ped is within the rectangle.</td></tr>
+			<tr><th>PedIsInAnyVehicle(ped)</th><td>Returns true if a ped is in any vehicle.</td></tr>
+			<tr><th>PedIsInAreaXYZ(ped, x1, y1, z1, range)</th><td>Returns true if a ped is in the area.</td></tr>
+			<tr><th>PedIsInVehicle(ped, veh)</th><td>Returns true if a ped is in a specific vehicle.</td></tr>
+			<tr><th>PedIsModel(ped, model)</th><td>Returns true if a ped is a specific model (number).</td></tr>
+			<tr><th>PedIsPlayer(ped)</th><td>Returns true if a ped is a player (has nothing to do with model).</td></tr>
+			<tr><th>PedIsValid(ped)</th><td>Returns true if a ped is valid (most other functions fail if invalid).</td></tr>
+			<tr><th>PedPutOnBike(ped, veh)</th><td>Warp a ped into a vehicle (exact same as PedWarpIntoCar).</td></tr>
+			<tr><th>PedSetArea(ped, area)</th><td>Set a ped's area code (they will only show up in this area).</td></tr>
+			<tr><th>PedSetName(ped, name)</th><td>Set a ped's name (the name is just for scripts, and is not used by the game).</td></tr>
+			<tr><th>PedSetPosXYZ(ped, x, y, z)</th><td>Set a ped's position.</td></tr>
+			<tr><th>PedSwapModel(ped, name)</th><td>Set a ped's model (using a number or string).</td></tr>
+			<tr><th>PedWarpIntoCar(ped, veh, seat)</th><td>Warp a ped into a vehicle (don't worry if it's a car or bike).</td></tr>
+			<tr><th>PedWarpOutOfCar()</th><td>Warp a ped out of any vehicle they're in (if in one).</td></tr>
+			<tr><th>VehicleCreateXYZ(model, x, y, z, h)</th><td>Create (and return) a vehicle with a custom position and heading.</td></tr>
+			<tr><th>VehicleDelete(veh)</th><td>Delete a vehicle</td></tr>
+			<tr><th>VehicleFaceHeading(veh, h)</th><td>Set a vehicle's heading in degrees.</td></tr>
+			<tr><th>VehicleFindInAreaXYZ(x1, y1, z1, range)</th><td>Returns a table of vehicles in the area *if* there are any.</td></tr>
+			<tr><th>VehicleGetArea(veh)</th><td>Returns a vehicle's area code (not guranteed to be a valid area).</td></tr>
+			<tr><th>VehicleGetHeading(veh)</th><td>Returns a vehicle's heading in radians.</td></tr>
+			<tr><th>VehicleGetModelId(veh)</th><td>Returns a vehicle's model id (number).</td></tr>
+			<tr><th>VehicleGetName(veh)</th><td>Returns a vehicle's name (the name used by basync).</td></tr>
+			<tr><th>VehicleGetPosXYZ(veh)</th><td>Returns a vehicle's position (in 3 values).</td></tr>
+			<tr><th>VehicleIsInAreaXYZ(veh, x1, y1, z1, range)</th><td>Returns true if a vehicle is in the area</td></tr>
+			<tr><th>VehicleIsModel(ped, model)</th><td>Returns true if a vehicle is a specific model (number).</td></tr>
+			<tr><th>VehicleIsValid(veh)</th><td>Returns true if a vehicle is valid (most other functions fail if invalid).</td></tr>
+			<tr><th>VehicleSetArea(veh, area)</th><td>Set a vehicle's area (it will only show up in this area).</td></tr>
+			<tr><th>VehicleSetName(veh, name)</th><td>Set a vehicle's name (the name is just for scripts, and is not used by the game).</td></tr>
+			<tr><th>VehicleSetPosXYZ(veh, x, y, z)</th><td>Set a vehicle's position.</td></tr>
+			<tr><th>WeatherGet()</th><td>Returns the current weather type.</td></tr>
+			<tr><th>WeatherSet(weather)</th><td>Set the current weather type (can be any integer, even if a corrupt weather type).</td></tr>
+		</table>
+	</body>
+</html>

@@ -1,0 +1,54 @@
+:root{
+	background-color: black;
+	color-scheme: dark;
+	font-family: Helvetica, Arial;
+	max-width: 80rem;
+	margin-left: auto;
+	margin-right: auto;
+}
+body{
+	background-color: #101010;
+	border-radius: 1rem;
+	padding: 1rem;
+	padding-top: 1px;
+}
+code{
+	background-color: #000000;
+	border-radius: 1rem;
+	display: block;
+	font-family: Consolas;
+	font-style: normal;
+	font-weight: normal;
+	margin-bottom: 1rem;
+	overflow-wrap: break-word;
+	padding: 1rem;
+	white-space: pre-wrap;
+}
+dfn{
+	background-color: #000000;
+	border-radius: 0.5rem;
+	font-family: Consolas;
+	font-style: normal;
+	font-weight: bold;
+	padding: 0.25rem;
+	white-space: nowrap;
+}
+h1,h2,h3,h4,h5,h6{
+	color: #C8C878;
+	font-family: Arial;
+	font-weight: 900;
+}
+h1{
+	text-align: center;
+}
+table{
+	/*background-color: #202020;*/
+	border-radius: 1rem;
+	border-spacing: 1rem;
+}
+td{
+	font-size: 1rem;
+}
+th{
+	text-align: left;
+}

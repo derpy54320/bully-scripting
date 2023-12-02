@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>BASYNC - Objects</title>
+		<link rel="stylesheet" href="style.css"/>
+		<meta charset="UTF-8"/>
+	</head>
+	<body>
+		<h1><a href="index.html">BASYNC</a> - Objects</h1>
+		<h2>usage</h2>
+		<p>
+			Basync objects are technically just tables, but you usually shouldn't be using any of its fields directly unless you're making a module and *really* know what you're doing.
+			Usually, you should just use the methods described on this page to interact with these objects (or the <a href="api.html">global api</a> functions).
+		</p>
+		<p>
+			The <dfn>ped:</dfn> and <dfn>veh:</dfn> parts of these method names are just provided for clarity, the way you actually use them depends on how you get or store the object.
+			For example if you have a variable named <dfn>my_car</dfn>, you could delete it using <dfn>my_car:delete()</dfn>.
+		</p>
+		<h2>ped objects (server)</h2>
+		<p>
+			On the server, a basync ped object is the main way peds are represented.
+			A ped is created for each player that joins, and more can be created using the <a href="functions.html">net.basync.create_ped</a> function.
+			They have the following methods, as well as the shared ones farther down the page.
+		</p>
+		<table>
+			<tr><th>ped:delete()</th><td>Delete the ped. This instantly makes the ped invalid, so you cannot use it anymore.</td></tr>
+			<tr><th>ped:is_valid()</th><td>Returns if the ped is valid. Any other function will fail if the ped isn't valid.</td></tr>
+			<tr><th>ped:is_player()</th><td>Returns if the ped is a player ped (you cannot create player peds, they are only made by basync).</td></tr>
+			<tr><th>ped:get_owner()</th><td>Return the ped's owning player. Could be <b>-1</b> which means it has no owner.</td></tr>
+			<tr><th>ped:lock_owner()</th><td>Don't allow the ped's owner to switch automatically, meaning it can only be switched by <b>set_owner</b>.</td></tr>
+			<tr><th>ped:unlock_owner()</th><td>Allow the ped's owner to switch automatically again (the default behavior).</tr>
+			<tr><th>ped:set_owner(player)</th><td>Set the ped's owner. This could instantly change to another player if the ped's owner isn't locked.<br/>
+			If you try to set the owner to a player that hasn't been initialized by basync yet, <b>false</b> is returned (instead of <b>true</b>).</td></tr>
+			<tr><th>ped:set_name(name)</th><td>Set the ped's name.</td></tr>
+			<tr><th>ped:set_model(model)</th><td>Set the ped's model index.</td></tr>
+			<tr><th>ped:set_area(area)</th><td>Set the ped's area code. The ped will only show up for players who are also in that area.<br/>
+			When changing a player ped's area, it will force the player to move to that area. Make sure they're in a valid position.</td></tr>
+			<tr><th>ped:set_position(x, y, z, h)</th><td>Set the ped's position, and optionally set their heading (0 by default).</td></tr>
+			<tr><th>ped:warp_into_vehicle(veh, seat)</th><td>Set the ped's vehicle. Only use seat <b>0</b> unless you enabled passengers in basync's config.txt.</td></tr>
+			<tr><th>ped:warp_out_of_car()</th><td>Take the ped out of any vehicle they're in.</td></tr>
+		</table>
+		<h2>ped objects (client)</h2>
+		<p>
+			On the client, a basync ped object represents a ped that exists on the server but may or may not actually be created in-game.
+			Make sure not to confuse basync ped objects with "real" peds (which you get using <dfn>ped:get_ped</dfn>).
+			They have the following methods, as well as the shared ones.
+		</p>
+		<table>
+			<tr><th>ped:is_valid(pre)</th><td>Returns if the ped is valid. Any other function will fail if the ped isn't valid.<br/>
+			If the ped has not received its first state update, the function will return <b>false</b> unless pre is <b>true</b>.<br/>
+			Remember this does not mean there is a valid ped handle associated with this ped object.</td></tr>
+			<tr><th>ped:is_player()</th><td>Returns if the ped is a player ped (not necessarily the local player's ped).<br/>
+			<tr><th>ped:is_owner()</th><td>Returns if the ped is owned by the local player.</td></tr>
+			<tr><th>ped:get_ped()</th><td>Return the ped handle associated with this ped. Remember to check if they are valid using <b>PedIsValid</b>.</td></tr>
+		</table>
+		<h2>ped objects (shared)</h2>
+		<p>
+			These methods are available on both the server and client.
+		</p>
+		<table>
+			<tr><th>ped:get_id()</th><td>Return the ped's network ID.</tr>
+			<tr><th>ped:get_name()</th><td>Return the ped's name.</td></tr>
+			<tr><th>ped:get_model()</th><td>Return the ped's model index.</td></tr>
+			<tr><th>ped:get_area()</th><td>Return the ped's current area code. It is not guaranteed to be a valid area, but it is at least a number.</td></tr>
+			<tr><th>ped:get_position()</th><td>Return the ped's position and heading (4 values).</td></tr>
+			<tr><th>ped:get_vehicle()</th><td>Return the vehicle object the ped is in if they're in a valid one.</td></tr>
+		</table>
+		<h2>vehicle objects (server)</h2>
+		<p>
+			On the server, a basync vehicle object is the main way vehicles are represented.
+			Vehicles can be created using the <a href="functions.html">net.basync.create_vehicle</a> function.
+			They have the following methods, as well as the shared ones farther down the page.
+		</p>
+		<table>
+			<tr><th>veh:delete()</th><td>Delete the vehicle. This instantly makes the vehicle invalid, so you cannot use it anymore.</td></tr>
+			<tr><th>veh:is_valid()</th><td>Returns if the vehicle is valid. Any other function will fail if the vehicle isn't valid.</td></tr>
+			<tr><th>veh:get_owner()</th><td>Return the vehicle's owning player. Could be <b>-1</b> which means it has no owner.</td></tr>
+			<tr><th>veh:get_seat(seat)</th><td>Returns a valid ped if one is in the vehicle's seat. Only use seat <b>0</b> unless you enabled passengers.</td></tr>
+			<tr><th>veh:lock_owner()</th><td>Don't allow the vehicle's owner to switch automatically, meaning it can only be switched by <b>set_owner</b>.</td></tr>
+			<tr><th>veh:unlock_owner()</th><td>Allow the vehicle's owner to switch automatically again (the default behavior).</tr>
+			<tr><th>veh:set_owner(player)</th><td>Set the vehicle's owner. This could instantly change to another player if the vehicle's owner isn't locked.<br/>
+			If you try to set the owner to a player that hasn't been initialized by basync yet, <b>false</b> is returned (instead of <b>true</b>).</td></tr>
+			<tr><th>veh:set_name(name)</th><td>Set the vehicle's name.</td></tr>
+			<tr><th>veh:set_model(model)</th><td>Set the vehicle's model index.</td></tr>
+			<tr><th>veh:set_area(area)</th><td>Set the vehicle's area code. The vehicle will only show up for players who are also in that area.</tr>
+			<tr><th>veh:set_position(x, y, z, h)</th><td>Set the vehicle's position, and optionally set its heading (0 by default).</td></tr>
+			<tr><th>veh:set_seat(seat, ped)</th><td>Set the ped in the vehicle's seat. Only use seat <b>0</b> unless you enabled passengers.<br/>
+			If you want to clear the seat, pass <b>nil</b> instead of a ped.</td></tr>
+		</table>
+		<h2>vehicle objects (client)</h2>
+		<p>
+			On the client, a basync vehicle object represents a vehicle that exists on the server but may or may not actually be created in-game.
+			Make sure not to confuse basync vehicle objects with "real" vehicles (which you get using <dfn>veh:get_vehicle()</dfn>).
+			They have the following methods, as well as the shared ones.
+		</p>
+		<table>
+			<tr><th>veh:is_valid()</th><td>Returns if the vehicle is valid. Any other function will fail if the vehicle isn't valid.<br/>
+			If the vehicle has not received its first state update, the function will return <b>false</b> unless pre is <b>true</b>.<br/>
+			Remember this does not mean there is a valid vehicle handle associated with this vehicle object.</td></tr>
+			<tr><th>veh:is_owner()</th><td>Returns if the vehicle is owned by the local player.</td></tr>
+			<tr><th>veh:get_vehicle()</th><td>Return the vehicle handle associated with this vehicle. Remember to check it using <b>VehicleIsValid</b>.</td></tr>
+		</table>
+		<h2>vehicle objects (shared)</h2>
+		<p>
+			These methods are available on both the server and client.
+		</p>
+		<table>
+			<tr><th>veh:get_id()</th><td>Return the vehicle's network ID.</tr>
+			<tr><th>veh:get_name()</th><td>Return the vehicle's name.</td></tr>
+			<tr><th>veh:get_model()</th><td>Return the vehicle's model index.</td></tr>
+			<tr><th>veh:get_area()</th><td>Return the vehicle's current area code. It is not guaranteed to be a valid area, but it is at least a number.</td></tr>
+			<tr><th>veh:get_position()</th><td>Return the vehicle's position and heading (4 values).</td></tr>
+			<tr><th>veh:get_vehicle()</th><td>Return the vehicle object the vehicle is in if they're in a valid one.</td></tr>
+		</table>
+	</body>
+</html>

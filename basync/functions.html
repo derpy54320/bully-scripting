@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>BASYNC - Functions</title>
+		<link rel="stylesheet" href="style.css"/>
+		<meta charset="UTF-8"/>
+	</head>
+	<body>
+		<h1><a href="index.html">BASYNC</a> - Functions</h1>
+		<h2>summary</h2>
+		<p>
+			These are the main functions used to interact with basync, though you may find it easier to use the <a href="globals.html">global api</a> a lot of the time.
+		</p>
+		<p>
+			The <a href="http://bullyscripting.net/dsl/globals.html#net">net table</a> is used to access these functions, naturally requiring basync to be running for them to be used.
+		</p>
+		<h2>peds (server)</h2>
+		<table>
+			<tr><th>net.basync.create_ped(model)</th><td>Create and return a new ped object.</td></tr>
+			<tr><th>net.basync.is_ped_valid(ped)</th><td>Returns if the value is a valid ped object.</td></tr>
+			<tr><th>net.basync.get_player_ped(player)</th><td>Return a player's ped object, or <b>nil</b> if they don't have a valid one.</td></tr>
+			<tr><th>net.basync.get_ped_from_player(id)</th><td>Return a valid ped object if one exists with this network ID.</td></tr>
+			<tr><th>net.basync.all_player_peds()</th><td>Return an iterator that returns each a player and ped object for each valid player ped.<br/>
+			For example: <dfn>for player, ped in net.basync.all_player_peds() do --[[ do something ]] end</dfn>.</td></tr>
+			<tr><th>net.basync.all_peds()</th><td>Return an iterator that returns each valid ped object.<br/>
+			For example: <dfn>for ped in net.basync.all_peds() do --[[ do something ]] end</dfn>.</td></tr>
+		</table>
+		<h2>peds (client)</h2>
+		<table>
+			<tr><th>net.basync.get_player_ped()</th><td>Return the local player's ped object, or <b>nil</b> if they don't have a valid one.</td></tr>
+			<tr><th>net.basync.get_ped_by_ped(ped)</th><td>Return a ped object for the ped handle (a "real" ped) if a valid one exists.</td></tr>
+			<tr><th>net.basync.get_ped_from_server(id, pre)</th><td>Return a valid ped object if one exists with this network ID.<br/>
+			If the ped has not received its first state update, the function will not return anything unless pre is <b>true</b>.</td></tr>
+			<tr><th>net.basync.all_peds()</th><td>Return an iterator that returns each valid ped object.</td></tr>
+		</table>
+		<h2>vehicles (server)</h2>
+		<table>
+			<tr><th>net.basync.create_vehicle(model)</th><td>Create and return a new vehicle object.</td></tr>
+			<tr><th>net.basync.is_vehicle_valid(veh)</th><td>Returns if the value is a valid vehicle object.</td></tr>
+			<tr><th>net.basync.get_vehicle_from_player(player, id)</th><td>Return a valid vehicle object if one exists with this network ID.</td></tr>
+			<tr><th>net.basync.all_vehicles()</th><td>Return an iterator that returns each valid vehicle object.<br/>
+			For example: <dfn>for veh in net.basync.all_vehicles() do --[[ do something ]] end</dfn>.</td></tr>
+		</table>
+		<h2>vehicles (client)</h2>
+		<table>
+			<tr><th>net.basync.get_vehicle_by_vehicle(veh)</th><td>Return a vehicle object for the vehicle handle (a "real" vehicle) if a valid one exists.</td></tr>
+			<tr><th>net.basync.get_vehicle_from_server(id)</th><td>Return a valid vehicle object if one exists with this network ID.<br/>
+			If the vehicle has not received its first state update, the function will not return anything unless pre is <b>true</b>.</td></tr>
+			<tr><th>net.basync.all_vehicles()</th><td>Return an iterator that returns each valid vehicle object.</td></tr>
+		</table>
+		<h2>world (server)</h2>
+		<table>
+			<tr><th>net.basync.get_chapter()</th><td>Return the current chapter.</td></tr>
+			<tr><th>net.basync.get_weather()</th><td>Return the current weather type.</td></tr>
+			<tr><th>net.basync.get_time()</th><td>Return the current hour and minute.</td></tr>
+			<tr><th>net.basync.get_time_rate()</th><td>Return how many real milliseconds are in a game minute (or 0 if time is frozen).</td></tr>
+			<tr><th>net.basync.set_chapter(chapter)</th><td>Set the current chapter.</td></tr>
+			<tr><th>net.basync.set_weather(weather)</th><td>Set the current weather type.</td></tr>
+			<tr><th>net.basync.set_time(hour, minute)</th><td>Set the current hour and minute.</td></tr>
+			<tr><th>net.basync.set_time_rate(ms)</th><td>Set how many real milliseconds are in a game minute (or 0 to freeze time).</td></tr>
+		</table>
+		<h2>world (client)</h2>
+		<table>
+			<tr><th>net.basync.get_chapter()</th><td>Return the current chapter.</td></tr>
+			<tr><th>net.basync.get_weather()</th><td>Return the current weather type.</td></tr>
+			<tr><th>net.basync.get_time()</th><td>Return the current hour and minute.</td></tr>
+			<tr><th>net.basync.get_time_rate()</th><td>Return how many real milliseconds are in a game minute (or 0 if time is frozen).</td></tr>
+			<tr><th>net.basync.is_world_ready()</th><td>rRturn if the client has got at least one message from the server about world sync.<br/>
+			If the world is not ready, it means all other client world functions will just return 0.</td></tr>
+		</table>
+	</body>
+</html>
