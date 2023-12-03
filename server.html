@@ -50,11 +50,13 @@
 				margin-top: 2rem;
 			}
 			h1{
+				color: #C8C878;
 				font-family: Arial;
 				font-weight: 900;
 				text-align: center;
 			}
 			h2{
+				color: #C8C878;
 				font-family: Arial;
 				font-weight: 900;
 			}
@@ -70,10 +72,11 @@
 			<hr/>
 			<div id="index">
 				<h2>Server Setup</h2>
-				<a href="#start">Getting started</a>
-				<a href="#config">Configuring your server</a>
-				<a href="#setup">Setting up your scripts</a>
-				<a href="#host">Hosting your server</a>
+				<a href="#start">1. Getting started</a>
+				<a href="#linux">2. Setting up a Linux server</a>
+				<a href="#config">3. Configuring your server</a>
+				<a href="#setup">4. Setting up your scripts</a>
+				<a href="#host">5. Hosting your server</a>
 				<h2>Official Scripts</h2>
 				<a href="#account">account</a>
 				<a href="#admin">admin</a>
@@ -83,7 +86,7 @@
 				<a href="#profanity">profanity</a>
 			</div>
 			<hr/>
-			<h2 id="start">Getting started</h2>
+			<h2 id="start">1. Getting started</h2>
 			<p>
 				Before setting up your server, you should already be familiar with the basics of <a href="http://bullyscripting.net/dsl/about.html">derpy's script loader (DSL)</a>
 				and how <a href="http://bullyscripting.net/dsl/collections.html">DSL collections<a> work.
@@ -91,30 +94,65 @@
 			</p>
 			<p>
 				Once you have the server version, you must decide if you want to run the server using Windows or Linux.
-				It is recommended you use Windows (<b>derpy_script_server.exe</b>) when starting out and only move to Linux (<b>./derpy_script_server</b>) later if you decide it is more cost-effective for you.
+				If using Windows, you should just be able to run <b>derpy_script_server.exe</b>.
+				If using Linux, you should run <b>./derpy_script_server</b> but may have to set a few things up first.
 			</p>
 			<p>
 				The directory (or folder) you run the executable in is where all your files will go.
 				You should at least have the <b>scripts</b> folder by the executable before you run it.
 				After you start the server for the first time, a <b>config.txt</b> file will be generated and you may configure it before starting again.
 			</p>
-			<h2 id="config">Configuring your server</h2>
+			<h2 id="linux">2. Setting up a Linux server</h2>
+			<p>
+				If you're running Ubuntu, read on for some help getting started. If you're using any other Linux distro, then you're on your own.
+				Since the server is 32 bit, you will need to make sure you can actually run 32 bit code.
+				This usually just means you'll need to install <b>lib32z1</b> and <b>libc6-i386</b>.
+			</p>
+			<p>
+				The following code is a list of commands to help you get your Linux server setup using the command line.
+				It downloads version 9 since that is the latest version as of this writing, but you may need to change it to download a later version if there is a newer one available.
+			</p>
+			<code># ubuntu setup (for other linux distros, you're on your own)
+
+# make a new directory for the server somewhere
+mkdir my-dss-server
+cd my-dss-server
+
+# download and extract the server release
+wget -q -O dss.zip https://www.mediafire.com/file_premium/vobshxqcc2kxxa8/derpy_script_server_9_s.zip/file
+unzip dss.zip
+
+# install 32 bit packages for your 64 bit system
+sudo apt-get install lib32z1
+sudo apt-get install libc6-i386
+
+# make the server file an executable
+chmod +x derpy_script_server
+
+# run the server so it generates a config
+./derpy_script_server
+
+# configure the server
+nano config.txt
+
+# and finally run it for real
+./derpy_script_server</code>
+			<h2 id="config">3. Configuring your server</h2>
 			<p>
 				For the most part, <b>config.txt</b> documents itself and you should be able to figure out what to change.
 				The only things that you should really need to change are <b>server_name</b>, <b>server_info</b>,
-				and if you'd like you can uncomment <b>server_icon</b> and set it to a 1:1 PNG in the same directory that is no more than 100 KiB.
+				and if you'd like you can uncomment <b>server_icon</b> and set it to a relative path for a 1:1 PNG that is no more than 100 KiB.
 			</p>
 			<p>
 				If you are only making this server for a few friends and you want to make sure nobody joins that isn't supposed to, you can setup a whitelist by
 				setting <b>whitelist_instead</b> to <b>true</b> and uncommenting <b>whitelist_ip</b> and setting it to someone's IP.
 				You can then add as many more IPs as you want by duplicating that line.
 			</p>
-			<h2 id="setup">Setting up your scripts</h2>
+			<h2 id="setup">4. Setting up your scripts</h2>
 			<p>
 				By itself, a server will do nothing to players' games. It is only through scripts that anything happens, including any sort of game sync.
 				Scripts used to come with the server (in an <b>extras</b> folder) but are now you will have to download or make any scripts you want.
-				Once you get some scripts you can control them using the same commands you'd use on the client.
-				Commands can be typed directly into Windows servers, but must be done remotely on Linux servers (for now).
+				Once you get some scripts you can control them using the same basic commands you'd use on the client.
 			</p>
 			<p>
 				Official scripts (made or endorsed by derpy54320) are available on <a href="https://github.com/derpy54320/dss-extras">github</a>.
@@ -128,12 +166,12 @@
 			<p>
 				If you are interested in making your own network scripts, you can check out <a href="http://bullyscripting.net/dsl/network.html">this page</a> to get started.
 			</p>
-			<h2 id="host">Hosting your server</h2>
+			<h2 id="host">5. Hosting your server</h2>
 			<p>
-				It is recommended you host your server locally using Windows when setting one up for the first time, and move it to a dedicated server when it is ready to be played by the public.
+				It is usually a good idea to run the server locally on Windows so it is easier to develop it, then move it to a dedicated Linux server when it's ready to be played.
 				There are many services that will let you rent a <a href="https://en.wikipedia.org/wiki/Virtual_private_server">VPS</a> if you do not have a server yet,
 				<a href="https://www.vultr.com/">Vultr</a> being a fairly good choice.
-				It is often more cost-effective to rent a Linux server than a Windows one as mentioned earlier, but either will work of course.
+				It is often more cost-effective to rent a Linux server than a Windows one, but either will work of course so you should get whatever is best for you.
 			</p>
 			<p>
 				Once your server is up, you should be able to connect to it by turning on <b>allow_networking</b> in your DSL <b>config.txt</b> and then using <i>/connect</i> in-game.
@@ -142,6 +180,7 @@
 			</p>
 			<p>
 				If you have problems, make sure the port for your server is open (<b>17017</b> by default) and that your firewall allows in-bound connections for the server.
+				To test if your server is visible to the internet, consider using <a href="https://portchecker.co/">portchecker.co</a>.
 			</p>
 			<hr/>
 			<h2 id="account">account</h2>

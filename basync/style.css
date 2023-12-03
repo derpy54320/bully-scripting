@@ -42,7 +42,7 @@ h1{
 	text-align: center;
 }
 table{
-	/*background-color: #202020;*/
+	background-color: #181818;
 	border-radius: 1rem;
 	border-spacing: 1rem;
 }
@@ -51,4 +51,5 @@ td{
 }
 th{
 	text-align: left;
+	white-space: nowrap;
 }

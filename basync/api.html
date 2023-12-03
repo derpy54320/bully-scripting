@@ -31,13 +31,13 @@ ped = PedCreateXYZ(75, 270, -110, 7)</code>
 		</p>
 		<table>
 			<tr><th>AllPeds()</th><td>Returns an iterator to use with for loops (<dfn>for ped in AllPeds() do --[[ stuff ]] end</dfn>).</td></tr>
-			<tr><th>AllVehicles()</th><td>Returns an iterator to use with for loops (<dfn>for ped in AllPeds() do --[[ stuff ]] end</dfn>).</td></tr>
+			<tr><th>AllVehicles()</th><td>Returns an iterator to use with for loops (<dfn>for vehicle in AllVehicles() do --[[ stuff ]] end</dfn>).</td></tr>
 			<tr><th>ChapterGet()</th><td>Returns the current chapter.</td></tr>
 			<tr><th>ChapterSet(chapter)</th><td>Set the current chapter (zero-based).</td></tr>
 			<tr><th>ClockGet()</th><td>Returns the current hour and minute.</td></tr>
 			<tr><th>ClockGetTickRate()</th><td>Returns how many game seconds pass per real second.</td></tr>
 			<tr><th>ClockSet(hour, minute)</th><td>Set the current hour and minute.</td></tr>
-			<tr><th>ClockSetTickRate(min_per_sec)</th><td>Set how many game seconds pass per real second.</td></tr>
+			<tr><th>ClockSetTickRate(rate)</th><td>Set how many game seconds pass per real second.</td></tr>
 			<tr><th>PedCreateXYZ(model, x, y, z, h)</th><td>Create (and return) a ped with a custom position and heading.</td></tr>
 			<tr><th>PedDelete(ped)</th><td>Delete a ped.</td></tr>
 			<tr><th>PedFaceHeading(ped, h)</th><td>Set a ped's heading in degrees.</td></tr>
