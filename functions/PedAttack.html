@@ -1,0 +1,21 @@
+<p class="func_description">
+	Force a specific Ped to attack another specific Ped.
+</p>
+<h2>Arguments</h2>
+<p class="func_arguments">
+	<li class="lua_number">Ped</li>
+  <li class="lua_number">Target_Ped</li>
+</p>
+<h2>Results</h2>
+<p class="func_results">
+	None.
+</p>
+<h2>Examples</h2>
+<p>Create and make Bif attack Jimmy (the player).</p>
+<code class="func_example">
+	<button class="copy_code" onclick="copyCode(this)">copy</button>
+	<pre>local x, y, z = PlayerGetPosXYZ()
+local ped = PedCreateXYZ(33, x + 1, y, z)
+PedAttack(ped, gPlayer)
+  </pre>
+</code>
