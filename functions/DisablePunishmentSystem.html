@@ -10,6 +10,14 @@
 	None.
 </p>
 <h2>Examples</h2>
-<p class="func_example">
-	None.
-</p>
+<p>Turn off the punishment system if the player is doing the mission 'Halloween Pranks'</p>
+<code class="func_example">
+	<button class="copy_code" onclick="copyCode(this)">copy</button>
+	<pre>local currentMission = MissionGetCurrentName()
+
+if currentMission == "1.11xP - Halloween Pranks" then -- Checks if the player is currently doing the Halloween Pranks mission with Pete and Gary
+	DisablePunishmentSystem(true) -- Disable the Punishment System if doing the Halloween Pranks mission
+else
+	DisablePunishmentSystem(false) -- Enable the Punishment System if not doing the Halloween Pranks mission
+end</pre>
+</code>
