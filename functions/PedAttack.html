@@ -19,3 +19,12 @@ local ped = PedCreateXYZ(33, x + 1, y, z)
 PedAttack(ped, gPlayer)
   </pre>
 </code>
+<br><p>Create and make Edgar and Russell fight each other.</p>
+<code class="func_example">
+	<button class="copy_code" onclick="copyCode(this)">copy</button>
+	<pre>local x, y, z = PlayerGetPosXYZ()
+local pedEdgar = PedCreateXYZ(91, x + 1, y, z)
+local pedRussell = PedCreateXYZ(176, x - 1, y, z)
+PedAttack(pedEdgar, pedRussell)
+  </pre>
+</code>
