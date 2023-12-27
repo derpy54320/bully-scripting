@@ -1,6 +1,10 @@
 # bullyscripting.net
-Hiya. This is for my site at [bullyscripting.net](http://bullyscripting.net).
 
-# adding global functions
-The biggest thing I need the community's help with is the [global functions section](/functions).  
-Just see the [template for functions](/template.html) first. Also see the existing functions for reference.
+## What is this
+Documentation of derpy54320's derpy script loader and Bully LUA scripting, located at [bullyscripting.net](http://bullyscripting.net).
+
+## In need of help/contributions
+The priority for contributions on the documentation is with [global functions section](/functions).
+
+## How to contribute with [global functions section](/functions)
+Check out the [template for functions](/template.html), and the [existing documented functions](/functions) for reference.
