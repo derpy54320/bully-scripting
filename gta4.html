@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Grand Theft Auto IV</title>
+		<style>
+			:root{
+				color-scheme: dark;
+				font-family: Arial;
+				max-width: 80rem;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			h1{
+				text-align: center;
+			}
+			li{
+				padding-bottom: 0.5rem;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Grand Theft Auto IV</title>
+		<h2>
+			Overview.
+		</h2>
+		<ol>
+			<li><a href="#rpcs3">Install RPCS3.</a></li>
+			<li><a href="#gta4">Install GTA IV.</a></li>
+			<li><a href="#config">Setup config.</a></li>
+			<li><a href="#rpcn">Setup RPCN.</a></li>
+			<li><b>Play!</b></li>
+		</ol>
+		<hr/>
+		<h2 id="rpcs3">
+			Install and setup RPCS3.
+		</h2>
+		<ol>
+			<li>Download and setup <a href="https://rpcs3.net/download">RPCS3</a>.</li>
+			<li>Download a PS3 system update from <a href="https://www.playstation.com/en-us/support/hardware/ps3/system-software/">playstation.com</a>.</li>
+			<li>Install the PS3 update using RPCS3 (<b>File > Install Firmware</b>).</li>
+			<li>Setup your controller (<b>Configuration > Pads</b>).</li>
+		</ol>
+		<hr/>
+		<h2 id="gta4">
+			Install and update GTA IV.
+		</h2>
+		<ol>
+			<li>Rip the normal USA version (<b>BLUS-30127</b>) from a disk, or download it from <a href="https://vimm.net/vault/25031">Vimm's Lair</a>.</li>
+			<li>Add the game to your list of RPCS3 games (<b>File > Add Games</b>). It should be visible in the main window now.</li>
+			<li>Download the only update for the game from <a href="http://b0.ww.np.dl.playstation.net/tppkg/np/BLUS30127/BLUS30127_T10/7cdb4771cdc2db79/UP1017-BLUS30127_00-GTAIVUPDATEV0108-A0108-V0100-PE.pkg">playstation.net</a>.</li>
+			<li>Install the update using RPCS3 (<b>File > Install Packages</b>).</li>
+		</ol>
+		<hr/>
+		<h2 id="config">
+			Setup custom RPCS3 settings for GTA IV (<b>CPU</b>).
+		</h2>
+		<ol>
+			<li>Right click GTA IV in your list of games, and select <b>Create Custom Configuration From Default Settings</b>.</li>
+			<li>Set <b>SPU XFloat Accuracy</b> to <b>Accurate XFloat</b>.</li>
+		</ol>
+		<h2>
+			(<b>GPU</b>)
+		</h2>
+		<ol>
+			<li>Go to the GPU tab, and ensure the <b>Renderer</b> is <b>Vulkan</b>.</li>
+			<li>Set <b>Framelimit</b> to <b>Off</b>.</li>
+			<li>Set <b>ZCULL Accuracy</b> to <b>Precise</b>.</li>
+			<li>Set <b>Shader Quality</b> to <b>Ultra</b>.</li>
+			<li>Consider changing <b>Resolution Scale</b> to a lower / higher value depending on your system.</li>
+			<li>If you changed your <b>Resolution Scale</b> really high, consider turning <b>Anti-Aliasing</b> off.</li>
+			<li>Set <b>Shader Mode</b> to <b>Legacy</b>.</li>
+			<li>Turn on <b>Write Color Buffers</b>.</li>
+			<li>Turn on <b>Multithreaded RSX</b>.</li>
+			<li>Turn on <b>Asynchronous Texture Streaming</b>.</li>
+		</ol>
+		<h2>
+			(<b>Audio</b>)
+		</h2>
+		<ol>
+			<li>Go to the Audio tab.</li>
+			<li>Turn the <b>Audio Buffering Duration</b> to <b>200 ms</b>. This may require tweaking later if audio sounds bad.</li>
+			<li>Turn on <b>Enable Time Stretching</b> and set it to <b>100%</b>.</li>
+		</ol>
+		<h2>
+			(<b>Network</b>)
+		</h2>
+		<ol>
+			<li>Go to the Network tab.</li>
+			<li>Set <b>Network Status</b> to <b>Connected</b>.</li>
+			<li>Set <b>DNS</b> to <b>8.8.8.8</b>.</li>
+			<li>Turn on <b>Enable UPNP</b>.</li>
+			<li>Set <b>PSN Status</b> to <b>RPCN</b>.</li>
+		</ol>
+		<h2>
+			(<b>Advanced</b>)
+		</h2>
+		<ol>
+			<li>Go to the Advanced tab.</li>
+			<li>Set <b>Sleep Timers Accuracy</b> to <b>As Host</b>.</li>
+			<li>Set <b>RSX FIFO Accuracy</b> to <b>Atomic</b>.</li>
+		</ol>
+		<h2>
+			(<b>Emulator</b>)
+		</h2>
+		<ol>
+			<li>Go to the Emulator tab.</li>
+			<li>Turn off <b>Show PPU compilation hint</b>.</li>
+			<li>Turn off <b>Show shader compilation hint</b>.</li>
+			<li>Consider turning on <b>Enable performance overlay</b> and setting <b>Detail Level</b> to <b>Minimum</b> if you want to see your FPS.</li>
+			<li>Now that you're done making the custom config, apply and save it.</li>
+		</ol>
+		<hr/>
+		<h2 id="rpcn">
+			Play online using RPCN.
+		</h2>
+		<ol>
+			<li>Open the RPCN window (<b>Configuration > RPCN</b>).</li>
+			<li>Click <b>Account</b> and make an account.</li>
+			<li>After making an account, make sure your account details show up when you click <b>Edit Account</b>.</li>
+			<li>Make sure the account is valid by clicking <b>Test Account</b>. If it is not valid, go back and edit the account.</li>
+			<li>Once you start the game, you should now be able to play online using the phone!</li>
+		</ol>
+	</body>
+</html>
